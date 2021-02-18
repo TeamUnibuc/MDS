@@ -5,7 +5,9 @@ using namespace std;
 
 int main()
 {
-    int a = fork();
-    cout << a << '\n';
+    cerr << "Yep!\n";
+    system("echo $IA_SANDBOX");
+    system("/bin/ls");
+    system("pwd");
     return 0;
 }
