@@ -18,12 +18,17 @@ import subprocess
 
 # For accessing the filesystem.
 import os
+import shutil
 
 # Other stuff.
 import random
+import json
 
 # Path of the ia-sandbox executable
-ia_sandbox_path = subprocess.run(["which", "ia-sandbox"], stdout=subprocess.PIPE).stdout.decode('utf-8')
+ia_sandbox_path = subprocess.run(["which", "ia-sandbox"], stdout=subprocess.PIPE).stdout.decode('utf-8')[:-1]
+
+# Path of the g++ executable
+gpp_path = subprocess.run(["which", "g++"], stdout=subprocess.PIPE).stdout.decode('utf-8')[:-1]
 
 class Match:
     def __init__(self):
@@ -33,23 +38,42 @@ class Match:
         # TODO: move the .hpp of the lib
 
     def __del__(self):
-        os.rmdir(self.working_dir)
+        shutil.rmtree(self.working_dir, ignore_errors=True)
 
 
-    def RunInSandbox(self, executable, args):
+    def RunInSandbox(self, executable: str, args: list = [], time_limit: float = 3.):
         """
             Runs the executable inside the ia-sandbox, while passing the args.
-            Returns a dict.
-            TODO:
-            ia-sandbox a.out -r /home/theodor/Projects/MDS/Engine
-                    --mount /bin:/bin:exec
-                    --mount /lib:/lib:exec
-                    --mount /lib64:/lib64:exec
-                    --mount /usr/bin:/usr/bin:exec
-                    --mount /usr/lib:/usr/lib:exec
-                    --mount /usr/include:/usr/include 
         """
-        pass
+
+        # Command to be ran.
+        command = ["ia-sandbox", executable, "-t", str(int(time_limit * 1000)) + "ms",
+                    "-r", self.working_dir,
+                    "--mount", "/bin:/bin:exec",
+                    "--mount", "/lib:/lib:exec",
+                    "--mount", "/lib64:/lib64:exec", 
+                    "--mount", "/usr/bin:/usr/bin:exec",
+                    "--mount", "/usr/lib:/usr/lib:exec",
+                    "--mount", "/usr/include:/usr/include",
+                    "--env", "PATH=/usr/bin",
+                    "-o", "json",
+                    "--stdout", self.working_dir + "/stdout",
+                    "--stderr", self.working_dir + "/stderr", 
+                    "--"] + args
+
+        # Running command.
+        result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        sandbox_status = result.stdout.decode('utf-8')
+        sandbox_error = result.stderr.decode('utf-8')
+
+        # Retrieving stdout and stderr.
+        with open(self.working_dir + "/stdout", "r") as fin:
+            stdout = fin.read()
+        with open(self.working_dir + "/stderr", "r") as fin:
+            stderr = fin.read()
+
+        return sandbox_status, stdout, stderr
+
 
     def Compile(self, code, name):
         """Compiles the code into an executable called name inside the working dir"""
@@ -59,7 +83,7 @@ class Match:
             fout.write(code)
 
         # Compile the code.
-        result = self.RunInSandbox("g++", ["-std=c++17", "-Wall", "-Wextra", "-O2", code + ".cpp", "-o", name])
+        result = self.RunInSandbox(gpp_path, ["-std=c++17", "-Wall", "-Wextra", "--static", "-O2", name + ".cpp", "-o", name], 5)
         
         return result
 
@@ -107,10 +131,32 @@ def Simulate(engine: str, bots: list):
             }
     
     # Run the actual match.
-    match_status = match.RunInSandbox("engine", [])
+    match_status = match.RunInSandbox("/engine", [])
 
     return {
         "status": "OK",
         "result": match_status
     }
 
+
+
+
+## TO delete
+code = """
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    cout << "Hello World!";
+    return 0;
+}
+"""
+
+simulator = Match()
+
+simulator.Compile(code, "program")
+
+ans = simulator.RunInSandbox("program")
+
+print(ans)
