@@ -18,17 +18,16 @@ std::pair <std::string, std::string> MovePlayer(int id, std::string state, doubl
 {
     using namespace std;
 
-    const string path_to_ia_sandbox = "/tmp/ia-sandbox";
-    std::string executable_name = "bot_" + to_string(id);
+    std::string executable_name = "/bot_" + to_string(id);
 
     ofstream out("bot_input");
     out << state << '\n';
     out.close();
 
-    string command = path_to_ia_sandbox + " " + executable_name +
-            "--stdin bot_input --stdout bot_output --stderr ignore " +
+    string command = "/ia-sandbox/ia-sandbox " + executable_name +
+            " --stdin bot_input --stdout bot_output --stderr ignore " +
             "-t " + to_string(int(time_limit_sec * 1000)) + "ms " +
-            "-o online > ia_sandbox_stdout";
+            "-o oneline > ia_sandbox_stdout";
 
     system(command.c_str());
 
@@ -39,7 +38,7 @@ std::pair <std::string, std::string> MovePlayer(int id, std::string state, doubl
     };
 
     string bot_result = get_str("bot_output");
-    string env_result = get_str("ia-sandbox_stdout");
+    string env_result = get_str("ia_sandbox_stdout");
 
     if (env_result.substr(0, 2) != "OK")
         return { "", env_result };

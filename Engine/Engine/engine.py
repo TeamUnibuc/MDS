@@ -54,7 +54,11 @@ class Match:
                     "--mount", "/lib64:/lib64:exec", 
                     "--mount", "/usr/bin:/usr/bin:exec",
                     "--mount", "/usr/lib:/usr/lib:exec",
+                    "--mount", ia_sandbox_path[:-10] + ":/ia-sandbox:exec",
                     "--mount", "/usr/include:/usr/include",
+                    "--mount", "/sys/fs/cgroup/cpuacct/ia-sandbox:/sys/fs/cgroup/cpuacct/ia-sandbox:rw",
+                    "--mount", "/sys/fs/cgroup/memory/ia-sandbox:/sys/fs/cgroup/memory/ia-sandbox:rw",
+                    "--mount", "/sys/fs/cgroup/pids/ia-sandbox:/sys/fs/cgroup/pids/ia-sandbox:rw",
                     "--env", "PATH=/usr/bin",
                     "-o", "json",
                     "--stdout", self.working_dir + "/stdout",
@@ -74,6 +78,9 @@ class Match:
 
         return sandbox_status, stdout, stderr
 
+    def Inject(self, content, filename):
+        with open(self.working_dir + "/" + filename, "w") as fout:
+            fout.write(content)
 
     def Compile(self, code, name):
         """Compiles the code into an executable called name inside the working dir"""
@@ -139,24 +146,3 @@ def Simulate(engine: str, bots: list):
     }
 
 
-
-
-## TO delete
-code = """
-#include <bits/stdc++.h>
-using namespace std;
-
-int main()
-{
-    cout << "Hello World!";
-    return 0;
-}
-"""
-
-simulator = Match()
-
-simulator.Compile(code, "program")
-
-ans = simulator.RunInSandbox("program")
-
-print(ans)
