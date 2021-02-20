@@ -11,7 +11,7 @@
 1. `Bazel` pentru C++ Build
 1. `GTest` pentru testare C++
 1. `ProtocolBuffers` pentru comunicare / salvare date
-
+1. `Abseil.io` pentru functionalitati aditionale C++
 
 ## Boti
 
