@@ -25,7 +25,9 @@ std::pair <std::string, std::string> MovePlayer(int id, std::string state, doubl
     out.close();
 
     string command = "/ia-sandbox/ia-sandbox " + executable_name +
-            " --stdin bot_input --stdout bot_output --stderr ignore " +
+            " --stdin bot_input" +
+            " --stdout bot_output" +
+            " --stderr ignore " +
             "-t " + to_string(int(time_limit_sec * 1000)) + "ms " +
             "-o oneline > ia_sandbox_stdout";
 
