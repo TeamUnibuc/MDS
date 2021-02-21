@@ -30,3 +30,8 @@
 *.exe
 *.out
 *.app
+
+
+# Testing
+build
+node_modules
