@@ -11,6 +11,22 @@
         "program": "${workspaceFolder}/backend/src/index.ts",
         // "preLaunchTask": "tsc: build - tsconfig.json",
         "outFiles": ["${workspaceFolder}/backend/dist/**/*.js"]
+      },
+
+      {
+        "type": "chrome",
+        "request": "launch",
+        "name": "vuejs: chrome",
+        "url": "http://localhost:8082",
+        "webRoot": "${workspaceFolder}/frontend/src",
+        "breakOnLoad": true,
+        "sourceMapPathOverrides": {
+          // "webpack:///./*": "${webRoot}/*",
+          "webpack:///src/*": "${webRoot}/*",
+          // "webpack:///*": "*",
+          // "webpack:///./~/*": "${webRoot}/node_modules/*",
+          // "meteor://💻app/*": "${webRoot}/*"
+        }
       }
     ]
   }

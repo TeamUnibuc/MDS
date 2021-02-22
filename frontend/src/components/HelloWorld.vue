@@ -121,6 +121,8 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
+console.log("from frontend ??");
+
 export default defineComponent({
   name: "HelloWorld",
   props: {
