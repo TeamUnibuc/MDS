@@ -117,7 +117,7 @@ def Simulate(engine: str, bots: list, injects: list):
             engine: C++ code with the engine.
             bots: List containing bots to compete against each other.
         Return value: stringify {
-            result: "Success/CompilationError",
+            result: "Success/CompilationError/TimeLimitExceded etc",
             file_error: "file that failed to compile",
             compilation_message: "Compilation error",
             evaluation_stdout: "eval",
