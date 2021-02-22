@@ -1,0 +1,7 @@
+name: MDS_env
+dependencies:
+  - python>=3.8
+  - pip
+  - nodejs>=15.3
+  - pip:
+    - -r file:requirements.txt
