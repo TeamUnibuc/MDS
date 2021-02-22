@@ -47,26 +47,34 @@ class Match:
         """
 
         # Command to be ran.
-        command = ["ia-sandbox", executable, "-t", str(int(time_limit * 1000)) + "ms",
-                    "-r", self.working_dir,
-                    "--mount", "/bin:/bin:exec",
-                    "--mount", "/lib:/lib:exec",
-                    "--mount", "/lib64:/lib64:exec", 
-                    "--mount", "/usr/bin:/usr/bin:exec",
-                    "--mount", "/usr/lib:/usr/lib:exec",
-                    "--mount", ia_sandbox_path[:-10] + ":/ia-sandbox:exec",
-                    "--mount", "/usr/include:/usr/include",
-                    "--mount", "/sys/fs/cgroup/cpuacct/ia-sandbox:/sys/fs/cgroup/cpuacct/ia-sandbox:rw",
-                    "--mount", "/sys/fs/cgroup/memory/ia-sandbox:/sys/fs/cgroup/memory/ia-sandbox:rw",
-                    "--mount", "/sys/fs/cgroup/pids/ia-sandbox:/sys/fs/cgroup/pids/ia-sandbox:rw",
-                    "--env", "PATH=/usr/bin",
-                    "-o", "json",
-                    "--stdout", self.working_dir + "/stdout",
-                    "--stderr", self.working_dir + "/stderr", 
-                    "--"] + args
+        command = [
+            "ia-sandbox", executable,
+            "-t", str(int(time_limit * 1000)) + "ms",
+            "-r", self.working_dir
+        ]
+        mounts = [
+            "--mount", "/bin:/bin:exec",
+            "--mount", "/lib:/lib:exec",
+            "--mount", "/usr/bin:/usr/bin:exec",
+            "--mount", "/usr/lib:/usr/lib:exec",
+            "--mount", ia_sandbox_path[:-10] + ":/ia-sandbox:exec",
+            "--mount", "/usr/include:/usr/include",
+            "--mount", "/sys/fs/cgroup/cpuacct/ia-sandbox:/sys/fs/cgroup/cpuacct/ia-sandbox:rw",
+            "--mount", "/sys/fs/cgroup/memory/ia-sandbox:/sys/fs/cgroup/memory/ia-sandbox:rw",
+            "--mount", "/sys/fs/cgroup/pids/ia-sandbox:/sys/fs/cgroup/pids/ia-sandbox:rw",
+        ]
+        if os.path.exists("/lib64"):
+            mounts = mounts + ["--mount", "/lib64:/lib64:exec"]
+
+        config = [
+            "--env", "PATH=/usr/bin",
+            "-o", "json",
+            "--stdout", self.working_dir + "/stdout",
+            "--stderr", self.working_dir + "/stderr", 
+            "--"] + args
 
         # Running command.
-        result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        result = subprocess.run(command + mounts + config, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         sandbox_status = result.stdout.decode('utf-8')
         sandbox_error = result.stderr.decode('utf-8')
 
@@ -97,7 +105,7 @@ class Match:
 
 # Entry point of the script.
 # Will probably be called from `nodejs` with some sockets.
-def Simulate(engine: str, bots: list):
+def Simulate(engine: str, bots: list, injects: list):
     """
         Simulates a battle between the bots from `bots`,
         by running the engine.
@@ -105,44 +113,67 @@ def Simulate(engine: str, bots: list):
         Parameters:
             engine: C++ code with the engine.
             bots: List containing bots to compete against each other.
-        Return value:
-            A Json TODO: fix return value
+        Return value: stringify {
+            result: "Success/CompilationError",
+            file_error: "file that failed to compile",
+            compilation_message: "Compilation error",
+            evaluation_stdout: "eval",
+            evaluation_stderr: "eval"
+        }
     """
 
     # Create a new match object.
     match = Match()
 
-    # Compile the engine, and return failure if unable to compile.
-    compilation_status = match.Compile(engine, "engine")
-    if compilation_status.status != "OK":
+    for (code, name) in injects:
+        match.Inject(code, name)
+    
+    def Compile(code: str, name: str):
+        compilation_status = match.Compile(code, name)
+        compiled = False
+        try:
+            status = json.loads(compilation_status[0])
+            if "result" in status and "Success" in status["result"]:
+                compiled = True
+        except:
+            pass
+        if not compiled:
+            return {
+                "result": {
+                    "CompilationError": None,
+                },
+                "file_error": name,
+                "compilation_message": compilation_status[2]
+            }
         return {
-            "status": "ERROR",
-            "error": {
-                "type": "compilation",
-                "file": "engine",
-                "details": compilation_status
+            "result": {
+                "Success": None
             }
         }
+
+    status = Compile(engine, "engine")
+    if "Success" not in status["result"]:
+        return status
     
-    # Compile bots, and return failure if unable to compile.
     for id, code in enumerate(bots):
-        compilation_status = match.Compile(code, "bot_" + str(id))
-        if compilation_status.status != "OK":
-            return {
-                "status": "ERROR",
-                "error": {
-                    "type": "compilation",
-                    "file": "bot_" + str(id),
-                    "details": compilation_status
-                }
-            }
+        status = Compile(code, "bot_" + str(id))
+        if "Success" not in status["result"]:
+            status
     
     # Run the actual match.
     match_status = match.RunInSandbox("/engine", [])
 
-    return {
-        "status": "OK",
-        "result": match_status
-    }
+    try:
+        object = json.loads(match_status[0])
+        object["evaluation_stdout"] = match_status[1]
+        object["evaluation_stderr"] = match_status[2]
+        return object
+    except:
+        return {
+            "status": {
+                "Failure": None
+            },
+            "data": match_status
+        }
 
 
