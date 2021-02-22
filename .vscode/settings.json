@@ -1,0 +1,4 @@
+{
+    "jestrunner.jestPath": "${workspaceFolder}/backend/node_modules/jest/bin/jest.js",
+    "jestrunner.projectPath": "${workspaceFolder}/backend"
+}
