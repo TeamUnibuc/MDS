@@ -78,6 +78,9 @@ class Match:
         sandbox_status = result.stdout.decode('utf-8')
         sandbox_error = result.stderr.decode('utf-8')
 
+        if sandbox_error != "":
+            sandbox_status += "Error: " + sandbox_error
+
         # Retrieving stdout and stderr.
         with open(self.working_dir + "/stdout", "r") as fin:
             stdout = fin.read()
@@ -98,7 +101,7 @@ class Match:
             fout.write(code)
 
         # Compile the code.
-        result = self.RunInSandbox(gpp_path, ["-std=c++17", "-Wall", "-Wextra", "--static", "-O2", name + ".cpp", "-o", name], 5)
+        result = self.RunInSandbox(gpp_path, ["-std=c++17", "-Wall", "-Wextra", "--static", "-O2", name + ".cpp", "-o", name], 15)
         
         return result
 
