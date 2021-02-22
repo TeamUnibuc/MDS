@@ -102,7 +102,7 @@ class Match:
             fout.write(code)
 
         # Compile the code.
-        result = self.RunInSandbox(gpp_path, ["-std=c++17", "-Wall", "-Wextra", "--static", "-O2", name + ".cpp", "-o", name], 15)
+        result = self.RunInSandbox(gpp_path, ["-std=c++17", "-Wall", "-Wextra", "--static", "-O2", name + ".cpp", "-o", name], 30)
         
         return result
 
@@ -149,7 +149,7 @@ def Simulate(engine: str, bots: list, injects: list):
                     "CompilationError": None,
                 },
                 "file_error": name,
-                "compilation_message": compilation_status[2]
+                "compilation_message": compilation_status
             }
         else:
             ret["status"] = {
