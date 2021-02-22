@@ -15,6 +15,7 @@
 # Used for lunching subprocesses.
 # We will mainly use it for getting results from called functions.
 import subprocess
+from threading import Thread
 
 # For accessing the filesystem.
 import os
@@ -154,23 +155,40 @@ def Simulate(engine: str, bots: list, injects: list):
             }
         }
 
-    status = Compile(engine, "engine")
-    if "Success" not in status["result"]:
-        return status
+    engine_lst = []
+    engine_thr = Thread(target=lambda l: l.append(Compile(engine, "engine")), args=(engine_lst, ))
+
+    bot_lists = [[] for i in range(len(bots))]
+    bot_threads = []
+    for i in range(len(bots)):
+        bot_thr = Thread(target=lambda id: bot_lists[id].append(Compile(bots[id], "bot_" + str(id))), args=(i, ))
+        bot_threads.append(bot_thr)
+
+    engine_thr.start()
+    for thr in bot_threads:
+        thr.start()
     
-    for id, code in enumerate(bots):
-        status = Compile(code, "bot_" + str(id))
-        if "Success" not in status["result"]:
-            status
+    engine_thr.join()
+    engine_status = engine_lst[0]
+    if "Success" not in engine_status["result"]:
+        return engine_status
+
+    for thr in bot_threads:
+        thr.join()
+
+    for lst in bot_lists:
+        bot_status = lst[0]
+        if "Success" not in bot_status["result"]:
+            return bot_status
     
     # Run the actual match.
     match_status = match.RunInSandbox("/engine", [])
 
     try:
-        object = json.loads(match_status[0])
-        object["evaluation_stdout"] = match_status[1]
-        object["evaluation_stderr"] = match_status[2]
-        return object
+        o = json.loads(match_status[0])
+        o["evaluation_stdout"] = match_status[1]
+        o["evaluation_stderr"] = match_status[2]
+        return o
     except:
         return {
             "status": {
