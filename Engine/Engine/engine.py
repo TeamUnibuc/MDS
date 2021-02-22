@@ -15,7 +15,7 @@
 # Used for lunching subprocesses.
 # We will mainly use it for getting results from called functions.
 import subprocess
-from threading import Thread
+from multiprocessing import Manager, Process
 
 # For accessing the filesystem.
 import os
@@ -129,10 +129,12 @@ def Simulate(engine: str, bots: list, injects: list):
     # Create a new match object.
     match = Match()
 
+    # Inject required files in the environment.
     for (code, name) in injects:
         match.Inject(code, name)
     
-    def Compile(code: str, name: str):
+    # Compiles a code with a given filename, and places the result into ret.
+    def Compile(code: str, name: str, ret):
         compilation_status = match.Compile(code, name)
         compiled = False
         try:
@@ -142,44 +144,49 @@ def Simulate(engine: str, bots: list, injects: list):
         except:
             pass
         if not compiled:
-            return {
+            ret["status"] = {
                 "result": {
                     "CompilationError": None,
                 },
                 "file_error": name,
                 "compilation_message": compilation_status[2]
             }
-        return {
-            "result": {
-                "Success": None
+        else:
+            ret["status"] = {
+                "result": {
+                    "Success": None
+                }
             }
-        }
 
-    engine_lst = []
-    engine_thr = Thread(target=lambda l: l.append(Compile(engine, "engine")), args=(engine_lst, ))
+    # Process manager, creating process-independent dictionaries.
+    process_manager = Manager()
 
-    bot_lists = [[] for i in range(len(bots))]
-    bot_threads = []
-    for i in range(len(bots)):
-        bot_thr = Thread(target=lambda id: bot_lists[id].append(Compile(bots[id], "bot_" + str(id))), args=(i, ))
-        bot_threads.append(bot_thr)
+    # Process of the engine's compilation.
+    engine_status = process_manager.dict()
+    engine_process = Process(target=Compile, args=[engine, "engine", engine_status])
 
-    engine_thr.start()
-    for thr in bot_threads:
-        thr.start()
-    
-    engine_thr.join()
-    engine_status = engine_lst[0]
-    if "Success" not in engine_status["result"]:
-        return engine_status
+    NR_BOTS = len(bots)
 
-    for thr in bot_threads:
-        thr.join()
+    # Processes of the bots' compilations.
+    bots_status = [process_manager.dict() for _ in range(NR_BOTS)]
+    bots_process = [Process(target=Compile, args=[bots[i], "bot_" + str(i), bots_status[i]]) for i in range(NR_BOTS)]
 
-    for lst in bot_lists:
-        bot_status = lst[0]
-        if "Success" not in bot_status["result"]:
-            return bot_status
+    # Starting all the processes.
+    engine_process.start()
+    for proc in bots_process:
+        proc.start()
+
+    # Joining all processes.
+    engine_process.join()
+    for proc in bots_process:
+        proc.join()
+
+    if "Success" not in engine_status["status"]["result"]:
+        return engine_status["status"]
+
+    for status in bots_status:
+        if "Success" not in status["status"]["result"]:
+            return status["status"]
     
     # Run the actual match.
     match_status = match.RunInSandbox("/engine", [])
