@@ -5,5 +5,3 @@ dependencies:
   - nodejs>=15.3
   - pip:
     - -r file:requirements.txt
-  # - npm:
-  #   - install --global @vue/cli
