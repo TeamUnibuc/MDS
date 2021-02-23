@@ -15,6 +15,7 @@
 # Used for lunching subprocesses.
 # We will mainly use it for getting results from called functions.
 import subprocess
+from multiprocessing import Manager, Process
 
 # For accessing the filesystem.
 import os
@@ -101,7 +102,7 @@ class Match:
             fout.write(code)
 
         # Compile the code.
-        result = self.RunInSandbox(gpp_path, ["-std=c++17", "-Wall", "-Wextra", "--static", "-O2", name + ".cpp", "-o", name], 15)
+        result = self.RunInSandbox(gpp_path, ["-std=c++17", "-Wall", "-Wextra", "--static", "-O2", name + ".cpp", "-o", name], 30)
         
         return result
 
@@ -128,10 +129,12 @@ def Simulate(engine: str, bots: list, injects: list):
     # Create a new match object.
     match = Match()
 
+    # Inject required files in the environment.
     for (code, name) in injects:
         match.Inject(code, name)
     
-    def Compile(code: str, name: str):
+    # Compiles a code with a given filename, and places the result into ret.
+    def Compile(code: str, name: str, ret):
         compilation_status = match.Compile(code, name)
         compiled = False
         try:
@@ -141,36 +144,58 @@ def Simulate(engine: str, bots: list, injects: list):
         except:
             pass
         if not compiled:
-            return {
+            ret["status"] = {
                 "result": {
                     "CompilationError": None,
                 },
                 "file_error": name,
-                "compilation_message": compilation_status[2]
+                "compilation_message": compilation_status
             }
-        return {
-            "result": {
-                "Success": None
+        else:
+            ret["status"] = {
+                "result": {
+                    "Success": None
+                }
             }
-        }
 
-    status = Compile(engine, "engine")
-    if "Success" not in status["result"]:
-        return status
-    
-    for id, code in enumerate(bots):
-        status = Compile(code, "bot_" + str(id))
-        if "Success" not in status["result"]:
-            status
+    # Process manager, creating process-independent dictionaries.
+    process_manager = Manager()
+
+    # Process of the engine's compilation.
+    engine_status = process_manager.dict()
+    engine_process = Process(target=Compile, args=[engine, "engine", engine_status])
+
+    NR_BOTS = len(bots)
+
+    # Processes of the bots' compilations.
+    bots_status = [process_manager.dict() for _ in range(NR_BOTS)]
+    bots_process = [Process(target=Compile, args=[bots[i], "bot_" + str(i), bots_status[i]]) for i in range(NR_BOTS)]
+
+    # Starting all the processes.
+    engine_process.start()
+    for proc in bots_process:
+        proc.start()
+
+    # Joining all processes.
+    engine_process.join()
+    for proc in bots_process:
+        proc.join()
+
+    if "Success" not in engine_status["status"]["result"]:
+        return engine_status["status"]
+
+    for status in bots_status:
+        if "Success" not in status["status"]["result"]:
+            return status["status"]
     
     # Run the actual match.
     match_status = match.RunInSandbox("/engine", [])
 
     try:
-        object = json.loads(match_status[0])
-        object["evaluation_stdout"] = match_status[1]
-        object["evaluation_stderr"] = match_status[2]
-        return object
+        o = json.loads(match_status[0])
+        o["evaluation_stdout"] = match_status[1]
+        o["evaluation_stderr"] = match_status[2]
+        return o
     except:
         return {
             "status": {

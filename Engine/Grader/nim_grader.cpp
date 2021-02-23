@@ -1,4 +1,6 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <sstream>
 #include "enginelib.hpp"
 using namespace std;
 
