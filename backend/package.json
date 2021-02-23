@@ -6,7 +6,7 @@
   "scripts": {
     "build-prod": "echo \"Error: Go configure this loser\" && exit 1",
     "build": "tsc",
-    "serve": "node dist/index.js",
+    "serve": "node dist/src/index.js",
     "debug": "",
     "test": "jest"
   },
