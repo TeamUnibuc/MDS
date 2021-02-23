@@ -23,6 +23,9 @@ module.exports = {
     project: './tsconfig.json',
   },
   rules: {
+    "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
+    "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
+    
     "no-multiple-empty-lines": "error",
     "eol-last": ["error", "always"],
     "no-loops/no-loops": 1,
