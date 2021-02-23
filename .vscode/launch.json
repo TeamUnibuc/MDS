@@ -5,6 +5,7 @@
     "version": "0.2.0",
     "configurations": [
       {
+        "port": 9229,
         "type": "node",
         "request": "launch",
         "name": "Debug Backend",
@@ -14,11 +15,12 @@
       },
 
       {
+        // "port": 9222,
         "type": "chrome",
         "request": "launch",
         "name": "vuejs: chrome",
-        "url": "http://localhost:8082",
-        "webRoot": "${workspaceFolder}/frontend/src",
+        "url": "http://192.168.1.105:8082",
+        "webRoot": "${workspaceFolder}/frontend",
         "breakOnLoad": true,
         "sourceMapPathOverrides": {
           // "webpack:///./*": "${webRoot}/*",
