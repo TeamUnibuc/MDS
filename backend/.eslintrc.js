@@ -24,6 +24,7 @@ module.exports = {
   },
   rules: {
     "no-multiple-empty-lines": "error",
+    "eol-last": ["error", "always"],
     "no-loops/no-loops": 1,
     'import-quotes/import-quotes': [2, 'single'],
   }
