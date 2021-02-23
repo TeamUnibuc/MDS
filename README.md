@@ -13,6 +13,11 @@
 1. `ProtocolBuffers` pentru comunicare / salvare date
 1. `Abseil.io` pentru functionalitati aditionale C++
 
+
+## Development
+
+Pentru instructiuni la cum sa contribui la proiect, consulta [Development](Development.md)
+
 ## Boti
 
 stdin: starea jocului
@@ -45,6 +50,3 @@ stdout: mutarea noastra
     }
 ```
 
-## Development
-
-Pentru instructiuni la cum sa contribui la proiect, consulta [Development](Development.md)
