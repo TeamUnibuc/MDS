@@ -1,0 +1,23 @@
+{
+  "testEnvironment": "node",
+
+  "transform": {
+    "^.+\\.ts$": "ts-jest",
+    "^.+\\.js$": "ts-jest"
+  },
+
+  "moduleFileExtensions": [
+    "ts",
+    "js",
+    "json",
+    "node"
+  ],
+
+  "coverageDirectory": "coverage",
+  "collectCoverageFrom": [
+    "src/**/*.{ts,js}",
+    "!src/**/*.d.ts"
+  ],
+
+  "testRegex": "(/tests/.*|(\\.|/)(test|spec))\\.(ts|js)$"
+}

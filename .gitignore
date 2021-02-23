@@ -38,4 +38,4 @@ node_modules/
 __pycache__/
 
 # VSCode
-.vscode/
+# .vscode/
