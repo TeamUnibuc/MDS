@@ -44,3 +44,7 @@ stdout: mutarea noastra
         }
     }
 ```
+
+## Development
+
+Pentru instructiuni la cum sa contribui la proiect, consulta [Development](Development.md)
