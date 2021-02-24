@@ -1,15 +1,11 @@
 import { env } from './config';
 import express from 'express'
 
-export function sampleFunction (x: string): string {
-  return x + x;
-}
-
-console.log(`port env variable:  ${env.PORT}`);
-
-console.log(sampleFunction('something'));
-
 const app = express()
+
+export const sampleFunction = (x: string): string => {
+  return x + x
+}
 
 app.get("/api", (req, res) => {
   console.log(req.url)
@@ -17,5 +13,5 @@ app.get("/api", (req, res) => {
 })
 
 app.listen(env.PORT, () => {
-  console.log("Started to listen!")
+  console.log(`URL: http://localhost:${env.PORT}`)
 })

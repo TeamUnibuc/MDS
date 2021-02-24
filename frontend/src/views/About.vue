@@ -6,10 +6,10 @@
 
 <script>
 export default {
-  name: "About",
+  name: "About", 
   methods: {
     testFunction: function(/* event */) {
-      console.log("I was clicked!");
+      console.log(process.env.VUE_APP_API_URL);
     }
   }
 };
