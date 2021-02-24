@@ -1,8 +1,10 @@
 name: MDS_env
+channels:
+  - conda-forge
 dependencies:
   - python>=3.8
   - pip
-  - nodejs>=15.3
-  - yarn>=1.22
   - pip:
     - -r file:requirements.txt
+  - nodejs>=15.3
+  - yarn>=1.22
