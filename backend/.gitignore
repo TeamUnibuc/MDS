@@ -1,1 +1,7 @@
+# Destination / Built files
 dist
+
+# Environment files
+.env
+.env.prod
+.env.dev

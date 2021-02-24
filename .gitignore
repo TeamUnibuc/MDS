@@ -1,6 +1,11 @@
 # Modules used by npm
 node_modules/
 
+# Environment files
+.env
+.env.prod
+.env.dev
+
 # Prerequisites
 *.d
 
