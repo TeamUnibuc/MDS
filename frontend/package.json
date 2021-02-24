@@ -14,7 +14,9 @@
     "scripts": "grep \"scripts\" -A 50 ./package.json | sed '/}/ q' # run it on package.json directory"
   },
   "dependencies": {
+    "@types/dotenv": "^8.2.0",
     "core-js": "^3.6.5",
+    "dotenv": "^8.2.0",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"
