@@ -6,6 +6,9 @@ node_modules/
 .env.prod
 .env.dev
 
+# Package lock file should be ignored, we use Yarn
+package-lock.json
+
 # Prerequisites
 *.d
 
