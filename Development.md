@@ -2,7 +2,7 @@
 
 ## Setup
 
-- Intai de toate, trebuie sa rulam `npm install` in folderul `backend` si `frontend`
+- Intai de toate, trebuie sa rulam `yarn install` in folderul `backend` si `frontend`
 - Pentru a lucra cu teste, folosim extensia `Jest Runner`
 
 -----------------------------------
@@ -12,13 +12,13 @@ Vom presupune cand lucram la backend ca terminalul se afla la fiecare comanda cu
 
 ## Run backend  (Deocamndata doar debug-friendly)
 
-- `npm run build`
-- `npm run serve`  (serve nu face rebuild)
+- `yarn build`
+- `yarn serve`  (serve nu face rebuild)
 
 ## Run backend tests
 
 Toate testele:
-- `npm run test`
+- `yarn test`
 
 Teste specifice:
 - Deasupra testului / suitei apasati `Run`
@@ -27,14 +27,14 @@ Teste specifice:
 
 * Requirement: VS-Code extension: Jest Runner
 
-- `npm run build`  (este nevoie sa avem folderul `dist` actualizat)
+- `yarn build`  (este nevoie sa avem folderul `dist` actualizat)
 - Pornim launch configuration: `Debug Backend`
 
 ## Debug backend tests
 
 * Requirement: VS-Code extension: Jest Runner
 
-- `npm run build`  (este nevoie sa avem folderul `dist` actualizat)
+- `yarn build`  (este nevoie sa avem folderul `dist` actualizat)
 - Deasupra testelor / suitelor, apasati `Debug`
 
 -------------------------------------
@@ -44,12 +44,12 @@ Vom presupune cand lucram la frontend ca terminalul se afla mereu in `cwd` la ad
 
 ## Run frontend  (Debug)
 
-- `npm run serve`
+- `yarn serve`
 
 ## Run frontend tests
 
 Toate testele:
-- `npm run test`
+- `yarn test`
 
 Teste specifice:
 - Deasupra testului / suitei apasati `Run`
@@ -57,7 +57,7 @@ Teste specifice:
 ## Debug frontend  (Chrome, client-side)
 
 * Trebuie sa avem serviciul (procesul de nodeJS) care ruleaza frontend-ul in picioare
-* Activati serviciul cu `npm run serve`
+* Activati serviciul cu `yarn serve`
 * Avem 3 metode de a da debug:
 - Developer Console din chrome/firefox, pentru plain debugging (sursele se afla in webpack -> src)
 - Chrome extension Vue Dev Tools
