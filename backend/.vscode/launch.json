@@ -5,13 +5,13 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "port": 9229,
+      // "port": 9229,
       "type": "node",
       "request": "launch",
       "name": "Debug Backend",
-      "program": "${workspaceFolder}/backend/src/index.ts",
+      "program": "${workspaceFolder}/src/index.ts",
       // "preLaunchTask": "tsc: build - tsconfig.json",
-      "outFiles": ["${workspaceFolder}/backend/dist/**/*.js"]
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"]
     },
   ]
 }

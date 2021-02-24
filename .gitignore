@@ -9,6 +9,15 @@ node_modules/
 # Package lock file should be ignored, we use Yarn
 package-lock.json
 
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Yarn stuff
+.yarn
+
 # Prerequisites
 *.d
 
