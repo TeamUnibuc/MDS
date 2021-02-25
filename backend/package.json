@@ -7,6 +7,7 @@
     "build-prod": "echo \"Error: Go configure this loser\" && exit 1",
     "build": "tsc",
     "serve": "node dist/src/index.js",
+    "run-dev": "yarn build && yarn serve",
     "debug": "",
     "test": "jest",
     "lint": "npx eslint .",
@@ -17,6 +18,7 @@
   "author": "Unibuc4Ever",
   "license": "UNLICENSED",
   "dependencies": {
+    "@types/express": "^4.17.11",
     "express": "^4.17.1",
     "passport": "^0.4.1",
     "ts-dotenv": "^0.8.3",
