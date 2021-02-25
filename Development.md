@@ -1,3 +1,8 @@
+# FightBots
+
+This documentation is dedicated to compiling and running the code.
+For a more detailed documentation please check [the wiki](https://github.com/TeamUnibuc/MDS/wiki).
+
 # Cum executam si cum facem debug
 
 ## Setup
