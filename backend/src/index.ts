@@ -12,6 +12,10 @@ app.get("/api", (req, res) => {
   res.json({"OK": "Yep"})
 })
 
-app.listen(env.PORT, () => {
+const instance = app.listen(env.PORT, () => {
   console.log(`URL: http://localhost:${env.PORT}`)
 })
+
+export const closeServer = (): void => {
+  instance.close()
+}
