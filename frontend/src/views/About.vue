@@ -9,7 +9,7 @@ export default {
   name: "About", 
   methods: {
     testFunction: function(/* event */) {
-      console.log(process.env.VUE_APP_API_URL);
+      console.log("I was clicked!");
     }
   }
 };
