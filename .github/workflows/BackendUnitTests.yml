@@ -11,14 +11,18 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
         node-version: [15.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    
 
+    env:
+       NODE_ENV: development
+       PORT: 8888  
+    
     steps:
     - uses: actions/checkout@v2
     - name: Test Backend
