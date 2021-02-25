@@ -1,9 +1,21 @@
 import { env } from './config';
+import express from 'express'
 
-export function sampleFunction (x: string): string {
-  return x + x;
+const app = express()
+
+export const sampleFunction = (x: string): string => {
+  return x + x
 }
 
-console.log(`port env variable:  ${env.PORT}`);
+app.get("/api", (req, res) => {
+  console.log(req.url)
+  res.json({"OK": "Yep"})
+})
 
-console.log(sampleFunction('something'));
+const instance = app.listen(env.PORT, () => {
+  console.log(`URL: http://localhost:${env.PORT}`)
+})
+
+export const closeServer = (): void => {
+  instance.close()
+}

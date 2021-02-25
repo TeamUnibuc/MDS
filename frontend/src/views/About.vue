@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "About",
+  name: "About", 
   methods: {
     testFunction: function(/* event */) {
       console.log("I was clicked!");

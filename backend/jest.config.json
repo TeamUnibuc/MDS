@@ -2,8 +2,7 @@
   "testEnvironment": "node",
 
   "transform": {
-    "^.+\\.ts$": "ts-jest",
-    "^.+\\.js$": "ts-jest"
+    "^.+\\.ts$": "ts-jest"
   },
 
   "moduleFileExtensions": [
