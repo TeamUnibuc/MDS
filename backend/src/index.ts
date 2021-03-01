@@ -1,11 +1,16 @@
 import { env } from './config';
 import express from 'express'
+import { startMongoConnection } from './DBConnection'
+import * as testStuff from './testMongo'
+
+// initialize connection to database
+
+startMongoConnection()
+
+
+//  Start express erver to listen for http api requests
 
 const app = express()
-
-export const sampleFunction = (x: string): string => {
-  return x + x
-}
 
 app.get("/api", (req, res) => {
   console.log(req.url)
@@ -19,3 +24,13 @@ const instance = app.listen(env.PORT, () => {
 export const closeServer = (): void => {
   instance.close()
 }
+
+// idiot export
+
+export const sampleFunction = (x: string): string => {
+  return x + x
+}
+
+// test code
+
+testStuff.printInsertPrint()
