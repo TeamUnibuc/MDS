@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import { env } from './config';
 
 const MONGODB_URI = `mongodb://${env.MONGO_USERNAME}:${env.MONGO_PASSWORD}@` + 
-    `${env.MONGO_HOST}:27017/DevFightBotDB`;
+    `${env.MONGO_HOST}:${env.MONGO_PORT}/${env.MONGO_DB}`;
 
 export const startMongoConnection = (): void => {
     mongoose.connect(MONGODB_URI, {

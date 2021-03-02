@@ -19,6 +19,7 @@ app.get("/api", (req, res) => {
 
 const instance = app.listen(env.PORT, () => {
   console.log(`URL: http://localhost:${env.PORT}`)
+  console.log(`Running backend in ${env.NODE_ENV} environment`)
 })
 
 export const closeServer = (): void => {

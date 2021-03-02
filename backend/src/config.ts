@@ -6,7 +6,9 @@ export const schema = {
   PORT: String,
   MONGO_USERNAME: String,
   MONGO_PASSWORD: String,
-  MONGO_HOST: String
+  MONGO_HOST: String,
+  MONGO_PORT: Number,
+  MONGO_DB: String
 }
 
 export type Env = EnvType<typeof schema>
