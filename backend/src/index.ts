@@ -1,7 +1,6 @@
 import { env } from './config';
 import express from 'express'
 import { startMongoConnection } from './DBConnection'
-import * as testStuff from './testMongo'
 
 // initialize connection to database
 
@@ -31,7 +30,3 @@ export const closeServer = (): void => {
 export const sampleFunction = (x: string): string => {
   return x + x
 }
-
-// test code
-
-testStuff.printInsertPrint()
