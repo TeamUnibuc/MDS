@@ -9,7 +9,7 @@
     "serve": "node dist/src/index.js",
     "run-dev": "yarn build && yarn serve",
     "debug": "",
-    "test": "jest",
+    "test": "jest --runInBand",
     "lint": "npx eslint .",
     "set-env-prod": "cp env/.env.prod .env",
     "set-env-dev": "cp env/.env.dev .env",

@@ -30,13 +30,13 @@ describe("Mongo database tests", () => {
     })
 
     it("Insert a document into Test collection after reset collection", async () => {
-      deleteAllTestDocuments();
+      await deleteAllTestDocuments();
       const res = await TestModel.create(exampleTest);
       console.log(res)
     })
 
     it("Checks for inserted Test model after reset collection", async () => {
-      deleteAllTestDocuments();
+      await deleteAllTestDocuments();
       await TestModel.create(exampleTest);
       const res = await TestModel.find({}).exec();
       expect(res).toHaveLength(1);
