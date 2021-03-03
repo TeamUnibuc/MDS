@@ -31,6 +31,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - working-directory: frontend
-      run:
-        yarn          &&
+      run: |
+        yarn
         yarn test:unit     
