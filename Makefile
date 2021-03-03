@@ -1,6 +1,9 @@
-.PHONY: init_ia_sandbox init_environment
+.PHONY: init_ia_sandbox init_environment deploy
 
 CONDA_ENV=MDS_env
+
+deploy:
+	./deploy_script.sh
 
 init:
 	$(MAKE) init_ia_sandbox
