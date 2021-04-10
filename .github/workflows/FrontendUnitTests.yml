@@ -33,4 +33,4 @@ jobs:
     - working-directory: frontend
       run: |
         yarn
-        yarn test:unit     
+        yarn test
