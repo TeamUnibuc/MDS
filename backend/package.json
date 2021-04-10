@@ -4,7 +4,7 @@
   "description": "NodeJS backend for BArena",
   "main": "dist/index.js",
   "scripts": {
-    "build-prod": "yarn set-env-prod && tsc",
+    "build-prod": "yarn set-env-prod && yarn build",
     "build": "tsc",
     "serve": "node dist/src/index.js",
     "run-dev": "yarn build && yarn serve",
