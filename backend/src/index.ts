@@ -11,6 +11,33 @@ startMongoConnection()
 
 const app = express()
 
+
+// Connect to the engine.
+var zerorpc = require("zerorpc");
+var client = new zerorpc.Client();
+client.connect("tcp://127.0.0.1:4242");
+
+app.get("/api/fight", (req, res) => {
+  console.log("Received a fight request at " + req.url)
+  const engine = req.params.engine;
+  const bots = req.params.bots;
+  const injects = req.params.injects;
+
+  console.log("Content of the request")
+  console.log("Engine: " + engine + "\nvars: " + bots + "\nInjects: " + injects)
+  
+  const obj = {
+    engine: engine,
+    bots: bots,
+    injects: injects
+  }
+  const obj_string = JSON.stringify(obj)
+  client.invoke("StartSimulation", obj_string, function(err: String, res: String, more: String) {
+    console.log(res)
+  });
+  res.json({"OK": "Yep"})
+})
+
 app.get("/api", (req, res) => {
   console.log(req.url)
   res.json({"OK": "Yep"})

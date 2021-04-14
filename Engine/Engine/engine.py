@@ -25,6 +25,9 @@ import shutil
 import random
 import json
 
+# Communication with TS Backend.
+import zerorpc
+
 # Path of the ia-sandbox executable
 ia_sandbox_path = subprocess.run(["which", "ia-sandbox"], stdout=subprocess.PIPE).stdout.decode('utf-8')[:-1]
 
@@ -205,3 +208,26 @@ def Simulate(engine: str, bots: list, injects: list):
         }
 
 
+class Simulator(object):
+    def StartSimulation(self, content: str):
+        print("Received request with content: " + content)
+        try:
+            json_content = json.loads(content)
+            print(json_content)
+            engine = json_content["engine"]
+            bots = json_content["bots"]
+            injects = json_content["injects"]
+            
+            result = Simulate(engine, bots, injects)
+
+            return json.dumps(result)
+        except:
+            return "FAIL"
+
+def main():
+    s = zerorpc.Server(Simulator())
+    s.bind("tcp://0.0.0.0:4242")
+    s.run()
+
+if __name__ == "__main__":
+    main()
