@@ -50,6 +50,7 @@ const instance = app.listen(env.PORT, () => {
 
 export const closeServer = (): void => {
   instance.close()
+  client.close()
 }
 
 // idiot export
