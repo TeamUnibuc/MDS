@@ -11,17 +11,25 @@ startMongoConnection()
 
 const app = express()
 
+// Automatically get the json content of the request body
+app.use(
+  express.urlencoded({
+    extended: true
+  })
+)
+
+app.use(express.json())
 
 // Connect to the engine.
 var zerorpc = require("zerorpc");
 var client = new zerorpc.Client();
 client.connect("tcp://127.0.0.1:4242");
 
-app.get("/api/fight", (req, res) => {
+app.post("/api/fight", (req, res) => {
   console.log("Received a fight request at " + req.url)
-  const engine = req.query.engine;
-  const bots = req.query.bots;
-  const injects = req.query.injects;
+  const engine = req.body.engine;
+  const bots = req.body.bots;
+  const injects = req.body.injects;
 
   console.log("Content of the request")
   console.log("Engine: " + engine + "\nvars: " + bots + "\nInjects: " + injects)
