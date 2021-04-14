@@ -19,9 +19,9 @@ client.connect("tcp://127.0.0.1:4242");
 
 app.get("/api/fight", (req, res) => {
   console.log("Received a fight request at " + req.url)
-  const engine = req.params.engine;
-  const bots = req.params.bots;
-  const injects = req.params.injects;
+  const engine = req.query.engine;
+  const bots = req.query.bots;
+  const injects = req.query.injects;
 
   console.log("Content of the request")
   console.log("Engine: " + engine + "\nvars: " + bots + "\nInjects: " + injects)

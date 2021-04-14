@@ -213,7 +213,6 @@ class Simulator(object):
         print("Received request with content: " + content)
         try:
             json_content = json.loads(content)
-            print(json_content)
             engine = json_content["engine"]
             bots = json_content["bots"]
             injects = json_content["injects"]
