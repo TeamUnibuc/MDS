@@ -23,7 +23,8 @@
     "mongoose": "5.11.15",
     "passport": "^0.4.1",
     "ts-dotenv": "^0.8.3",
-    "typescript": "4.1"
+    "typescript": "4.1",
+    "zerorpc": "^0.9.8"
   },
   "devDependencies": {
     "@types/mongoose": "^5.10.3",
