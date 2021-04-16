@@ -10,6 +10,8 @@
             recursive templates or other junk.
     2. The game engine is itself run in a container, for avoiding untrusted code execution.
     3. Bots are (you guessed it) also run into containers, for easying the timing etc.
+
+    A description of the used API can be seen [here](https://github.com/TeamUnibuc/MDS/wiki/Engine-API).
 """
 
 # Used for lunching subprocesses.
@@ -30,7 +32,11 @@ import logging
 # Communication with TS Backend.
 import zerorpc
 
+
+
+# Initialize logging.
 logging.basicConfig(format = u'[LINE:%(lineno)d]# %(levelname)-8s [%(asctime)s]  %(message)s', level = logging.NOTSET)
+
 
 # Path of the ia-sandbox executable
 ia_sandbox_path = subprocess.run(["which", "ia-sandbox"], stdout=subprocess.PIPE).stdout.decode('utf-8')[:-1]
@@ -38,11 +44,23 @@ ia_sandbox_path = subprocess.run(["which", "ia-sandbox"], stdout=subprocess.PIPE
 # Path of the g++ executable
 gpp_path = subprocess.run(["which", "g++"], stdout=subprocess.PIPE).stdout.decode('utf-8')[:-1]
 
+
 # Class able to start a sandbox in which to run a match.
 class Match:
+    """
+        Steps for running a match:
+            1. The working directory (/tmp/match_random-id) is created.
+            2. The dependencies are injected in the environment.
+            3. The C++ files are compiled in paralel.
+                * Each bot is compiled in it's own folder: /tmp/match_random-id/bot_id/
+                * The engine is also compiled in it's own folder: /tmp/match_random-id/engine/
+            4. The engine's executable is moved up one one directory, and is executed.
+    """
+
     def __init__(self):
         self.working_dir = "/tmp/match_" + str(random.randint(1, int(1e18)))
         os.mkdir(self.working_dir)
+        logging.info(f"Created working folder: {self.working_dir}")
 
     def __del__(self):
         """
@@ -51,16 +69,20 @@ class Match:
         shutil.rmtree(self.working_dir, ignore_errors=True)
 
 
-    def RunInSandbox(self, executable: str, args: list = [], time_limit: float = 3.):
+    def RunInSandbox(self, executable: str, new_root:str = "", args: list = [], time_limit: float = 3.):
         """
             Runs the executable inside the ia-sandbox, while passing the args.
         """
+
+        # No new root set, revert to the working dir
+        if new_root == "":
+            new_root = self.working_dir
 
         # Command to be ran.
         command = [
             "ia-sandbox", executable,
             "-t", str(int(time_limit * 1000)) + "ms",
-            "-r", self.working_dir
+            "-r", new_root
         ]
         mounts = [
             "--mount", "/bin:/bin:exec",
@@ -99,22 +121,37 @@ class Match:
 
         return sandbox_status, stdout, stderr
 
-    def Inject(self, content, filename):
-        with open(self.working_dir + "/" + filename, "w") as fout:
+    def Inject(self, content, filename, path):
+        """
+            Injects content in the environment.
+        """
+        if path != "":
+            os.mkdir(self.working_dir + path)
+
+        with open(self.working_dir + path + "/" + filename, "w") as fout:
             fout.write(content)
 
-    def Compile(self, code, name):
-        """Compiles the code into an executable called name inside the working dir"""
+    def Compile(self, code: str, name: str):
+        """
+            Compiles the code into an executable called name inside the working dir, in it's own folder
+        """
+
+        # Create new folder
+        new_path = self.working_dir + "/" + name
+        if not os.path.exists(new_path):
+            os.mkdir(new_path)
     
         # Write code into a cpp file.
-        with open(self.working_dir + "/" + name + ".cpp", "w") as fout:
+        with open(new_path + "/" + name + ".cpp", "w") as fout:
             fout.write(code)
 
         # Compile the code.
-        result = self.RunInSandbox(gpp_path, ["-std=c++17", "-Wall", "-Wextra", "--static", "-O2", name + ".cpp", "-o", name], 30)
+        result = self.RunInSandbox(gpp_path, new_path, ["-std=c++17", "-Wall", "-Wextra", "--static", "-O2", name + ".cpp", "-o", name], 30)
         
         return result
 
+    def Move(self, source, dest):
+        os.rename(self.working_dir + source, self.working_dir + dest)
 
 # Entry point of the script.
 # Will probably be called from `nodejs` with some sockets.
@@ -140,8 +177,8 @@ def Simulate(engine: str, bots: list, injects: list):
     match = Match()
 
     # Inject required files in the environment.
-    for (code, name) in injects:
-        match.Inject(code, name)
+    for (code, name, path) in injects:
+        match.Inject(code, name, path)
     
     # Compiles a code with a given filename, and places the result into ret.
     def Compile(code: str, name: str, ret):
@@ -155,17 +192,13 @@ def Simulate(engine: str, bots: list, injects: list):
             pass
         if not compiled:
             ret["status"] = {
-                "result": {
-                    "CompilationError": None,
-                },
-                "file_error": name,
-                "compilation_message": compilation_status
+                "status": "compilation_error",
+                "file": name,
+                "compilation_message": compilation_status[2]
             }
         else:
             ret["status"] = {
-                "result": {
-                    "Success": None
-                }
+                "status": "ok"
             }
 
     # Process manager, creating process-independent dictionaries.
@@ -191,26 +224,39 @@ def Simulate(engine: str, bots: list, injects: list):
     for proc in bots_process:
         proc.join()
 
-    if "Success" not in engine_status["status"]["result"]:
+    if engine_status["status"]["status"] != "ok":
         return engine_status["status"]
 
     for status in bots_status:
-        if "Success" not in status["status"]["result"]:
+        if status["status"]["status"] != "ok":
             return status["status"]
     
     # Run the actual match.
-    match_status = match.RunInSandbox("/engine", [])
+    match.Move("/engine/engine", "/engine_bin")
+    for bot in range(NR_BOTS):
+        match.Move(f"/bot_{bot}/bot_{bot}", f"/bot_{bot}_bin")
 
+    match_status = match.RunInSandbox("/engine_bin")
     try:
-        o = json.loads(match_status[0])
-        o["evaluation_stdout"] = match_status[1]
-        o["evaluation_stderr"] = match_status[2]
-        return o
-    except:
+        result = json.loads(match_status[0])
+
+        if "Success" not in result["result"]:
+            raise Exception("Didn't finish successfully")
+
+        winner = int(match_status[2])
+        if winner < 0 or winner >= NR_BOTS:
+            raise Exception(f"Invalid winner: {winner}")
+
+        ans = {
+            "status": "ok",
+            "logs": match_status[1],
+            "winner": match_status[2]
+        }
+        return ans
+    except Exception as e:
         return {
-            "status": {
-                "Failure": None
-            },
+            "status": "error",
+            "reason": repr(e),
             "data": match_status
         }
 
@@ -224,14 +270,20 @@ class Simulator(object):
             engine = json_content["engine"]
             bots = json_content["bots"]
             with open(pathlib.Path(__file__).parent.absolute().as_posix() + "/../Grader/enginelib.hpp", "r") as fin:
-                injects = [(fin.read(), "enginelib.hpp")]
+                injects = [(fin.read(), "enginelib.hpp", "/engine")]
             result = Simulate(engine, bots, injects)
             
             logging.info(f"Result: {result}")
             return json.dumps(result)
         except Exception as e:
-            logging.error(f"Error: {e.with_traceback()}")
-            return "FAIL"
+            # logging.error(f"Error: {str(e)}")
+            result = json.dumps({
+                "status": "error",
+                "reason": repr(e)
+            })
+            logging.error(f"Error: {result}")
+            return result
+            
 
 def main():
     address = "tcp://0.0.0.0:4242"
