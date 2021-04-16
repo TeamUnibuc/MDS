@@ -19,14 +19,18 @@ from multiprocessing import Manager, Process
 
 # For accessing the filesystem.
 import os
+import pathlib
 import shutil
 
 # Other stuff.
 import random
 import json
+import logging
 
 # Communication with TS Backend.
 import zerorpc
+
+logging.basicConfig(format = u'[LINE:%(lineno)d]# %(levelname)-8s [%(asctime)s]  %(message)s', level = logging.NOTSET)
 
 # Path of the ia-sandbox executable
 ia_sandbox_path = subprocess.run(["which", "ia-sandbox"], stdout=subprocess.PIPE).stdout.decode('utf-8')[:-1]
@@ -34,14 +38,16 @@ ia_sandbox_path = subprocess.run(["which", "ia-sandbox"], stdout=subprocess.PIPE
 # Path of the g++ executable
 gpp_path = subprocess.run(["which", "g++"], stdout=subprocess.PIPE).stdout.decode('utf-8')[:-1]
 
+# Class able to start a sandbox in which to run a match.
 class Match:
     def __init__(self):
-        self.working_dir = "/tmp/match_" + str(random.randint(1, int(1e9)))
+        self.working_dir = "/tmp/match_" + str(random.randint(1, int(1e18)))
         os.mkdir(self.working_dir)
 
-        # TODO: move the .hpp of the lib
-
     def __del__(self):
+        """
+            Free memory (delete simulation folder).
+        """
         shutil.rmtree(self.working_dir, ignore_errors=True)
 
 
@@ -120,6 +126,7 @@ def Simulate(engine: str, bots: list, injects: list):
         Parameters:
             engine: C++ code with the engine.
             bots: List containing bots to compete against each other.
+            injects: pair of (code, name) of additional files to inject.
         Return value: stringify {
             result: "Success/CompilationError/TimeLimitExceded etc",
             file_error: "file that failed to compile",
@@ -210,22 +217,27 @@ def Simulate(engine: str, bots: list, injects: list):
 
 class Simulator(object):
     def StartSimulation(self, content: str):
-        print("Received request with content: " + content)
+        logging.info("Received new request.")
+
         try:
             json_content = json.loads(content)
             engine = json_content["engine"]
             bots = json_content["bots"]
-            injects = json_content["injects"]
-            
+            with open(pathlib.Path(__file__).parent.absolute().as_posix() + "/../Grader/enginelib.hpp", "r") as fin:
+                injects = [(fin.read(), "enginelib.hpp")]
             result = Simulate(engine, bots, injects)
-
+            
+            logging.info(f"Result: {result}")
             return json.dumps(result)
-        except:
+        except Exception as e:
+            logging.error(f"Error: {e.with_traceback()}")
             return "FAIL"
 
 def main():
+    address = "tcp://0.0.0.0:4242"
     s = zerorpc.Server(Simulator())
-    s.bind("tcp://0.0.0.0:4242")
+    logging.info(f"Starting server. Listening at address {address}")
+    s.bind(address)
     s.run()
 
 if __name__ == "__main__":
