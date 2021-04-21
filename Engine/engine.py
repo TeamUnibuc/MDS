@@ -294,3 +294,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+else:
+    logging.disable(logging.CRITICAL)
