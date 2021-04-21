@@ -38,10 +38,11 @@ app.post("/api/fight", (req, res) => {
     bots: bots
   }
   const obj_string = JSON.stringify(obj)
-  client.invoke("StartSimulation", obj_string, function(err: string, res: string) {
-    console.log(res)
+  client.invoke("StartSimulation", obj_string, function(err: string, result: string) {
+    result = JSON.parse(result)
+    console.log(result)
+    res.json(result)
   });
-  res.json({"OK": "Yep"})
 })
 
 app.get("/api", (req, res) => {

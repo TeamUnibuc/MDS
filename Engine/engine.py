@@ -269,7 +269,7 @@ class Simulator(object):
             json_content = json.loads(content)
             engine = json_content["engine"]
             bots = json_content["bots"]
-            with open(pathlib.Path(__file__).parent.absolute().as_posix() + "/../Grader/enginelib.hpp", "r") as fin:
+            with open(pathlib.Path(__file__).parent.absolute().as_posix() + "/Grader/enginelib.hpp", "r") as fin:
                 injects = [(fin.read(), "enginelib.hpp", "/engine")]
             result = Simulate(engine, bots, injects)
             
