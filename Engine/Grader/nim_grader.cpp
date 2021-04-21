@@ -13,6 +13,8 @@ int main()
         cout << i << " ";
     cout << "}\n";
 
+    int winner = 0;
+
     // Play game.
     for (int i = 0; ; i = 1 - i) {
         ostringstream out;
@@ -26,7 +28,8 @@ int main()
         if (player_action.size() == 0) {
             cout << "Player #" << i << " failed to play: error " << error << "\n";
             cout << "Winner is player #" << 1 - i << "!\n";
-            return 0;
+            winner = 1 - i;
+            break;
         }
 
         istringstream in(player_action);
@@ -38,7 +41,8 @@ int main()
 
         if (poz < 0 || poz >= state.size() || nr > state[poz] || nr <= 0) {
             cout << "    Action illegal. Player #" << i << "loses!";
-            return 0;
+            winner = 1 - i;
+            break;
         }
 
         state[poz] -= nr;
@@ -47,4 +51,7 @@ int main()
             cout << i << ' ';
         cout << "}\n";
     }
+
+    cerr << winner;
+    return 0;
 }

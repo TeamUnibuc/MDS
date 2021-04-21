@@ -18,7 +18,7 @@ std::pair <std::string, std::string> MovePlayer(int id, std::string state, doubl
 {
     using namespace std;
 
-    std::string executable_name = "/bot_" + to_string(id);
+    std::string executable_name = "/bot_" + to_string(id) + "_bin";
 
     ofstream out("bot_input");
     out << state << '\n';

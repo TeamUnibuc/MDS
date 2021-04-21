@@ -6,5 +6,5 @@ dependencies:
   - pip
   - pip:
     - -r file:requirements.txt
-  - nodejs>=15.3
+  - nodejs=12
   - yarn>=1.22

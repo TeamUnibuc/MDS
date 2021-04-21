@@ -1,47 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-// import { Redirect, Switch, Route, useParams } from "react-router-dom";
+import { DefaultPage, TestEval } from './pages';
+import { Switch, Route, BrowserRouter as Router } from'react-router-dom'
 
 function App() {
 
-  const [msg, setMsg] = useState('')
-  
-  // on mount basically
-  // the function in useEffect cannot be async, so we trick it
-  useEffect(() => {
-    const func = async () => {
-      const my_req = await fetch('/api', {
-        method: 'GET',headers: {'Content-Type': 'application/json'},
-      })
-  
-      const resp = await my_req.json()
-      setMsg(resp["OK"])
-    }
-    func();
-  }, [])
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <strong>
-          {msg}
-        </strong>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          learn react
-        </a>
-      </header>
-    </div>
+    <Router basename={process.env.PUBLIC_URL}>
+      <Switch>
+        <Route key="default" path="/" exact component={DefaultPage}/>
+        <Route key="testeval" path="/testeval" exact component={TestEval}/>
+      </Switch>
+    </Router>
   );
 }
 

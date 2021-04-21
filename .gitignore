@@ -1,5 +1,6 @@
 # Modules used by npm
 node_modules/
+.vscode/
 
 # Environment files
 .env
