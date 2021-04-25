@@ -1,9 +1,9 @@
-import { env } from './config';
+import { env } from './config'
 import express from 'express'
+import zerorpc from 'zerorpc'
 import { startMongoConnection } from './DBConnection'
 
 // initialize connection to database
-
 startMongoConnection()
 
 
@@ -21,29 +21,27 @@ app.use(
 app.use(express.json())
 
 // Connect to the engine.
-var zerorpc = require("zerorpc");
-var client = new zerorpc.Client();
+const client = new zerorpc.Client();
 client.connect("tcp://127.0.0.1:4242");
 
 app.post("/api/fight", (req, res) => {
   console.log("Received a fight request at " + req.url)
   const engine = req.body.engine;
   const bots = req.body.bots;
-  const injects = req.body.injects;
 
   console.log("Content of the request")
-  console.log("Engine: " + engine + "\nvars: " + bots + "\nInjects: " + injects)
+  console.log("Engine: " + engine + "\nvars: " + bots)
   
   const obj = {
     engine: engine,
-    bots: bots,
-    injects: injects
+    bots: bots
   }
   const obj_string = JSON.stringify(obj)
-  client.invoke("StartSimulation", obj_string, function(err: String, res: String, more: String) {
-    console.log(res)
+  client.invoke("StartSimulation", obj_string, function(err: string, result: string) {
+    result = JSON.parse(result)
+    console.log(result)
+    res.json(result)
   });
-  res.json({"OK": "Yep"})
 })
 
 app.get("/api", (req, res) => {
