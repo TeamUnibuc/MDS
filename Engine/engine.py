@@ -33,13 +33,8 @@ import logging
 import zerorpc
 
 
-
 # Initialize logging.
 logging.basicConfig(format = u'[LINE:%(lineno)d]# %(levelname)-8s [%(asctime)s]  %(message)s', level = logging.NOTSET)
-
-
-# Communication with TS Backend.
-import zerorpc
 
 # Path of the ia-sandbox executable
 ia_sandbox_path = subprocess.run(["which", "ia-sandbox"], stdout=subprocess.PIPE).stdout.decode('utf-8')[:-1]
@@ -289,7 +284,7 @@ class Simulator(object):
             
 
 def main():
-    address = "tcp://0.0.0.0:4242"
+    address = "tcp://127.0.0.1:4242"
     s = zerorpc.Server(Simulator())
     logging.info(f"Starting server. Listening at address {address}")
     s.bind(address)
