@@ -2,6 +2,8 @@ import { env } from './config';
 import express from 'express'
 import { startMongoConnection } from './DBConnection'
 
+import models from './models/index'
+
 // initialize connection to database
 
 startMongoConnection()
@@ -49,6 +51,9 @@ app.get("/api", (req, res) => {
   console.log(req.url)
   res.json({"OK": "Yep"})
 })
+
+app.get('/api/users', models.users.getUsers)
+app.post('/api/users/add', models.users.addUser)
 
 const instance = app.listen(env.PORT, () => {
   console.log(`URL: http://localhost:${env.PORT}`)
