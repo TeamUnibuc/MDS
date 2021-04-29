@@ -2,6 +2,7 @@ import { env } from './config'
 import express from 'express'
 import { startMongoConnection } from './DBConnection'
 import { EngineConnection } from './EngineConnection'
+import { NewGame } from './API/NewGame'
 
 // initialize connection to database
 startMongoConnection()
@@ -34,6 +35,10 @@ app.post("/api/fight", (req, res) => {
             console.log(err);
             res.sendStatus(403);
         })
+})
+
+app.get("/api/newgame", (req, res) => {
+    NewGame(req, res);
 })
 
 app.get("/api", (req, res) => {
