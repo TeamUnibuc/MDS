@@ -88,4 +88,4 @@ stdout: mutarea noastra
     * Cand se termina competitia, se face cumva un clasament al jucatorilor facandu-i sa se bata intre ei.
 2. Reprezentare grafica a problemei.
     La trimiterea unei probleme, se poate opta pentru integrarea reprezentarii grafice.
-    
+3. Se pot trimite surse si in alte limbaje (de ex python)
