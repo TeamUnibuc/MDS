@@ -4,10 +4,16 @@
 			"path": "."
 		},
 		{
-			"path": "backend"
+			"path": "frontend",
+			"name": "Frontend"
 		},
 		{
-			"path": "frontend"
+			"path": "backend",
+			"name": "Backend"
+		},
+		{
+			"path": "Engine",
+			"name": "Engine"
 		}
 	],
 	"settings": {}

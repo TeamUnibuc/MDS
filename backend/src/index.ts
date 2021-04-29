@@ -1,9 +1,9 @@
-import { env } from './config';
+import { env } from './config'
 import express from 'express'
+import zerorpc from 'zerorpc'
 import { startMongoConnection } from './DBConnection'
 
 // initialize connection to database
-
 startMongoConnection()
 
 
@@ -21,7 +21,6 @@ app.use(
 app.use(express.json())
 
 // Connect to the engine.
-const zerorpc = require("zerorpc");
 const client = new zerorpc.Client();
 client.connect("tcp://127.0.0.1:4242");
 
