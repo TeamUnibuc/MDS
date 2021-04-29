@@ -21,8 +21,6 @@ export class Test
   address?: TestAddress;
 }
 
-interface TestDoc extends Test, Document { }
-
 const TestSchema: Schema = new Schema({
   email: { type: String, required: true, unique: true },
   firstName: { type: String, required: true },
@@ -35,6 +33,8 @@ const TestSchema: Schema = new Schema({
     postCode: { type: String }
   }
 });
+
+interface TestDoc extends Test, Document { }
 
 // Export the model and return your interface
 export const TestModel = mongoose.model<TestDoc>('Test', TestSchema);
