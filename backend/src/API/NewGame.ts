@@ -1,7 +1,7 @@
-import { GamesDB } from '../models/GamesModel'
+import { GamesModel } from '../models/GamesModel'
 
 export const NewGame = (req: any, res: any): void => {
-    const game = new GamesDB();
+    const game = new GamesModel();
     game.Name = req.query.name; // change to body when receiving over post.
     game.Description = req.query.description;
     game.OfficialGameBots = req.query.official_game_bots;
