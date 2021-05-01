@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import CodeMirror from '@uiw/react-codemirror';
+import 'codemirror/keymap/sublime';
+import 'codemirror/theme/elegant.css';
 
 import { Container, Button, Grid } from '@material-ui/core'
 
@@ -20,6 +23,8 @@ function AddGame(){
             author,
             bots,
         }
+
+        console.log(reqBody);
 
         const data = await fetch('api/new_game', {
             method: "POST",
@@ -60,6 +65,16 @@ function AddGame(){
 
         <br/>
 
+
+        {/* <CodeMirror
+            value={engine}
+            options={{
+                theme: 'elegant',
+                keyMap: 'sublime',
+                mode: 'c++',
+                lineNumbers: true,
+            }}
+        /> */}
         <textarea
             style={{width: "90%"}}
             rows={20} 
