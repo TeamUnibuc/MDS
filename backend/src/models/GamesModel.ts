@@ -15,6 +15,8 @@ class GamesItem {
     GameEngine = "";
     // Number of official game bots.
     OfficialGameBots = 0;
+    // Creator of the game.
+    AuthorID = "";
 }
 
 interface GamesDoc extends GamesItem, Document { }
@@ -24,6 +26,7 @@ const GamesSchema: Schema = new Schema({
     Description: { type: String, required: true },
     GameEngine: { type: String, required: true },
     OfficialGameBots: { type: Number, required: true },
+    AuthorID: { type: String, required: true },
 });
 
 // Export the model and return your interface

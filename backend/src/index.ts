@@ -37,7 +37,7 @@ app.post("/api/fight", (req, res) => {
         })
 })
 
-app.get("/api/newgame", (req, res) => {
+app.post("/api/new_game", (req, res) => {
     NewGame(req, res);
 })
 

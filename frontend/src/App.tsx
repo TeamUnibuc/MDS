@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { DefaultPage, TestEval } from './pages';
+import { DefaultPage, TestEval, AddGame } from './pages';
 import { Switch, Route, BrowserRouter as Router } from'react-router-dom'
 
 function App() {
@@ -10,6 +10,7 @@ function App() {
       <Switch>
         <Route key="default" path="/" exact component={DefaultPage}/>
         <Route key="testeval" path="/testeval" exact component={TestEval}/>
+        <Route key="addgame" path="/addgame" exact component={AddGame}/>
       </Switch>
     </Router>
   );
