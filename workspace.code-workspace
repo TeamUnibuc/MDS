@@ -16,5 +16,7 @@
 			"name": "Engine"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"python.analysis.typeCheckingMode": "off"
+	}
 }
