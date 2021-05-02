@@ -4,6 +4,10 @@ import { EnvType, load } from 'ts-dotenv'
 export const schema = {
   NODE_ENV: String,
   PORT: String,
+  ENGINE_PORT: {
+    type: String,
+    default: '4242'
+  },
   MONGO_USERNAME: String,
   MONGO_PASSWORD: String,
   MONGO_HOST: String,
