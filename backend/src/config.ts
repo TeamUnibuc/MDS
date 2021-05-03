@@ -1,5 +1,4 @@
 import { EnvType, load } from 'ts-dotenv'
-import { UsersDoc } from './models/UsersModel'
 
 // Because typescript is stronglytyped-ish, we have to specify the schema
 export const schema = {

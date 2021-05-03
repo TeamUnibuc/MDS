@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './DefaultPage.css';
 
-export default function DefaultPage(){
-    const [msg, setMsg] = useState('')
+export default function DefaultPage(): JSX.Element{
+  const [msg, setMsg] = useState('')
   
   // on mount basically
   // the function in useEffect cannot be async, so we trick it
@@ -12,7 +12,7 @@ export default function DefaultPage(){
       const my_req = await fetch('/api', {
         method: 'GET',headers: {'Content-Type': 'application/json'},
       })
-  
+
       const resp = await my_req.json()
       setMsg(resp["OK"])
     }

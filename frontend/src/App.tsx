@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { DefaultPage, TestEval, AddGame } from './pages';
 import { Switch, Route, BrowserRouter as Router } from'react-router-dom'
 
-function App() {
-
+function App(): JSX.Element {
   return (
     <Router basename={process.env.PUBLIC_URL}>
       <Switch>

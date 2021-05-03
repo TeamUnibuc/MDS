@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 
 import { Container, Button, Grid } from '@material-ui/core'
 
-function TestEval(){
+function TestEval(): JSX.Element {
 
     const [inject, setInject] = useState('')
     const [engine, setEngine] = useState('')
     const [bot1, setBot1] = useState('')
     const [bot2, setBot2] = useState('')
 
-    const processSubmit = async (event : any) => {
+    const processSubmit = async (event: React.SyntheticEvent) => {
         event.preventDefault();
         console.log("Got called");
         console.log(inject);
