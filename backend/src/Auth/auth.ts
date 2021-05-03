@@ -3,6 +3,7 @@ import { Application } from 'express'
 import { UsersModel } from '../models/UsersModel'
 import { LoginGoogleStrategy, RegisterGoogleStrategy } from './google/GoogleStrategy'
 import { authRoutes } from './routes'
+import { googleRoutes } from './google/routes'
 
 export const passport_configure = (app: Application): void => 
 {
@@ -10,6 +11,7 @@ export const passport_configure = (app: Application): void =>
     app.use(passport.session())
 
     app.use('/auth', authRoutes)
+    app.use('/google', googleRoutes)
 }
 
 passport.serializeUser((user, done) => {

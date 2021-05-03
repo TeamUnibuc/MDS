@@ -38,7 +38,11 @@ app.use(
 )
 
 // Encrypted session
-app.use(session({ secret: "cats" }));
+app.use(session({ 
+    secret: "cats", 
+    resave: true,
+    saveUninitialized: true
+}));
 app.use(flash())
 
 // API routes

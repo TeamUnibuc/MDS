@@ -23,7 +23,7 @@ export const GoogleScopes = ['profile', 'email']
 export const LoginGoogleStrategy = new OAuthGoogleStrategy(
     {
         ...GoogleOptions,
-        callbackURL: `${env.BASE_URL}:${env.PORT}/auth/google-callback`
+        callbackURL: `${env.BASE_URL}:${env.PORT}/google/login-callback`
     },
     async function (accessToken, refreshToken, profile, done) {
         const {user: user} = await obtainEmailAndUser(profile)
@@ -39,7 +39,7 @@ export const LoginGoogleStrategy = new OAuthGoogleStrategy(
 export const RegisterGoogleStrategy = new OAuthGoogleStrategy(
     {
         ...GoogleOptions,
-        callbackURL: `${env.BASE_URL}:${env.PORT}/auth/register/google-callback`
+        callbackURL: `${env.BASE_URL}:${env.PORT}/google/register-callback`
     },
     async function (accessToken, refreshToken, profile, done) {
         const {user: user, email: email} = await obtainEmailAndUser(profile)
