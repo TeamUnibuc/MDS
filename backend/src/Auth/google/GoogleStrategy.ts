@@ -78,13 +78,13 @@ const obtainEmailAndUser = async (profile: Profile):
         user?: UsersDoc
     }> => 
 {
-    console.log("First email data: ")
-    const email_data = profile.emails?.[0]
-    console.log(email_data)
+    console.log("Email data: ")
+    console.log(profile.emails)
+    const first_email_data = profile.emails?.[0]
 
-    if (email_data === undefined)
+    if (first_email_data === undefined)
         return {}
-    const email = email_data.value
+    const email = first_email_data.value
 
     const user = await UsersModel.findByEmail(email)
         .catch(reason => {
