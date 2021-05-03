@@ -48,6 +48,10 @@ authRoutes.get('/register/google-callback',
                                      failureFlash: true}),
 )
 
+authRoutes.get('/logout', (req, res) => {
+    req.logout()
+    res.redirect('/auth')
+})
 
 // All login strategies have redirect to this Route
 authRoutes.get('/login-success', (req, res) => {
@@ -58,7 +62,7 @@ authRoutes.get('/login-success', (req, res) => {
     if (req.isAuthenticated()) {
         console.log("Successful LOGIN ")
         console.log(req.user)
-        return res.redirect(`/Dashboard/${req.user.Email}`)
+        return res.redirect(`/auth`)
     }
     console.log("WTF are you doing here???? XXXXXXXXXXXXXXXXXXXXXX")
 })
@@ -72,7 +76,7 @@ authRoutes.get('/register-success', (req, res) => {
     if (req.isAuthenticated()) {
         console.log("Successful REGISTRATION ")
         console.log(req.user)
-        return res.redirect(`/Dashboard/${req.user.Email}`)
+        return res.redirect(`/auth`)
     }
     console.log("WTF are you doing here???? XXXXXXXXXXXXXXXXXXXXXX")
 })
