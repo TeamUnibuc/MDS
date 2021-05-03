@@ -9,6 +9,7 @@ import { routes as routesAPI } from './API/routes'
 import session from 'express-session'
 import cors from 'cors'
 import flash from 'connect-flash'
+import morgan from 'morgan'
 import { passport_configure } from './Auth/auth'
 
 // initialize connection to database
@@ -20,11 +21,14 @@ const app: Application = express()
 // set up cors to allow us to accept requests from our client
 app.use(
     cors({
-      origin: `${env.BASE_URL}:${env.PORT}`, // allow to server to accept request from different origin
-      methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-      credentials: true // allow session cookie from browser to pass through
+        origin: `${env.BASE_URL}:${env.PORT}`, // allow to server to accept request from different origin
+        methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+        credentials: true // allow session cookie from browser to pass through
     })
-  );
+);
+
+// Better logging
+app.use(morgan('dev'))
 
 // Automatically get the json content of the request body
 app.use(

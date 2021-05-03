@@ -91,3 +91,14 @@ authRoutes.get('/register-fail', (req, res) => {
     console.log(msg)
     res.send(msg)
 })
+
+authRoutes.get('/', (req, res) => {
+    let user = null;
+    if (req.isAuthenticated()) {
+        user = req.user;
+    }
+    res.json({
+        authenticated: user ? "Yes" : "No",
+        user: user
+    })
+})
