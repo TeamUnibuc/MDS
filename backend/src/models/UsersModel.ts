@@ -17,6 +17,13 @@ class UsersItem {
     Username = "";
     // Date the user registered.
     DateJoined = new Date();
+    // List of Providers the user with this email connected
+    Providers = {
+        googleID : "",
+        facebookID : "",
+        twitterID : "",
+        githubID : ""
+    }
 }
 
 export interface UsersDoc extends UsersItem, Document { }
@@ -40,6 +47,15 @@ const UsersSchema: Schema<UsersDoc> = new Schema<UsersDoc>({
     Email: { type: String, required: true },
     Username: { type: String, required: true },
     DateJoined: { type: Date, required: true },
+    Providers: {
+        required: true,
+        type: new Schema(({
+            googleID: { type: String },
+            facebookID: { type: String },
+            twitterID: { type: String },
+            githubID: { type: String },
+        }))
+    }
 });
 
 UsersSchema.statics.findByEmail = function(email: string)

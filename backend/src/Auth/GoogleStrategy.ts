@@ -101,7 +101,10 @@ export const RegisterGoogleStrategy = new OAuthGoogleStrategy(
             FirstName: profile.name?.givenName,
             LastName: profile.name?.familyName,
             Username: email,
-            DateJoined: new Date()
+            DateJoined: new Date(),
+            Providers: {
+                googleID: profile.id
+            }
         }).then(userDoc => {
             console.log(`DB user created!`)
             done(null, userDoc, {message: "User created successfully"})
