@@ -71,7 +71,12 @@ export const RegisterGoogleStrategy = new OAuthGoogleStrategy(
     }
 );
 
-
+/**
+ * Tries to extract email from the profile data
+ * If successful, tries to query our MongoDB for our version of user 
+ * @param profile Profile data given by the social network provider
+ * @returns Email and User account as in our Database, if data is not bad
+ */
 const obtainEmailAndUser = async (profile: Profile):
     Promise<{
         email?: string,
