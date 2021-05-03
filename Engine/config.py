@@ -3,9 +3,9 @@ import os
 # In case we want to use .env files. Currently just place default values in the 
 # ENV_DEFAULT variable
 
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 
-# load_dotenv()  # take environment variables from .env.
+load_dotenv()  # take environment variables from .env.
 
 ENV_DEFAULT = {
     'PORT': '4242'

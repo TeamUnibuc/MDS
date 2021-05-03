@@ -1,15 +1,30 @@
 import { env } from './config'
-import express from 'express'
+import express, { Application } from 'express'
 import { startMongoConnection } from './DBConnection'
 import { EngineConnection } from './EngineConnection'
-import { NewGame } from './API/NewGame'
+
+// import passport from 'passport'
+// import { GoogleStrategy } from './Auth/GoogleStrategy'
+import { routes as routesAPI } from './API/routes'
+import session from 'express-session'
+import cors from 'cors'
+import flash from 'connect-flash'
+import { passport_configure } from './Auth/auth'
 
 // initialize connection to database
 startMongoConnection()
 
-
 //  Start express erver to listen for http api requests
-const app = express()
+const app: Application = express()
+
+// set up cors to allow us to accept requests from our client
+app.use(
+    cors({
+      origin: `${env.BASE_URL}:${env.PORT}`, // allow to server to accept request from different origin
+      methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+      credentials: true // allow session cookie from browser to pass through
+    })
+  );
 
 // Automatically get the json content of the request body
 app.use(
@@ -18,34 +33,18 @@ app.use(
     })
 )
 
-app.use(express.json())
+// Encrypted session
+app.use(session({ secret: "cats" }));
+app.use(flash())
+
+// API routes
+app.use('/api', routesAPI)
+
+// passport configs
+passport_configure(app)
 
 
-app.post("/api/fight", (req, res) => {
-    console.log("Received a fight request at " + req.url)
-    const engine = req.body.engine;
-    const bots = req.body.bots;
-
-    console.log("Content of the request")
-    console.log("Engine: " + engine + "\nvars: " + bots)
-
-    EngineConnection.Fight(engine, bots)
-        .then(result => res.json(result))
-        .catch(err => {
-            console.log(err);
-            res.sendStatus(403);
-        })
-})
-
-app.post("/api/new_game", (req, res) => {
-    NewGame(req, res);
-})
-
-app.get("/api", (req, res) => {
-    console.log(req.url)
-    res.json({ "OK": "Yep" })
-})
-
+// Start express app
 const instance = app.listen(env.PORT, () => {
     console.log(`URL: http://localhost:${env.PORT}`)
     console.log(`Running backend in ${env.NODE_ENV} environment`)
@@ -56,8 +55,7 @@ export const closeServer = (): void => {
     EngineConnection.CloseConnection();
 }
 
-// idiot export
-
+// idiot export for test
 export const sampleFunction = (x: string): string => {
     return x + x
 }
