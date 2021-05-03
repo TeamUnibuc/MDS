@@ -1,4 +1,4 @@
-import { OAuth2Strategy as OAuthGoogleStrategy, Profile, VerifyFunction } from 'passport-google-oauth'
+import { OAuth2Strategy as OAuthGoogleStrategy, Profile } from 'passport-google-oauth'
 import { env } from '../../config';
 import { UsersDoc, UsersModel } from '../../models/UsersModel'
 
