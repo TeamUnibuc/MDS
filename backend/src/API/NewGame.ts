@@ -1,6 +1,7 @@
 import { GamesModel } from '../models/GamesModel'
 import { GameOfficialBotsModel } from '../models/GameOfficialBotsModel'
 import { BotsModel } from '../models/BotsModel'
+import { Request, Response } from 'express';
 
 const CreateNewBotEntry = (Code: string, AuthorID: string): Promise<string> => {
     const bot = new BotsModel();
@@ -34,7 +35,7 @@ const CreateOfficialBot = (Code: string, AuthorID: string, GameID: string, BotRa
         .catch(e => console.log("Unable to save: ", e));
 }
 
-export const NewGame = (req: any, res: any): void => {
+export const NewGame = (req: Request, res: Response): void => {
     const game = new GamesModel();
     game.Name = req.body.name;
     game.Description = req.body.description;

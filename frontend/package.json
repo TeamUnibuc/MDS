@@ -31,6 +31,7 @@
     "eject": "react-scripts eject",
     "test:tsc": "tsc -p tsconfig.test.json",
     "build-ts": "tsc -p .",
+    "lint": "npx eslint .",
     "set-env-prod": "cp env/.env.prod .env",
     "set-env-dev": "cp env/.env.dev .env",
     "scripts": "grep \"scripts\" -A 50 ./package.json | sed '/}/ q' # run it on package.json directory"

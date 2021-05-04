@@ -8,7 +8,7 @@ const MONGODB_URI = `mongodb://${env.MONGO_USERNAME}:${env.MONGO_PASSWORD}@` +
 export const mongoConnect = (): Promise<typeof mongoose> => {
     return mongoose.connect(MONGODB_URI, {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
     })
 }
 

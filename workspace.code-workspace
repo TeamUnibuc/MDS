@@ -16,5 +16,10 @@
 			"name": "Engine"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"python.analysis.typeCheckingMode": "off",
+		"files.exclude": {
+			"**/node_modules": true,
+		}
+	},
 }

@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import CodeMirror from '@uiw/react-codemirror';
+// import CodeMirror from '@uiw/react-codemirror';
 import 'codemirror/keymap/sublime';
 import 'codemirror/theme/elegant.css';
 
-import { Container, Button, Grid } from '@material-ui/core'
+import { Container, Button } from '@material-ui/core'
 
-function AddGame(){
+function AddGame(): JSX.Element {
     const [engine, setEngine] = useState('Engine code...')
     const [author, setAuthor] = useState('Author...')
     const [name, setName] = useState('Game Name...')
     const [description, setDescription] = useState('Game Description...')
     const [bots, setBots] = useState<Array<string>>([])
 
-    const processSubmit = async (event : any) => {
+    const processSubmit = async (event: React.SyntheticEvent) => {
         event.preventDefault();
         console.log("Got called");
 

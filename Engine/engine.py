@@ -16,6 +16,7 @@
 
 # Used for lunching subprocesses.
 # We will mainly use it for getting results from called functions.
+from config import ENV_DEFAULT, getEnv
 import subprocess
 from multiprocessing import Manager, Process
 
@@ -284,7 +285,7 @@ class Simulator(object):
             
 
 def main():
-    address = "tcp://127.0.0.1:4242"
+    address = f"tcp://127.0.0.1:{getEnv('PORT')}"
     s = zerorpc.Server(Simulator())
     logging.info(f"Starting server. Listening at address {address}")
     s.bind(address)

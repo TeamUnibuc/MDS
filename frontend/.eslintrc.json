@@ -1,4 +1,13 @@
 {
+    "ignorePatterns": [
+        "node_modules",
+        "dist",
+        "coverage",
+        ".eslintrc.js",
+        "env",
+        ".vscode",
+        "*.js"
+    ],
     "env": {
         "browser": true,
         "es2021": true,
@@ -19,8 +28,10 @@
     },
     "plugins": [
         "react",
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "import-quotes"
     ],
     "rules": {
+        "import-quotes/import-quotes": [2, "single"]
     }
 }
