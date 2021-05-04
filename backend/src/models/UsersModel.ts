@@ -22,7 +22,7 @@ class UsersItem {
         googleID : "",
         facebookID : "",
         twitterID : "",
-        githubID : ""
+        githubID : "",
     }
 }
 
@@ -54,8 +54,8 @@ const UsersSchema: Schema<UsersDoc> = new Schema<UsersDoc>({
             facebookID: { type: String },
             twitterID: { type: String },
             githubID: { type: String },
-        }))
-    }
+        })),
+    },
 });
 
 UsersSchema.statics.findByEmail = function(email: string)

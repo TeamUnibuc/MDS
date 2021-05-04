@@ -21,9 +21,13 @@ const app: Application = express()
 // set up cors to allow us to accept requests from our client
 app.use(
     cors({
-        origin: `${env.BASE_URL}:${env.PORT}`, // allow to server to accept request from different origin
+        origin: [
+            `${env.BASE_URL}:${env.PORT}`, // allow to server to accept request from different origin
+            `${env.FRONTEND_BASE_URL}:${env.FRONTEND_PORT}`,
+        ],
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-        credentials: true // allow session cookie from browser to pass through
+        credentials: true, // allow session cookie from browser to pass through
+        preflightContinue: true,
     })
 );
 
@@ -33,7 +37,7 @@ app.use(morgan('dev'))
 // Automatically get the json content of the request body
 app.use(
     express.urlencoded({
-        extended: true
+        extended: true,
     })
 )
 
@@ -41,7 +45,7 @@ app.use(
 app.use(session({ 
     secret: "cats", 
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
 }));
 app.use(flash())
 

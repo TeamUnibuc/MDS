@@ -1,4 +1,5 @@
 import express from 'express'
+import { env } from '../config'
 
 export const authRoutes = express.Router()
 
@@ -10,14 +11,14 @@ authRoutes.get('/', (req, res) => {
     }
     res.json({
         authenticated: user ? true : false,
-        user: user
+        user: user,
     })
 })
 
 // Logs the user out
 authRoutes.get('/logout', (req, res) => {
     req.logout()
-    res.redirect('/auth')
+    res.redirect(`${env.FRONTEND_BASE_URL}:${env.FRONTEND_PORT}/Login?msg=LoggedOutOK`)
 })
 
 // All login strategies have redirect to this Route
@@ -27,9 +28,10 @@ authRoutes.get('/login-success', (req, res) => {
         return res.redirect(`/error/SucessRedirectSaysNotAuthenticated`)
     } 
     if (req.isAuthenticated()) {
-        console.log("Successful LOGIN ")
+        const msg = "Successful LOGIN ";
+        console.log(msg)
         console.log(req.user)
-        return res.redirect(`/auth`)
+        res.redirect(`${env.FRONTEND_BASE_URL}:${env.FRONTEND_PORT}/Login?msg=${msg}`)
     }
     console.log("WTF are you doing here???? XXXXXXXXXXXXXXXXXXXXXX")
 })
@@ -41,9 +43,10 @@ authRoutes.get('/register-success', (req, res) => {
         return res.redirect(`/error/SucessRedirectSaysNotAuthenticated`)
     } 
     if (req.isAuthenticated()) {
-        console.log("Successful REGISTRATION ")
+        const msg = "Successful REGISTRATION "
+        console.log(msg)
         console.log(req.user)
-        return res.redirect(`/auth`)
+        res.redirect(`${env.FRONTEND_BASE_URL}:${env.FRONTEND_PORT}/Login?msg=${msg}`)
     }
     console.log("WTF are you doing here???? XXXXXXXXXXXXXXXXXXXXXX")
 })
@@ -53,12 +56,12 @@ authRoutes.get('/register-success', (req, res) => {
 authRoutes.get('/login-fail', (req, res) => {
     const msg = "Failed login info: " + req.flash('error')
     console.log(msg)
-    res.send(msg)
+    res.redirect(`${env.FRONTEND_BASE_URL}:${env.FRONTEND_PORT}/Login?msg=${msg}`)
 })
 
 // All register strategies have failed-register redirects here
 authRoutes.get('/register-fail', (req, res) => {
     const msg = "Failed registration info: " + req.flash('error')
     console.log(msg)
-    res.send(msg)
+    res.redirect(`${env.FRONTEND_BASE_URL}:${env.FRONTEND_PORT}/Login?msg=${msg}`)
 })

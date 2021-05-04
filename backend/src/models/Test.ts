@@ -32,8 +32,8 @@ const TestSchema: Schema = new Schema({
   address: {
     street: { type: String },
     city: { type: String },
-    postCode: { type: String }
-  }
+    postCode: { type: String },
+  },
 });
 
 // Export the model and return your interface

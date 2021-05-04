@@ -7,7 +7,12 @@ export const schema = {
     
     ENGINE_PORT: {
         type: String,
-        default: '4242'
+        default: '4242',
+    },
+
+    FRONTEND_PORT: {
+        type: String,
+        default: '7777',
     },
 
     MONGO_USERNAME: String,
@@ -21,8 +26,13 @@ export const schema = {
 
     BASE_URL: {
         type: String,
-        default: 'http://localhost'
-    }
+        default: 'http://localhost',
+    },
+
+    FRONTEND_BASE_URL: {
+        type: String,
+        default: 'http://localhost',
+    },
 }
 
 export type Env = EnvType<typeof schema>

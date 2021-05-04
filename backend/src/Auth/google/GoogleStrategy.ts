@@ -14,7 +14,7 @@ import { UsersDoc, UsersModel } from '../../models/UsersModel'
 
 const GoogleOptions = {
     clientID: env.GOOGLE_CLIENT_ID,
-    clientSecret: env.GOOGLE_CLIENT_SECRET
+    clientSecret: env.GOOGLE_CLIENT_SECRET,
 };
 
 export const GoogleScopes = ['profile', 'email']
@@ -23,7 +23,7 @@ export const GoogleScopes = ['profile', 'email']
 export const LoginGoogleStrategy = new OAuthGoogleStrategy(
     {
         ...GoogleOptions,
-        callbackURL: `${env.BASE_URL}:${env.PORT}/google/login-callback`
+        callbackURL: `${env.BASE_URL}:${env.PORT}/google/login-callback`,
     },
     async function (accessToken, refreshToken, profile, done) {
         const {user: user} = await obtainEmailAndUser(profile)
@@ -39,7 +39,7 @@ export const LoginGoogleStrategy = new OAuthGoogleStrategy(
 export const RegisterGoogleStrategy = new OAuthGoogleStrategy(
     {
         ...GoogleOptions,
-        callbackURL: `${env.BASE_URL}:${env.PORT}/google/register-callback`
+        callbackURL: `${env.BASE_URL}:${env.PORT}/google/register-callback`,
     },
     async function (accessToken, refreshToken, profile, done) {
         const {user: user, email: email} = await obtainEmailAndUser(profile)
@@ -58,8 +58,8 @@ export const RegisterGoogleStrategy = new OAuthGoogleStrategy(
             Username: email,
             DateJoined: new Date(),
             Providers: {
-                googleID: profile.id
-            }
+                googleID: profile.id,
+            },
         }).then(userDoc => {
             console.log(`DB user created!`)
             done(null, userDoc, {message: "User created successfully"})
@@ -100,6 +100,6 @@ const obtainEmailAndUser = async (profile: Profile):
 
     return {
         email: email,
-        user: user || undefined  // Mega funny, practic daca user este null, atunci pun undefined, 
+        user: user || undefined,  // Mega funny, practic daca user este null, atunci pun undefined, 
     }                            // sa vrea argumentul optional :) ca asa vrea TS
 }

@@ -30,5 +30,6 @@ module.exports = {
     "eol-last": ["error", "always"],
     "no-loops/no-loops": 1,
     'import-quotes/import-quotes': [2, 'single'],
+    "comma-dangle": ["warn", "always-multiline"],
   }
 };

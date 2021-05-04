@@ -27,7 +27,7 @@ export class EngineConnection {
 
         const obj = {
             engine: engine,
-            bots: bots
+            bots: bots,
         };
         const obj_string = JSON.stringify(obj);
         
