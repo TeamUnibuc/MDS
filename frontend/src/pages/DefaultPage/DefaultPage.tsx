@@ -29,6 +29,16 @@ export default function DefaultPage(): JSX.Element{
         <strong>
           {msg}
         </strong>
+        
+        <a
+          className="App-link"
+          href="/Dashboard"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Dashboard
+        </a>
+
         <a
           className="App-link"
           href="https://reactjs.org"

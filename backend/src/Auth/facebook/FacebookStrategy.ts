@@ -1,6 +1,6 @@
-import { Strategy as OAuthFacebookStrategy, Profile } from 'passport-facebook'
 import { env } from '../../config';
-import { UsersDoc, UsersModel } from '../../models/UsersModel'
+import { Strategy as OAuthFacebookStrategy } from 'passport-facebook'
+import { createUserAndCallDone, obtainEmailAndUser } from '../utils';
 
 //   Strategies in Passport require a `verify` function, which accept
 //   credentials (in this case, an accessToken, refreshToken, and
@@ -11,26 +11,32 @@ import { UsersDoc, UsersModel } from '../../models/UsersModel'
 // Login just tries to return the user if it's already in DB
 // Registration tries to create user if everything is alright
 
+
+// These are the data fields you ask facebook to give you about the user
+// IF you have the access. And that access is given by thee scopes you provide
+const facebookProfileFields = [
+    "id",
+    "name",
+    "name_format",
+    "picture",
+    "short_name",
+    "email",
+]
+
+// When you do an Auth, what "scopes", or "hmm, id like something about <X>"
+// They give you access to specific fields, like the ones above
+export const FacebookScopes = ['email', 'public_profile']
+
 const FacebookOptions = {
     clientID: env.FACEBOOK_CLIENT_ID,
     clientSecret: env.FACEBOOK_CLIENT_SECRET,
+    profileFields: facebookProfileFields,
 };
-
-export const FacebookScopes = ['email', 'public_profile']
-
 
 export const LoginFacebookStrategy = new OAuthFacebookStrategy(
     {
         ...FacebookOptions,
         callbackURL: `${env.BASE_URL}:${env.PORT}/facebook/login-callback`,
-        profileFields: [
-            "id",
-            "name",
-            "name_format",
-            "picture",
-            "short_name",
-            "email",
-        ],
     },
     async function (accessToken, refreshToken, profile, done) {
         const {user: user} = await obtainEmailAndUser(profile)
@@ -53,14 +59,6 @@ export const RegisterFacebookStrategy = new OAuthFacebookStrategy(
     {
         ...FacebookOptions,
         callbackURL: `${env.BASE_URL}:${env.PORT}/facebook/register-callback`,
-        profileFields: [
-            "id",
-            "name",
-            "name_format",
-            "picture",
-            "short_name",
-            "email",
-        ],
     },
     async function (accessToken, refreshToken, profile, done) {
         console.log(profile)
@@ -73,55 +71,6 @@ export const RegisterFacebookStrategy = new OAuthFacebookStrategy(
             return done(null, false, {message: msg})
         }
 
-        UsersModel.create({
-            Email: email,
-            FirstName: profile.name?.givenName,  // Daca cumva nu da nimic aici, teapa....
-            LastName: profile.name?.familyName,
-            Username: email,
-            DateJoined: new Date(),
-            Providers: {
-                facebookID: profile.id,
-            },
-        }).then(userDoc => {
-            console.log(`DB user created!`)
-            done(null, userDoc, {message: "User created successfully"})
-        }).catch(err => {
-            const msg = `Error creating user in DB: ${err}`
-            console.log(msg)
-            done({err: msg}, false, {message: msg})
-        })
+        createUserAndCallDone(email, profile, {facebookID: profile.id}, done)
     }
 );
-
-/**
- * Tries to extract email from the profile data
- * If successful, tries to query our MongoDB for our version of user 
- * @param profile Profile data given by the social network provider
- * @returns Email and User account as in our Database, if data is not bad
- */
-const obtainEmailAndUser = async (profile: Profile):
-    Promise<{
-        email?: string,
-        user?: UsersDoc
-    }> => 
-{
-    console.log("Email data: ")
-    console.log(profile.emails)
-    const first_email_data = profile.emails?.[0]
-
-    if (first_email_data === undefined)
-        return {}
-    const email = first_email_data.value
-
-    const user = await UsersModel.findByEmail(email)
-        .catch(reason => {
-            console.log('Error finding by email: ', reason)
-            return null;
-        });
-    console.log("User from promise: ", user)
-
-    return {
-        email: email,
-        user: user || undefined,  // Mega funny, practic daca user este null, atunci pun undefined, 
-    }                            // sa vrea argumentul optional :) ca asa vrea TS
-}

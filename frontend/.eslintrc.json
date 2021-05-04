@@ -32,6 +32,6 @@
         "import-quotes"
     ],
     "rules": {
-        "import-quotes/import-quotes": [2, "single"]
+        "import-quotes/import-quotes": ["warn", "single"]
     }
 }

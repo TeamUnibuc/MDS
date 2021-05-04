@@ -31,7 +31,7 @@ authRoutes.get('/login-success', (req, res) => {
         const msg = "Successful LOGIN ";
         console.log(msg)
         console.log(req.user)
-        res.redirect(`${env.FRONTEND_BASE_URL}:${env.FRONTEND_PORT}/Login?msg=${msg}`)
+        return res.redirect(`${env.FRONTEND_BASE_URL}:${env.FRONTEND_PORT}/Login?msg=${msg}`)
     }
     console.log("WTF are you doing here???? XXXXXXXXXXXXXXXXXXXXXX")
 })
@@ -46,7 +46,7 @@ authRoutes.get('/register-success', (req, res) => {
         const msg = "Successful REGISTRATION "
         console.log(msg)
         console.log(req.user)
-        res.redirect(`${env.FRONTEND_BASE_URL}:${env.FRONTEND_PORT}/Login?msg=${msg}`)
+        return res.redirect(`${env.FRONTEND_BASE_URL}:${env.FRONTEND_PORT}/Login?msg=${msg}`)
     }
     console.log("WTF are you doing here???? XXXXXXXXXXXXXXXXXXXXXX")
 })
