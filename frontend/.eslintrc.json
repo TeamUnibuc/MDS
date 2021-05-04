@@ -28,8 +28,10 @@
     },
     "plugins": [
         "react",
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "import-quotes",
     ],
     "rules": {
+        "import-quotes/import-quotes": [2, "single"],
     }
 }

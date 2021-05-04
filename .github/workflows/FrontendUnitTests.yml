@@ -22,7 +22,7 @@ jobs:
     env:
        NODE_ENV: development
        PORT: 7777
-       API_URL: http://localhost:8888
+       REACT_APP_API_URL: http://localhost:8888
     
     steps:
     - uses: actions/checkout@v2

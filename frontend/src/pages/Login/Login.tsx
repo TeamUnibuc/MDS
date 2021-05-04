@@ -1,69 +1,60 @@
-export {}
+import Header from '../../components/Header';
+import React, { useState, useEffect, Fragment } from 'react';
 
+export default function Login(): JSX.Element {
+    const [user, setUser] = useState<{Username: string, Email: string} | null>(null);
+    const [error, setError] = useState('');
+    const [authenticated, setAuthenticated] = useState(false);
 
+    const handleNotAuthenticated = () => {
+        setAuthenticated(false)
+    };
 
-// import Header from "./Header";
-// import PropTypes from "prop-types";
-// import React, { Component } from "react";
+    useEffect(() => {
+        fetch("auth", {
+            method: "GET",
+            // credentials: "include",
+            headers: {
+                // Accept: "application/json",
+                "Content-Type": "application/json",
+                // "Access-Control-Allow-Credentials": "true"
+            }
+        }).then(async response => {
+            if (response.status === 200) return response.json();
+            throw new Error("failed to get auth status from server");
+        }).then(responseJson => {
+            console.log("JSON Response")
+            console.log(responseJson)
+            if (responseJson.authenticated) {
+                setAuthenticated(true)
+                setUser(responseJson.user)
+            }
+            else {
+                setAuthenticated(false)
+            }
+        }).catch(err => {
+            console.log(err)
+            setAuthenticated(false)
+            setError(err)
+        });
+    },  [])
 
-// export default class HomePage extends Component {
-//   state = {
-//     user: {},
-//     error: null,
-//     authenticated: false
-//   };
-
-//   componentDidMount() {
-//     fetch("http://localhost:4000/auth/login/success", {
-//       method: "GET",
-//       credentials: "include",
-//       headers: {
-//         Accept: "application/json",
-//         "Content-Type": "application/json",
-//         "Access-Control-Allow-Credentials": true
-//       }
-//     })
-//       .then(response => {
-//         if (response.status === 200) return response.json();
-//         throw new Error("failed to authenticate user");
-//       })
-//       .then(responseJson => {
-//         this.setState({
-//           authenticated: true,
-//           user: responseJson.user
-//         });
-//       })
-//       .catch(error => {
-//         this.setState({
-//           authenticated: false,
-//           error: "Failed to authenticate user"
-//         });
-//       });
-//   }
-
-//   render() {
-//     const { authenticated } = this.state;
-//     return (
-//       <div>
-//         <Header
-//           authenticated={authenticated}
-//           handleNotAuthenticated={this._handleNotAuthenticated}
-//         />
-//         <div>
-//           {!authenticated ? (
-//             <h1>Welcome!</h1>
-//           ) : (
-//             <div>
-//               <h1>You have login succcessfully!</h1>
-//               <h2>Welcome {this.state.user.name}!</h2>
-//             </div>
-//           )}
-//         </div>
-//       </div>
-//     );
-//   }
-
-//   _handleNotAuthenticated = () => {
-//     this.setState({ authenticated: false });
-//   };
-// }
+    return (
+      <div>
+        <Header
+          authenticated={authenticated}
+          handleNotAuth={handleNotAuthenticated}
+        />
+        <div>
+          {!authenticated ? (<>
+            <h1>Welcome, Guest</h1>
+            <p>Status: {error}</p>
+          </>) : (
+            <div>
+              <h2>Welcome, {user?.Username}!</h2>
+            </div>
+          )}
+        </div>
+      </div>
+    );  
+}
