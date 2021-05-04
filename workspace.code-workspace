@@ -12,7 +12,7 @@
 			"name": "Backend"
 		},
 		{
-			"path": "Engine",
+			"path": "engine",
 			"name": "Engine"
 		}
 	],
@@ -20,6 +20,9 @@
 		"python.analysis.typeCheckingMode": "off",
 		"files.exclude": {
 			"**/node_modules": true,
+			"**/engine": true,
+			"**/frontend": true,
+			"**/backend": true,
 		}
 	},
 }
