@@ -19,7 +19,7 @@
 	"settings": {
 		"python.analysis.typeCheckingMode": "off",
 		"files.exclude": {
-			// "**/node_modules": true,
+			"**/node_modules": true,
 		}
 	},
 }
