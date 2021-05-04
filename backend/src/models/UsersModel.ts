@@ -71,6 +71,9 @@ UsersSchema.statics.findByEmail = function(email: string)
 // Export the model and return your interface
 export const UsersModel: IUsersModel = mongoose.model<UsersDoc, IUsersModel>('Users', UsersSchema, 'Users');
 
+// When writing an express endpoint, (req, res) => ...
+// The req object will have the req.user object types as extending UsersDoc
+//   to have autocomplete and please the TS language
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Express {
