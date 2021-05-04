@@ -26,7 +26,9 @@ jobs:
         MONGO_PASSWORD: ${{secrets.MONGO_PASSWORD}} 
         MONGO_HOST: ${{secrets.MONGO_HOST}} 
         MONGO_DB: ${{secrets.MONGO_DB}} 
-        MONGO_PORT: ${{secrets.MONGO_PORT}} 
+        MONGO_PORT: ${{secrets.MONGO_PORT}}
+        GOOGLE_CLIENT_ID: ${{secrets.GOOGLE_CLIENT_ID}} 
+        GOOGLE_CLIENT_SECRET: ${{secrets.GOOGLE_CLIENT_SECRET}} 
     
     steps:
     - uses: actions/checkout@v2
