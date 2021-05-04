@@ -71,10 +71,6 @@ UsersSchema.statics.findByEmail = function(email: string)
 // Export the model and return your interface
 export const UsersModel: IUsersModel = mongoose.model<UsersDoc, IUsersModel>('Users', UsersSchema, 'Users');
 
-// Test of static
-UsersModel.findByEmail('puscasu.felix1@gmail.com')
-    .catch(() => console.log('Pesky test failed'))
-
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Express {
