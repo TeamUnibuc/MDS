@@ -1,8 +1,5 @@
 import { EnvType, load } from 'ts-dotenv'
 
-console.log(`GOOGLE CLIENT IDDDD: ${process.env.GOOGLE_CLIENT_ID}`)
-console.log(`MONGO USERNAME: ${process.env.MONGO_USERNAME}`)
-
 // Because typescript is stronglytyped-ish, we have to specify the schema
 export const schema = {
     NODE_ENV: String,
