@@ -1,10 +1,9 @@
-import { OAuth2Strategy as OAuthGoogleStrategy, Profile } from 'passport-google-oauth'
+import { Strategy as OAuthFacebookStrategy, Profile } from 'passport-facebook'
 import { env } from '../../config';
 import { UsersDoc, UsersModel } from '../../models/UsersModel'
 
-// Use the GoogleStrategy within Passport.
 //   Strategies in Passport require a `verify` function, which accept
-//   credentials (in this case, an accessToken, refreshToken, and Google
+//   credentials (in this case, an accessToken, refreshToken, and
 //   profile), and invoke a callback with a user object.
 
 
@@ -12,18 +11,26 @@ import { UsersDoc, UsersModel } from '../../models/UsersModel'
 // Login just tries to return the user if it's already in DB
 // Registration tries to create user if everything is alright
 
-const GoogleOptions = {
-    clientID: env.GOOGLE_CLIENT_ID,
-    clientSecret: env.GOOGLE_CLIENT_SECRET,
+const FacebookOptions = {
+    clientID: env.FACEBOOK_CLIENT_ID,
+    clientSecret: env.FACEBOOK_CLIENT_SECRET,
 };
 
-export const GoogleScopes = ['profile', 'email']
+export const FacebookScopes = ['email', 'public_profile']
 
 
-export const LoginGoogleStrategy = new OAuthGoogleStrategy(
+export const LoginFacebookStrategy = new OAuthFacebookStrategy(
     {
-        ...GoogleOptions,
-        callbackURL: `${env.BASE_URL}:${env.PORT}/google/login-callback`,
+        ...FacebookOptions,
+        callbackURL: `${env.BASE_URL}:${env.PORT}/facebook/login-callback`,
+        profileFields: [
+            "id",
+            "name",
+            "name_format",
+            "picture",
+            "short_name",
+            "email",
+        ],
     },
     async function (accessToken, refreshToken, profile, done) {
         const {user: user} = await obtainEmailAndUser(profile)
@@ -31,8 +38,9 @@ export const LoginGoogleStrategy = new OAuthGoogleStrategy(
         if (!user) // nu exista un user cu email la noi in DB
             return done(null, false, {message: "User with specified email doeesn't exists"})
         
-        if (!user.Providers.googleID) {
-            user.Providers.googleID = profile.id;
+        // Adauga ID pentru acest provider daca nu s-a mai logat pana acum
+        if (!user.Providers.facebookID) {
+            user.Providers.facebookID = profile.id;
             await user.save()
         }
 
@@ -41,12 +49,21 @@ export const LoginGoogleStrategy = new OAuthGoogleStrategy(
     }
 );
 
-export const RegisterGoogleStrategy = new OAuthGoogleStrategy(
+export const RegisterFacebookStrategy = new OAuthFacebookStrategy(
     {
-        ...GoogleOptions,
-        callbackURL: `${env.BASE_URL}:${env.PORT}/google/register-callback`,
+        ...FacebookOptions,
+        callbackURL: `${env.BASE_URL}:${env.PORT}/facebook/register-callback`,
+        profileFields: [
+            "id",
+            "name",
+            "name_format",
+            "picture",
+            "short_name",
+            "email",
+        ],
     },
     async function (accessToken, refreshToken, profile, done) {
+        console.log(profile)
         const {user: user, email: email} = await obtainEmailAndUser(profile)
         
         if (user) {
@@ -55,15 +72,15 @@ export const RegisterGoogleStrategy = new OAuthGoogleStrategy(
             console.log(msg)
             return done(null, false, {message: msg})
         }
-        
+
         UsersModel.create({
             Email: email,
-            FirstName: profile.name?.givenName,  // Daca cumva google nu da nimic aici, teapa....
+            FirstName: profile.name?.givenName,  // Daca cumva nu da nimic aici, teapa....
             LastName: profile.name?.familyName,
             Username: email,
             DateJoined: new Date(),
             Providers: {
-                googleID: profile.id,
+                facebookID: profile.id,
             },
         }).then(userDoc => {
             console.log(`DB user created!`)

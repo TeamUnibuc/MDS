@@ -2,7 +2,16 @@ import Header from '../../components/Header';
 import React, { useState, useEffect, Fragment } from 'react';
 
 export default function Login(): JSX.Element {
-    const [user, setUser] = useState<{Username: string, Email: string} | null>(null);
+    const [user, setUser] = useState<{
+      Username: string, 
+      Email: string,
+      Providers: {
+        googleID: string,
+        facebookID: string,
+        twitterID: string,
+        githubID: string,
+      }
+    } | null>(null);
     const [error, setError] = useState('');
     const [authenticated, setAuthenticated] = useState(false);
 
@@ -54,6 +63,19 @@ export default function Login(): JSX.Element {
               <h2>Welcome, {user?.Username}!</h2>
             </div>
           )}
+        </div>
+        <div>
+          <p>Social accounts connected: </p>
+          {user?.Providers.facebookID && 
+            <ul>
+              <p>Facebook: {user.Providers.facebookID}</p>
+            </ul>
+          }
+          {user?.Providers.googleID && 
+            <ul>
+              <p>Google: {user.Providers.googleID}</p>
+            </ul>
+          }
         </div>
       </div>
     );  

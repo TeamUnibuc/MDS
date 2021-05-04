@@ -4,6 +4,8 @@ import { UsersModel } from '../models/UsersModel'
 import { LoginGoogleStrategy, RegisterGoogleStrategy } from './google/GoogleStrategy'
 import { authRoutes } from './routes'
 import { googleRoutes } from './google/routes'
+import { facebookRoutes } from './facebook/routes'
+import { LoginFacebookStrategy, RegisterFacebookStrategy } from './facebook/FacebookStrategy'
 
 export const passport_configure = (app: Application): void => 
 {
@@ -12,6 +14,7 @@ export const passport_configure = (app: Application): void =>
 
     app.use('/auth', authRoutes)
     app.use('/google', googleRoutes)
+    app.use('/facebook', facebookRoutes)
 }
 
 passport.serializeUser((user, done) => {
@@ -27,3 +30,6 @@ passport.deserializeUser(async (email: string, done) => {
 
 passport.use('google-login', LoginGoogleStrategy)
 passport.use('google-register', RegisterGoogleStrategy)
+
+passport.use('facebook-login', LoginFacebookStrategy)
+passport.use('facebook-register', RegisterFacebookStrategy)
