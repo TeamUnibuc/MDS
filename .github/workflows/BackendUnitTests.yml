@@ -9,8 +9,9 @@ on:
   pull_request:
     branches: [ main ]
 
-jobs:
+jobs:  
   build:
+    environment: Test
     runs-on: ubuntu-latest
 
     strategy:
@@ -19,16 +20,16 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     
 
-    env:
-        NODE_ENV: development
-        PORT: 8888  
-        MONGO_USERNAME: ${{secrets.MONGO_USERNAME}} 
-        MONGO_PASSWORD: ${{secrets.MONGO_PASSWORD}} 
-        MONGO_HOST: ${{secrets.MONGO_HOST}} 
-        MONGO_DB: ${{secrets.MONGO_DB}} 
-        GOOGLE_CLIENT_ID: ${{secrets.GOOGLE_CLIENT_ID}} 
-        MONGO_PORT: ${{secrets.MONGO_PORT}} 
-        GOOGLE_CLIENT_SECRET: ${{secrets.GOOGLE_CLIENT_SECRET}} 
+#     env:
+#         NODE_ENV: development
+#         PORT: 8888  
+#         MONGO_USERNAME: ${{secrets.MONGO_USERNAME}} 
+#         MONGO_PASSWORD: ${{secrets.MONGO_PASSWORD}} 
+#         MONGO_HOST: ${{secrets.MONGO_HOST}} 
+#         MONGO_DB: ${{secrets.MONGO_DB}} 
+#         GOOGLE_CLIENT_ID: ${{secrets.GOOGLE_CLIENT_ID}} 
+#         MONGO_PORT: ${{secrets.MONGO_PORT}} 
+#         GOOGLE_CLIENT_SECRET: ${{secrets.GOOGLE_CLIENT_SECRET}} 
     
     steps:
     - uses: actions/checkout@v2
