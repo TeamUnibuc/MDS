@@ -5,7 +5,7 @@ import { LoginGoogleStrategy, RegisterGoogleStrategy, SmartGoogleStrategy } from
 import { authRoutes } from './routes'
 import { googleRoutes } from './google/routes'
 import { facebookRoutes } from './facebook/routes'
-import { LoginFacebookStrategy, RegisterFacebookStrategy } from './facebook/FacebookStrategy'
+import { LoginFacebookStrategy, RegisterFacebookStrategy, SmartFacebookStrategy } from './facebook/FacebookStrategy'
 
 export const passport_configure = (app: Application): void => 
 {
@@ -21,6 +21,7 @@ passport.use('google-smart', SmartGoogleStrategy)
 passport.use('google-login', LoginGoogleStrategy)
 passport.use('google-register', RegisterGoogleStrategy)
 
+passport.use('facebook-smart', SmartFacebookStrategy)
 passport.use('facebook-login', LoginFacebookStrategy)
 passport.use('facebook-register', RegisterFacebookStrategy)
 
