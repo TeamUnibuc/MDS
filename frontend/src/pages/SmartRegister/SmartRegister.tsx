@@ -1,27 +1,22 @@
-import Header from '../../components/Header';
-import React, { useState, useEffect, Fragment } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Redirect, useLocation } from 'react-router-dom';
+
+function useQuery() {
+    return new URLSearchParams(useLocation().search);
+}
 
 export default function SmartRegister(): JSX.Element {
-    const [user, setUser] = useState<{
-      Username: string, 
-      Email: string,
-      Providers: {
-        googleID: string,
-        facebookID: string,
-        twitterID: string,
-        githubID: string,
-      }
-    } | null>(null);
-
     const [redirect, setRedirect] = useState(false)
     const [extraInfo, setExtraInfo] = useState('');
     const [newUsername, setNewUsername] = useState('');
     const [error, setError] = useState('');
-    const [authenticated, setAuthenticated] = useState(false);
+    const query = useQuery();
 
-    // Basically this is called only at start as it has no dependencies
-    useEffect(() => {
+    const handleInputChanged = (event: {target: HTMLInputElement}) => {
+        setNewUsername(event.target.value)
+    }
+
+    const handleSomething = () => {
         fetch("auth", {
             method: "GET",
             headers: {
@@ -34,26 +29,25 @@ export default function SmartRegister(): JSX.Element {
             console.log("JSON Response")
             console.log(responseJson)
             if (responseJson.authenticated) {
-                setAuthenticated(true)
-                setUser(responseJson.user)
+                console.log('authenticated')
             }
             else {
-                setAuthenticated(false)
+                console.log('NOT authenticated')
             }
         }).catch(err => {
-            setAuthenticated(false)
-            setError(String(err))
+            console.log(err)
         });
-    },  [])
-
-    const handleInputChanged = (event: {target: HTMLInputElement}) => {
-        setNewUsername(event.target.value)
     }
     
     const handleButtonClicked = () => {
         /// Check with a fetch that the user has been created
-        const authRoute = `${process.env.REACT_APP_API_URL}/auth/smart-create`
-        fetch(`${authRoute}?tryNewUsername=${newUsername}`)
+        const authRoute = `auth/smart-create`
+        fetch(`${authRoute}?tryNewUsername=${newUsername}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
             .then(response => {
                 if (response.status === 200) return response.json();
                 throw new Error("failed to get create-status info from server");
@@ -64,7 +58,10 @@ export default function SmartRegister(): JSX.Element {
                     setTimeout(() => setRedirect(true), 2000)
                 }
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                console.log(err)
+                setError(String(err))
+            })
     }
 
     if (redirect) 
@@ -74,9 +71,13 @@ export default function SmartRegister(): JSX.Element {
       <div>
         {error && <p>Eroare: {error}</p>}
         {extraInfo && <p>Info: {extraInfo}</p>}
+        <p>Type your username to create yoour account for your email address: {query.get('email')}</p>
         <input type="text" value={newUsername} onChange={handleInputChanged}/>
         <button onClick={handleButtonClicked}>
           Submit
+        </button>
+        <button onClick={handleSomething}>
+            Try to get auth details
         </button>
       </div>
     );  

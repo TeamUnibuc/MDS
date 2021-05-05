@@ -28,11 +28,39 @@ export const SmartGoogleStrategy = new OAuthGoogleStrategy(
     async function (accessToken, refreshToken, profile, done) {
         const {user: user, email: email} = await obtainEmailAndUser(profile)
 
-        // nu exista un user cu email la noi in DB, cream unul...
-        if (!user) {
-            return createUserAndCallDone(email, profile, {googleID: profile.id}, done, "")
-            // Deoarece username-ul va fi setat cu "", vom fi redirectati sa cream un username
+        if (!email) {
+            const msg = `Email not found in profile data`
+            console.log(msg)
+            return done(null, false, {message: msg})
         }
+
+        // nu exista un user cu email la noi in DB, 
+        // cream unul dar doar punem obiectul in sesiune ca si logat (dpdv passport), 
+        //    dar defapt userul nu este in DB
+        if (!user) {
+            const createdUserDoc = new UsersModel({
+                Email: email,
+                FirstName: profile.name?.givenName,  // Daca cumva nu da nimic aici, teapa....
+                LastName: profile.name?.familyName,
+                Username: undefined,  // notice the empty username consideram 
+                DateJoined: new Date(),
+                Providers: {
+                    googleID: profile.id,
+                },
+            })
+            createdUserDoc.save()
+                .then(resp => {
+                    console.log(`Saved in DB Shallow user: ${resp.Email}`)
+                    return done(null, createdUserDoc)
+                })
+                .catch(err => {
+                    console.log(`Error saving in DB Shallow user: ${email}`, err)
+                    return done(null, false, {message: 'Save in DB of shallow user failed'})
+                })
+            return ;
+        }
+
+        // User-ul este in baza de date, dar s-ar putea sa nu aiba username setat
 
         // User-ul exista, verificam daca trebuie sa adaugam provider-ul
         if (!user.Providers.googleID) {

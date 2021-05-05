@@ -44,7 +44,7 @@ export default function Login(): JSX.Element {
         }).catch(err => {
             console.log(err)
             setAuthenticated(false)
-            setError(err)
+            setError(String(err))
         });
     },  [])
 

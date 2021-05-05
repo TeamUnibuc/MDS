@@ -44,8 +44,8 @@ interface IUsersModel extends mongoose.Model<UsersDoc>
 const UsersSchema: Schema<UsersDoc> = new Schema<UsersDoc>({
     FirstName: { type: String, required: true },
     LastName: { type: String, required: true },
-    Email: { type: String, required: true },
-    Username: { type: String, required: true },
+    Email: { type: String, required: true, unique: true },
+    Username: { type: String, required: false },
     DateJoined: { type: Date, required: true },
     Providers: {
         required: true,

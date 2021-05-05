@@ -1,6 +1,5 @@
 import express from 'express'
 import passport from 'passport';
-import { env } from '../../config';
 import { GoogleScopes } from './GoogleStrategy';
 
 export const googleRoutes = express.Router()
@@ -11,8 +10,8 @@ googleRoutes.get('/smart',
 
 googleRoutes.get('/smart-callback',
     passport.authenticate('google-smart', {
-            failureRedirect: '/auth/login-fail',
-            successRedirect: `${env.FRONTEND_BASE_URL}:${env.FRONTEND_PORT}/smart-register`,
+            failureRedirect: '/auth/smart-fail',
+            successRedirect: '/auth/smart-success',
             failureFlash: true,
         }
     ),

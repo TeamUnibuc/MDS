@@ -1,5 +1,5 @@
-import Header from '../../components/Header';
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
+import SmartHeader from '../../components/SmartHeader';
 
 export default function Dashboard(): JSX.Element {
     const [user, setUser] = useState<{
@@ -48,7 +48,7 @@ export default function Dashboard(): JSX.Element {
 
     return (
       <div>
-        <Header
+        <SmartHeader
           authenticated={authenticated}
           handleNotAuth={handleNotAuthenticated}
         />

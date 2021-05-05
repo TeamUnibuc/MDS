@@ -12,7 +12,7 @@ function App(): JSX.Element {
         <Route key="addgame" path="/addgame" exact component={AddGame}/>
         <Route key="login" path="/login" exact component={Login}/>
         <Route key="dashboard" path="/dashboard" exact component={Dashboard}/>
-        <Route key="smart-registerr" path="/smart-register" exact component={SmartRegister}/>
+        <Route key="smartregisterr" path="/smartregister" exact component={SmartRegister}/>
       </Switch>
     </Router>
   );
