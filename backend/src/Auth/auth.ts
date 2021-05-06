@@ -1,29 +1,32 @@
 import passport from 'passport'
 import { Application } from 'express'
 import { UsersModel } from '../models/UsersModel'
-import { LoginGoogleStrategy, RegisterGoogleStrategy, SmartGoogleStrategy } from './google/GoogleStrategy'
+import { SmartGoogleStrategy } from './google/GoogleStrategy'
 import { authRoutes } from './routes'
 import { googleRoutes } from './google/routes'
 import { facebookRoutes } from './facebook/routes'
-import { LoginFacebookStrategy, RegisterFacebookStrategy, SmartFacebookStrategy } from './facebook/FacebookStrategy'
+import { SmartFacebookStrategy } from './facebook/FacebookStrategy'
+import { appAuthMiddleware } from './Middleware/AppAuth'
+import { SmartGithubStrategy } from './github/GithubStrategy'
+import { githubRoutes } from './github/routes'
 
 export const passport_configure = (app: Application): void => 
 {
     app.use(passport.initialize())
     app.use(passport.session())
+    app.use(appAuthMiddleware)
 
     app.use('/auth', authRoutes)
     app.use('/google', googleRoutes)
     app.use('/facebook', facebookRoutes)
+    app.use('/github', githubRoutes)
 }
 
 passport.use('google-smart', SmartGoogleStrategy)
-passport.use('google-login', LoginGoogleStrategy)
-passport.use('google-register', RegisterGoogleStrategy)
 
 passport.use('facebook-smart', SmartFacebookStrategy)
-passport.use('facebook-login', LoginFacebookStrategy)
-passport.use('facebook-register', RegisterFacebookStrategy)
+
+passport.use('github-smart', SmartGithubStrategy)
 
 passport.serializeUser((user, done) => {
     done(null, user.Email)

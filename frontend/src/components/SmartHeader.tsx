@@ -32,7 +32,10 @@ export default function SmartHeader({authenticated, handleNotAuth}: HeaderProps)
             </li>
             
             <li onClick={() => handleSmartLoginClick('facebook')}>
-                <Link to="#">Favebook Login</Link>
+                <Link to="#">Facebook Login</Link>
+            </li>
+            <li onClick={() => handleSmartLoginClick('github')}>
+                <Link to="#">Github Login</Link>
             </li>
             </>
         )}

@@ -74,6 +74,11 @@ export default function Dashboard(): JSX.Element {
               <p>Google: {user.Providers.googleID}</p>
             </ul>
           }
+          {user?.Providers.githubID && 
+            <ul>
+              <p>Github: {user.Providers.githubID}</p>
+            </ul>
+          }
         </div>
       </div>
     );  
