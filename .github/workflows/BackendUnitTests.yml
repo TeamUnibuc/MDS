@@ -9,8 +9,9 @@ on:
   pull_request:
     branches: [ main ]
 
-jobs:
+jobs:  
   build:
+    environment: Test
     runs-on: ubuntu-latest
 
     strategy:
@@ -26,9 +27,13 @@ jobs:
         MONGO_PASSWORD: ${{secrets.MONGO_PASSWORD}} 
         MONGO_HOST: ${{secrets.MONGO_HOST}} 
         MONGO_DB: ${{secrets.MONGO_DB}} 
-        MONGO_PORT: ${{secrets.MONGO_PORT}}
+        MONGO_PORT: ${{secrets.MONGO_PORT}} 
         GOOGLE_CLIENT_ID: ${{secrets.GOOGLE_CLIENT_ID}} 
         GOOGLE_CLIENT_SECRET: ${{secrets.GOOGLE_CLIENT_SECRET}} 
+        FACEBOOK_CLIENT_ID: ${{secrets.FACEBOOK_CLIENT_ID}} 
+        FACEBOOK_CLIENT_SECRET: ${{secrets.FACEBOOK_CLIENT_SECRET}} 
+        GITHUB_CLIENT_ID: ${{secrets.GITHUB_CLIENT_ID}} 
+        GITHUB_CLIENT_SECRET: ${{secrets.GITHUB_CLIENT_SECRET}} 
     
     steps:
     - uses: actions/checkout@v2
