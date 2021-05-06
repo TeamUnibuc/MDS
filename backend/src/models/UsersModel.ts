@@ -26,7 +26,7 @@ class UsersItem {
     }
 }
 
-export interface UsersDoc extends UsersItem, Document { }
+interface UsersDoc extends UsersItem, Document { }
 
 interface IUsersModel extends mongoose.Model<UsersDoc>
 {
