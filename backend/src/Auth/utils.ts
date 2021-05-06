@@ -1,40 +1,5 @@
 import { Profile } from 'passport'
-import { VerifyFunction } from 'passport-google-oauth'
-import { UsersDoc, UsersItem, UsersModel } from '../models/UsersModel'
-
-/**
- * Tries to create a user given its email, profile, provider and username information
- * @param email email from the social provider
- * @param profile profile from the social provider
- * @param provider Details for the provider field
- * @param done VerifyFunction for passport auth
- * @returns Nothing, it runs a promise and thats it
- */
- export const createUserAndCallDone = (email: string | undefined, profile: Profile, 
-    provider: Partial<UsersItem['Providers']>, done: VerifyFunction, username = email): void =>
-{
-    if (!email) {
-        const msg = `Email not found in profile data`
-        console.log(msg)
-        return done(null, false, {message: msg})
-    }
-
-    UsersModel.create({
-        Email: email,
-        FirstName: profile.name?.givenName,  // Daca cumva nu da nimic aici, teapa....
-        LastName: profile.name?.familyName,
-        Username: username,
-        DateJoined: new Date(),
-        Providers: provider,
-    }).then(userDoc => {
-        console.log(`DB user created!`)
-        done(null, userDoc, {message: "User created successfully"})
-    }).catch(err => {
-        const msg = `Error creating user in DB: ${err}`
-        console.log(msg)
-        done({err: msg}, false, {message: msg})
-    })
-}
+import { UsersDoc, UsersModel } from '../models/UsersModel'
 
 /**
  * Tries to extract email from the profile data
