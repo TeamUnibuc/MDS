@@ -6,7 +6,7 @@ import mongoose, { Schema, Document } from 'mongoose';
  * Stores all the users.
  */
 
-export class UsersItem {
+class UsersItem {
     // First name of the user.
     FirstName = "";
     // Last name of the user.
@@ -26,7 +26,7 @@ export class UsersItem {
     }
 }
 
-export interface UsersDoc extends UsersItem, Document { }
+interface UsersDoc extends UsersItem, Document { }
 
 interface IUsersModel extends mongoose.Model<UsersDoc>
 {

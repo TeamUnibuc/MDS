@@ -1,6 +1,6 @@
 import { env } from '../../config';
 import { Strategy as OAuthFacebookStrategy } from 'passport-facebook'
-import { createUserAndCallDone, obtainEmailAndUser } from '../utils';
+import { obtainEmailAndUser } from '../utils';
 import { UsersModel } from '../../models/UsersModel';
 
 //   Strategies in Passport require a `verify` function, which accept
