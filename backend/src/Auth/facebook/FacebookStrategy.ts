@@ -50,7 +50,7 @@ export const SmartFacebookStrategy = new OAuthFacebookStrategy(
 
         // nu exista un user cu email la noi in DB, 
         // cream unul dar doar punem obiectul in sesiune ca si logat (dpdv passport), 
-        //    dar defapt userul nu este in DB
+        //    dar defapt userul nu are username
         if (!user) {
             const createdUserDoc = new UsersModel({
                 Email: email,
@@ -87,6 +87,8 @@ export const SmartFacebookStrategy = new OAuthFacebookStrategy(
     }
 );
 
+
+// Should be deprecated
 export const LoginFacebookStrategy = new OAuthFacebookStrategy(
     {
         ...FacebookOptions,

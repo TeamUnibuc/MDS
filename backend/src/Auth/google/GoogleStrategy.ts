@@ -48,6 +48,7 @@ export const SmartGoogleStrategy = new OAuthGoogleStrategy(
                     googleID: profile.id,
                 },
             })
+
             createdUserDoc.save()
                 .then(resp => {
                     console.log(`Saved in DB Shallow user: ${resp.Email}`)

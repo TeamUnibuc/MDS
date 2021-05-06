@@ -33,7 +33,10 @@ passport.serializeUser((user, done) => {
 //  dar defapt nu exista in MongoDB
 passport.deserializeUser(async (email: string, done) => {
     const user = await UsersModel.findByEmail(email);
-    if (user === null) 
-        return done(new Error('Did not find user by Email'), null)
+    if (user === null) {
+        return done(new Error('Passport error: Did not find user by Email'), null)
+        /// Poate redirect
+        // return res.redirect()
+    } 
     return done(null, user)
 })

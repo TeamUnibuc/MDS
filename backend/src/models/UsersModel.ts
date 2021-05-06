@@ -45,7 +45,7 @@ const UsersSchema: Schema<UsersDoc> = new Schema<UsersDoc>({
     FirstName: { type: String, required: true },
     LastName: { type: String, required: true },
     Email: { type: String, required: true, unique: true },
-    Username: { type: String, required: false },
+    Username: { type: String, required: false, unique: true },
     DateJoined: { type: Date, required: true },
     Providers: {
         required: true,
