@@ -22,7 +22,7 @@ const app: Application = express()
 app.use(
     cors({
         origin: [
-            `${env.BASE_URL}:${env.PORT}`, // allow to server to accept request from different origin
+            `${env.BACKEND_BASE_URL}:${env.PORT}`, // allow to server to accept request from different origin
             `${env.FRONTEND_BASE_URL}:${env.FRONTEND_PORT}`,
         ],
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",

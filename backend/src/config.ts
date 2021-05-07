@@ -10,10 +10,7 @@ export const schema = {
         default: '4242',
     },
 
-    FRONTEND_PORT: {
-        type: String,
-        default: '7777',
-    },
+    FRONTEND_PORT: String,
 
     MONGO_USERNAME: String,
     MONGO_PASSWORD: String,
@@ -30,14 +27,14 @@ export const schema = {
     GITHUB_CLIENT_ID: String,
     GITHUB_CLIENT_SECRET: String,
 
-    BASE_URL: {
+    BACKEND_BASE_URL: {
         type: String,
-        default: 'http://localhost',
+        default: 'https://universityproject.ml',
     },
 
     FRONTEND_BASE_URL: {
         type: String,
-        default: 'http://localhost',
+        default: 'https://universityproject.ml',
     },
 }
 
