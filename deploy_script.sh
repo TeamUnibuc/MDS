@@ -36,7 +36,7 @@ kill -9 $(lsof -t -i :${PORT})
 yarn serve &
 
 # Start the engine backgrround process
-cd ../Engine
+cd ../engine
 # Kill old process
 PORT=4242
 echo "Port is: ${PORT}"
