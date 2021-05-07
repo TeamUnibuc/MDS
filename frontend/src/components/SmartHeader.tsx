@@ -9,12 +9,12 @@ interface HeaderProps {
 export default function SmartHeader({authenticated, handleNotAuth}: HeaderProps): JSX.Element
 {
     const handleSmartLoginClick = (provider: string) => {
-        window.open(`${process.env.REACT_APP_API_URL}/${provider}/smart`, "_self");
+        window.open(`auth/${provider}/smart`, "_self");
     };
 
     const handleLogoutClick = () => {
         // Set authenticated state to false in the HomePage component
-        window.open(`${process.env.REACT_APP_API_URL}/auth/logout`, "_self");
+        window.open(`auth/logout`, "_self");
         handleNotAuth();
     };
     
