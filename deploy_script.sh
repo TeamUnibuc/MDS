@@ -14,7 +14,7 @@ echo "========  !!!!   Building for production"
 # Build the frontend
 cd ../frontend
 rm -rf dist
-yarn build
+yarn build-prod
 # Build the backend
 cd ../backend
 yarn build-prod
@@ -36,7 +36,7 @@ kill -9 $(lsof -t -i :${PORT})
 yarn serve &
 
 # Start the engine backgrround process
-cd ../Engine
+cd ../engine
 # Kill old process
 PORT=4242
 echo "Port is: ${PORT}"

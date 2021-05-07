@@ -1,4 +1,4 @@
-import { OAuth2Strategy as OAuthGoogleStrategy } from 'passport-google-oauth'
+import { Strategy as OAuthGithubStrategy } from 'passport-github2'
 import { env } from '../../config';
 import { UsersModel } from '../../models/UsersModel';
 import { obtainEmailAndUser } from '../utils';
@@ -13,25 +13,36 @@ import { obtainEmailAndUser } from '../utils';
 // Login just tries to return the user if it's already in DB
 // Registration tries to create user if everything is alright
 
-const GoogleOptions = {
-    clientID: env.GOOGLE_CLIENT_ID,
-    clientSecret: env.GOOGLE_CLIENT_SECRET,
+const GithubOptions = {
+    clientID: env.GITHUB_CLIENT_ID,
+    clientSecret: env.GITHUB_CLIENT_SECRET,
 };
 
-export const GoogleScopes = ['profile', 'email']
+export const GithubScopes = [ 'read:user', 'user:email' ]
 
-export const SmartGoogleStrategy = new OAuthGoogleStrategy(
+export const SmartGithubStrategy = new OAuthGithubStrategy(
     {
-        ...GoogleOptions,
-        callbackURL: `${env.BASE_URL}:${env.PORT}/google/smart-callback`,
+        ...GithubOptions,
+        callbackURL: `${env.BASE_URL}:${env.PORT}/github/smart-callback`,
     },
-    async function (accessToken, refreshToken, profile, done) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    async function (accessToken: string, refreshToken: string, profile: any, done: any) {
+        console.log('github profile: ', profile)
         const {user: user, email: email} = await obtainEmailAndUser(profile)
 
         if (!email) {
             const msg = `Email not found in profile data`
             console.log(msg)
-            return done(null, false, {message: msg})
+            return done(null, undefined, {message: msg})
+        }
+
+        const displayname = String(profile.displayname)
+        let firstName = displayname.substr(0, displayname.indexOf(' ')); // "72"
+        let lastName  = displayname.substr(displayname.indexOf(' ')+1); // "tocirah sneab"
+
+        if (!firstName || !lastName) {
+            firstName = String(profile.username)
+            lastName = String(profile.username)
         }
 
         // nu exista un user cu email la noi in DB, 
@@ -40,12 +51,12 @@ export const SmartGoogleStrategy = new OAuthGoogleStrategy(
         if (!user) {
             const createdUserDoc = new UsersModel({
                 Email: email,
-                FirstName: profile.name?.givenName,  // Daca cumva nu da nimic aici, teapa....
-                LastName: profile.name?.familyName,
+                FirstName: firstName,  // Daca cumva nu da nimic aici, teapa....
+                LastName: lastName,
                 Username: undefined,  // notice the empty username consideram 
                 DateJoined: new Date(),
                 Providers: {
-                    googleID: profile.id,
+                    githubID: profile.id,
                 },
             })
 
@@ -56,7 +67,7 @@ export const SmartGoogleStrategy = new OAuthGoogleStrategy(
                 })
                 .catch(err => {
                     console.log(`Error saving in DB Shallow user: ${email}`, err)
-                    return done(null, false, {message: 'Save in DB of shallow user failed'})
+                    return done(null, undefined, {message: 'Save in DB of shallow user failed'})
                 })
             return ;
         }
@@ -64,8 +75,8 @@ export const SmartGoogleStrategy = new OAuthGoogleStrategy(
         // User-ul este in baza de date, dar s-ar putea sa nu aiba username setat
 
         // User-ul exista, verificam daca trebuie sa adaugam provider-ul
-        if (!user.Providers.googleID) {
-            user.Providers.googleID = profile.id;
+        if (!user.Providers.githubID) {
+            user.Providers.githubID = profile.id;
             await user.save()
         }
 

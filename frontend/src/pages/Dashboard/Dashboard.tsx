@@ -1,8 +1,18 @@
-import Header from '../../components/Header';
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
+import SmartHeader from '../../components/SmartHeader';
 
-export default function Login(): JSX.Element {
-    const [user, setUser] = useState<{Username: string, Email: string} | null>(null);
+export default function Dashboard(): JSX.Element {
+    const [user, setUser] = useState<{
+      Username: string, 
+      Email: string,
+      Providers: {
+        googleID: string,
+        facebookID: string,
+        twitterID: string,
+        githubID: string,
+      }
+    } | null>(null);
+
     const [error, setError] = useState('');
     const [authenticated, setAuthenticated] = useState(false);
 
@@ -10,18 +20,16 @@ export default function Login(): JSX.Element {
         setAuthenticated(false)
     };
 
+    // Basically this is called only at start as it has no dependencies
     useEffect(() => {
         fetch("auth", {
             method: "GET",
-            // credentials: "include",
             headers: {
-                // Accept: "application/json",
                 "Content-Type": "application/json",
-                // "Access-Control-Allow-Credentials": "true"
             }
         }).then(async response => {
             if (response.status === 200) return response.json();
-            throw new Error("failed to get auth status from server");
+            throw new Error("failed to get auth status from server, http code: " + response.status);
         }).then(responseJson => {
             console.log("JSON Response")
             console.log(responseJson)
@@ -33,15 +41,14 @@ export default function Login(): JSX.Element {
                 setAuthenticated(false)
             }
         }).catch(err => {
-            console.log(err)
             setAuthenticated(false)
-            setError(err)
+            setError(String(err))
         });
     },  [])
 
     return (
       <div>
-        <Header
+        <SmartHeader
           authenticated={authenticated}
           handleNotAuth={handleNotAuthenticated}
         />
@@ -54,6 +61,24 @@ export default function Login(): JSX.Element {
               <h2>Welcome, {user?.Username}!</h2>
             </div>
           )}
+        </div>
+        <div>
+          <p>Social accounts connected: </p>
+          {user?.Providers.facebookID && 
+            <ul>
+              <p>Facebook: {user.Providers.facebookID}</p>
+            </ul>
+          }
+          {user?.Providers.googleID && 
+            <ul>
+              <p>Google: {user.Providers.googleID}</p>
+            </ul>
+          }
+          {user?.Providers.githubID && 
+            <ul>
+              <p>Github: {user.Providers.githubID}</p>
+            </ul>
+          }
         </div>
       </div>
     );  

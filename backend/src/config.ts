@@ -24,6 +24,12 @@ export const schema = {
     GOOGLE_CLIENT_ID: String,
     GOOGLE_CLIENT_SECRET: String,
 
+    FACEBOOK_CLIENT_ID: String,
+    FACEBOOK_CLIENT_SECRET: String,
+    
+    GITHUB_CLIENT_ID: String,
+    GITHUB_CLIENT_SECRET: String,
+
     BASE_URL: {
         type: String,
         default: 'http://localhost',

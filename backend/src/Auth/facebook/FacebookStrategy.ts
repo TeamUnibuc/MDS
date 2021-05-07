@@ -1,11 +1,10 @@
-import { OAuth2Strategy as OAuthGoogleStrategy } from 'passport-google-oauth'
 import { env } from '../../config';
-import { UsersModel } from '../../models/UsersModel';
+import { Strategy as OAuthFacebookStrategy } from 'passport-facebook'
 import { obtainEmailAndUser } from '../utils';
+import { UsersModel } from '../../models/UsersModel';
 
-// Use the GoogleStrategy within Passport.
 //   Strategies in Passport require a `verify` function, which accept
-//   credentials (in this case, an accessToken, refreshToken, and Google
+//   credentials (in this case, an accessToken, refreshToken, and
 //   profile), and invoke a callback with a user object.
 
 
@@ -13,17 +12,32 @@ import { obtainEmailAndUser } from '../utils';
 // Login just tries to return the user if it's already in DB
 // Registration tries to create user if everything is alright
 
-const GoogleOptions = {
-    clientID: env.GOOGLE_CLIENT_ID,
-    clientSecret: env.GOOGLE_CLIENT_SECRET,
+
+// These are the data fields you ask facebook to give you about the user
+// IF you have the access. And that access is given by thee scopes you provide
+const facebookProfileFields = [
+    "id",
+    "name",
+    "name_format",
+    "picture",
+    "short_name",
+    "email",
+]
+
+// When you do an Auth, what "scopes", or "hmm, id like something about <X>"
+// They give you access to specific fields, like the ones above
+export const FacebookScopes = ['email', 'public_profile']
+
+const FacebookOptions = {
+    clientID: env.FACEBOOK_CLIENT_ID,
+    clientSecret: env.FACEBOOK_CLIENT_SECRET,
+    profileFields: facebookProfileFields,
 };
 
-export const GoogleScopes = ['profile', 'email']
-
-export const SmartGoogleStrategy = new OAuthGoogleStrategy(
+export const SmartFacebookStrategy = new OAuthFacebookStrategy(
     {
-        ...GoogleOptions,
-        callbackURL: `${env.BASE_URL}:${env.PORT}/google/smart-callback`,
+        ...FacebookOptions,
+        callbackURL: `${env.BASE_URL}:${env.PORT}/facebook/smart-callback`,
     },
     async function (accessToken, refreshToken, profile, done) {
         const {user: user, email: email} = await obtainEmailAndUser(profile)
@@ -36,7 +50,7 @@ export const SmartGoogleStrategy = new OAuthGoogleStrategy(
 
         // nu exista un user cu email la noi in DB, 
         // cream unul dar doar punem obiectul in sesiune ca si logat (dpdv passport), 
-        //    dar defapt userul nu este in DB
+        //    dar defapt userul nu are username
         if (!user) {
             const createdUserDoc = new UsersModel({
                 Email: email,
@@ -45,10 +59,9 @@ export const SmartGoogleStrategy = new OAuthGoogleStrategy(
                 Username: undefined,  // notice the empty username consideram 
                 DateJoined: new Date(),
                 Providers: {
-                    googleID: profile.id,
+                    facebookID: profile.id,
                 },
             })
-
             createdUserDoc.save()
                 .then(resp => {
                     console.log(`Saved in DB Shallow user: ${resp.Email}`)
@@ -64,8 +77,8 @@ export const SmartGoogleStrategy = new OAuthGoogleStrategy(
         // User-ul este in baza de date, dar s-ar putea sa nu aiba username setat
 
         // User-ul exista, verificam daca trebuie sa adaugam provider-ul
-        if (!user.Providers.googleID) {
-            user.Providers.googleID = profile.id;
+        if (!user.Providers.facebookID) {
+            user.Providers.facebookID = profile.id;
             await user.save()
         }
 
