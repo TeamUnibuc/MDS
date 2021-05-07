@@ -14,7 +14,7 @@ echo "========  !!!!   Building for production"
 # Build the frontend
 cd ../frontend
 rm -rf dist
-yarn build
+yarn build-prod
 # Build the backend
 cd ../backend
 yarn build-prod
