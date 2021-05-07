@@ -28,6 +28,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build && mv build dist",
+    "build-prod": "yarn set-env-prod && yarn build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "test:tsc": "tsc -p tsconfig.test.json",
