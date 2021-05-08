@@ -37,7 +37,7 @@ const FacebookOptions = {
 export const SmartFacebookStrategy = new OAuthFacebookStrategy(
     {
         ...FacebookOptions,
-        callbackURL: `${env.BACKEND_BASE_URL}:${env.PORT}/auth/facebook/smart-callback`,
+        callbackURL: `${env.FRONTEND_BASE_URL}:${env.FRONTEND_PORT}/auth/facebook/smart-callback`,
     },
     async function (accessToken, refreshToken, profile, done) {
         const {user: user, email: email} = await obtainEmailAndUser(profile)

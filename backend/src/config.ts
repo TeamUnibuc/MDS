@@ -10,8 +10,6 @@ export const schema = {
         default: '4242',
     },
 
-    FRONTEND_PORT: String,
-
     MONGO_USERNAME: String,
     MONGO_PASSWORD: String,
     MONGO_HOST: String,
@@ -27,15 +25,10 @@ export const schema = {
     GITHUB_CLIENT_ID: String,
     GITHUB_CLIENT_SECRET: String,
 
-    BACKEND_BASE_URL: {
-        type: String,
-        default: 'https://universityproject.ml',
-    },
+    BACKEND_BASE_URL: String,
+    FRONTEND_BASE_URL: String,
 
-    FRONTEND_BASE_URL: {
-        type: String,
-        default: 'https://universityproject.ml',
-    },
+    FRONTEND_PORT: String,
 }
 
 export type Env = EnvType<typeof schema>

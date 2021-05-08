@@ -23,7 +23,7 @@ app.use(
     cors({
         origin: [
             `${env.BACKEND_BASE_URL}:${env.PORT}`, // allow to server to accept request from different origin
-            `${env.FRONTEND_BASE_URL}:${env.FRONTEND_PORT}`,
+            `${env.FRONTEND_BASE_URL}`,
         ],
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
         credentials: true, // allow session cookie from browser to pass through
