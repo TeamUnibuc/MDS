@@ -33,7 +33,7 @@ PORT=$(grep -oP '^PORT=\K.*' .env)
 echo "Port is: ${PORT}"
 kill -9 $(lsof -t -i :${PORT})
 # Serve
-yarn serve &
+nohup yarn serve &
 
 # Start the engine backgrround process
 cd ../engine
@@ -42,7 +42,7 @@ PORT=4242
 echo "Port is: ${PORT}"
 kill -9 $(lsof -t -i :${PORT})
 # Start
-python engine.py &
+nohup python engine.py &
 
 # disown -h %1
 # disown -h %2
