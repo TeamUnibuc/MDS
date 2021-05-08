@@ -49,11 +49,11 @@ app.use(session({
 }));
 app.use(flash())
 
-// API routes
-app.use('/api', routesAPI)
-
 // passport configs
 passport_configure(app)
+
+// API routes
+app.use('/api', routesAPI)
 
 
 // Start express app
