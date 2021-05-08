@@ -1,10 +1,13 @@
 import express from 'express'
 import { EngineConnection } from '../EngineConnection'
+import { gameRoutes } from './Games/routes'
 import { NewGame } from './NewGame'
 
 export const routes = express.Router()
 
 routes.use(express.json())
+
+routes.use('/games', gameRoutes)
 
 routes.post("/fight", (req, res) => {
     console.log("Received a fight request at " + req.url)
