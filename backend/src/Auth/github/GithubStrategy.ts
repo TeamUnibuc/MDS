@@ -23,7 +23,7 @@ export const GithubScopes = [ 'read:user', 'user:email' ]
 export const SmartGithubStrategy = new OAuthGithubStrategy(
     {
         ...GithubOptions,
-        callbackURL: `${env.BASE_URL}:${env.PORT}/github/smart-callback`,
+        callbackURL: `${env.FRONTEND_BASE_URL}:${env.FRONTEND_PORT}/auth/github/smart-callback`,
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async function (accessToken: string, refreshToken: string, profile: any, done: any) {

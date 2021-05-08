@@ -34,6 +34,9 @@ jobs:
         FACEBOOK_CLIENT_SECRET: ${{secrets.FACEBOOK_CLIENT_SECRET}} 
         GITHUB_CLIENT_ID: ${{secrets.WTF_GITHUB_CLIENT_ID}} 
         GITHUB_CLIENT_SECRET: ${{secrets.WTF_GITHUB_CLIENT_SECRET}} 
+        BACKEND_BASE_URL: ${{secrets.BACKEND_BASE_URL}} 
+        FRONTEND_BASE_URL: ${{secrets.FRONTEND_BASE_URL}} 
+        FRONTEND_PORT: ${{secrets.FRONTEND_PORT}} 
     
     steps:
     - uses: actions/checkout@v2

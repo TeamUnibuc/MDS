@@ -23,7 +23,7 @@ export const GoogleScopes = ['profile', 'email']
 export const SmartGoogleStrategy = new OAuthGoogleStrategy(
     {
         ...GoogleOptions,
-        callbackURL: `${env.BASE_URL}:${env.PORT}/google/smart-callback`,
+        callbackURL: `${env.FRONTEND_BASE_URL}:${env.FRONTEND_PORT}/auth/google/smart-callback`,
     },
     async function (accessToken, refreshToken, profile, done) {
         const {user: user, email: email} = await obtainEmailAndUser(profile)

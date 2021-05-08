@@ -17,9 +17,9 @@ export const passport_configure = (app: Application): void =>
     app.use(appAuthMiddleware)
 
     app.use('/auth', authRoutes)
-    app.use('/google', googleRoutes)
-    app.use('/facebook', facebookRoutes)
-    app.use('/github', githubRoutes)
+    app.use('/auth/google', googleRoutes)
+    app.use('/auth/facebook', facebookRoutes)
+    app.use('/auth/github', githubRoutes)
 }
 
 passport.use('google-smart', SmartGoogleStrategy)
@@ -27,6 +27,7 @@ passport.use('google-smart', SmartGoogleStrategy)
 passport.use('facebook-smart', SmartFacebookStrategy)
 
 passport.use('github-smart', SmartGithubStrategy)
+
 
 passport.serializeUser((user, done) => {
     done(null, user.Email)
