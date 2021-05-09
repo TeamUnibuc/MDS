@@ -1,6 +1,5 @@
 import express from 'express'
 import { env } from '../config'
-import { UsersModel } from '../models/UsersModel'
 
 export const authRoutes = express.Router()
 
