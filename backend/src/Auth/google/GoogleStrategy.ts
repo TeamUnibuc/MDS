@@ -1,7 +1,7 @@
 import { OAuth2Strategy as OAuthGoogleStrategy } from 'passport-google-oauth'
 import { env } from '../../config';
 import { UsersModel } from '../../models/UsersModel';
-import { obtainEmailAndUser } from '../utils';
+import { computeUsername, obtainEmailAndUser } from '../utils';
 
 // Use the GoogleStrategy within Passport.
 //   Strategies in Passport require a `verify` function, which accept
@@ -38,11 +38,18 @@ export const SmartGoogleStrategy = new OAuthGoogleStrategy(
         // cream unul dar doar punem obiectul in sesiune ca si logat (dpdv passport), 
         //    dar defapt userul nu este in DB
         if (!user) {
+            const newUsername = await computeUsername(email)
+            if (!newUsername) {
+                const msg = `Unable to generate username`
+                console.log(msg)
+                return done(null, undefined, {message: msg})
+            }
+
             const createdUserDoc = new UsersModel({
                 Email: email,
                 FirstName: profile.name?.givenName,  // Daca cumva nu da nimic aici, teapa....
                 LastName: profile.name?.familyName,
-                Username: undefined,  // notice the empty username consideram 
+                Username: newUsername,  // notice the empty username consideram 
                 DateJoined: new Date(),
                 Providers: {
                     googleID: profile.id,
@@ -51,11 +58,11 @@ export const SmartGoogleStrategy = new OAuthGoogleStrategy(
 
             createdUserDoc.save()
                 .then(resp => {
-                    console.log(`Saved in DB Shallow user: ${resp.Email}`)
+                    console.log(`Saved in DB user: ${resp.Email}`)
                     return done(null, createdUserDoc)
                 })
                 .catch(err => {
-                    console.log(`Error saving in DB Shallow user: ${email}`, err)
+                    console.log(`Error saving in DB user: ${email}`, err)
                     return done(null, false, {message: 'Save in DB of shallow user failed'})
                 })
             return ;
