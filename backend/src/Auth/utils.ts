@@ -33,3 +33,44 @@ export const obtainEmailAndUser = async (profile: Profile):
         user: user || undefined,  // Mega funny, practic daca user este null, atunci pun undefined, 
     }                            // sa vrea argumentul optional :) ca asa vrea TS
 }
+
+export const computeUsername = async (email: string): Promise<string | undefined> =>
+{
+    const aronPos = email.lastIndexOf('@')
+    if (aronPos == -1) {
+        return undefined
+    }
+    
+    const userPrefix = email.substr(0, aronPos)
+
+    return await generateUsername(userPrefix)    
+}
+
+export const generateUsername = async (prefix: string, lg = 0): Promise<string> =>
+{
+    const randomDig = () => String(Math.floor(Math.random() * 10))
+
+    const nrTries = Math.pow(10, Math.max(0, lg - 1))
+    let foundUsername: string | undefined;
+    // eslint-disable-next-line no-loops/no-loops
+    for (let nrTried = 0; nrTried < nrTries; ++nrTried) {
+        const randomDigits = Array.from({length: lg}, () => randomDig()).join('')
+        const candidateUsername = prefix + (lg == 0 ? '' : '' + randomDigits)
+        console.log(`Random digits: ${randomDigits}`)
+        console.log(`Candidate username: ${candidateUsername}`)
+        const searchedUser = await UsersModel
+            .findOne({Username: candidateUsername})
+            .then(usr => console.log('found user when creating username: ' + usr))
+            .catch(err => {
+                console.log(`Error trying to find if user ${candidateUsername} exists: ${err}`)
+                return null
+            })
+        if (searchedUser)
+            continue
+        foundUsername = candidateUsername
+        break
+    }
+    if (foundUsername)
+        return foundUsername
+    return await generateUsername(prefix, lg + 1)
+}

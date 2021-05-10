@@ -1,6 +1,6 @@
 import { env } from '../../config';
 import { Strategy as OAuthFacebookStrategy } from 'passport-facebook'
-import { obtainEmailAndUser } from '../utils';
+import { computeUsername, obtainEmailAndUser } from '../utils';
 import { UsersModel } from '../../models/UsersModel';
 
 //   Strategies in Passport require a `verify` function, which accept
@@ -52,11 +52,18 @@ export const SmartFacebookStrategy = new OAuthFacebookStrategy(
         // cream unul dar doar punem obiectul in sesiune ca si logat (dpdv passport), 
         //    dar defapt userul nu are username
         if (!user) {
+            const newUsername = await computeUsername(email)
+            if (!newUsername) {
+                const msg = `Unable to generate username`
+                console.log(msg)
+                return done(null, undefined, {message: msg})
+            }
+
             const createdUserDoc = new UsersModel({
                 Email: email,
                 FirstName: profile.name?.givenName,  // Daca cumva nu da nimic aici, teapa....
                 LastName: profile.name?.familyName,
-                Username: undefined,  // notice the empty username consideram 
+                Username: newUsername,  // notice the empty username consideram 
                 DateJoined: new Date(),
                 Providers: {
                     facebookID: profile.id,
@@ -64,11 +71,11 @@ export const SmartFacebookStrategy = new OAuthFacebookStrategy(
             })
             createdUserDoc.save()
                 .then(resp => {
-                    console.log(`Saved in DB Shallow user: ${resp.Email}`)
+                    console.log(`Saved in DB user: ${resp.Email}`)
                     return done(null, createdUserDoc)
                 })
                 .catch(err => {
-                    console.log(`Error saving in DB Shallow user: ${email}`, err)
+                    console.log(`Error saving in DB user: ${email}`, err)
                     return done(null, false, {message: 'Save in DB of shallow user failed'})
                 })
             return ;
