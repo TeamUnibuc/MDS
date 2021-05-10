@@ -1,7 +1,7 @@
 import { Strategy as OAuthGithubStrategy } from 'passport-github2'
 import { env } from '../../config';
 import { UsersModel } from '../../models/UsersModel';
-import { obtainEmailAndUser } from '../utils';
+import { computeUsername, obtainEmailAndUser } from '../utils';
 
 // Use the GoogleStrategy within Passport.
 //   Strategies in Passport require a `verify` function, which accept
@@ -49,11 +49,18 @@ export const SmartGithubStrategy = new OAuthGithubStrategy(
         // cream unul dar doar punem obiectul in sesiune ca si logat (dpdv passport), 
         //    dar defapt userul nu este in DB
         if (!user) {
+            const newUsername = await computeUsername(email)
+            if (!newUsername) {
+                const msg = `Unable to generate username`
+                console.log(msg)
+                return done(null, undefined, {message: msg})
+            }
+
             const createdUserDoc = new UsersModel({
                 Email: email,
                 FirstName: firstName,  // Daca cumva nu da nimic aici, teapa....
                 LastName: lastName,
-                Username: undefined,  // notice the empty username consideram 
+                Username: newUsername,  // notice the empty username consideram 
                 DateJoined: new Date(),
                 Providers: {
                     githubID: profile.id,
@@ -62,11 +69,11 @@ export const SmartGithubStrategy = new OAuthGithubStrategy(
 
             createdUserDoc.save()
                 .then(resp => {
-                    console.log(`Saved in DB Shallow user: ${resp.Email}`)
+                    console.log(`Saved in DB user: ${resp.Email}`)
                     return done(null, createdUserDoc)
                 })
                 .catch(err => {
-                    console.log(`Error saving in DB Shallow user: ${email}`, err)
+                    console.log(`Error saving in DB  user: ${email}`, err)
                     return done(null, undefined, {message: 'Save in DB of shallow user failed'})
                 })
             return ;
