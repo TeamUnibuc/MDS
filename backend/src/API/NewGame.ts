@@ -11,7 +11,7 @@ const CreateNewBotEntry = (Code: string, AuthorID: string): Promise<string> => {
 
     return bot.save()
         .then(val => {
-            console.log("SAved bot!");
+            console.log("Saved bot!");
             return val.id;
         })
         .catch(e => {
