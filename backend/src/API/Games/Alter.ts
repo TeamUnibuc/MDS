@@ -1,3 +1,4 @@
+/* eslint-disable no-loops/no-loops */
 import { Request, Response } from 'express'
 import { GamesModel } from '../../models/GamesModel'
 import { GameOfficialBotsModel } from '../../models/GameOfficialBotsModel'
@@ -20,12 +21,15 @@ const CreateNewBotEntry = (Code: string, AuthorID: string): Promise<string> => {
         });
 }
 
-const CreateOfficialBot = (Code: string, AuthorID: string, GameID: string, BotRank: number): Promise<string> => {
+const CreateOfficialBot = (Code: string, Name: string | undefined, AuthorID: string, GameID: string, BotRank: number): Promise<string> => {
     return CreateNewBotEntry(Code, AuthorID)
         .then(async BotID => {
             const game_official_bot = new GameOfficialBotsModel();
             game_official_bot.BotID = BotID;
-            game_official_bot.BotName = "Bot #" + BotRank;
+
+            if (Name == null) game_official_bot.BotName = "Bot #" + BotRank;
+            else game_official_bot.BotName = Name;
+
             game_official_bot.BotRank = BotRank;
             game_official_bot.GameID = GameID;
 
@@ -37,17 +41,46 @@ const CreateOfficialBot = (Code: string, AuthorID: string, GameID: string, BotRa
 
 export const Alter = async (req: Request, res: Response): Promise<void> => 
 {
+    // Permissions required: Creator of the game or administrator for Update, signed-in for Create
 
-    // TODO: verify the permission (administrator)
+    if (!req.isAuthenticated() || !req.user) {
+        res.json({
+            "status": "fail",
+            "error_message": "You need to be authenticated to do this operation",
+        });
+    }
 
     if (req.body.game_id) {
         // edit a game
 
-        const game_id: number = req.body.game_id;
+        const game_id: string = req.body.game_id;
         
         const editGame = await GamesModel.findById(game_id)
 
         if (editGame) {
+
+            if (!req.user || (req.user.IsAdministrator != true && req.user.id != editGame.AuthorID)) {
+                res.json({
+                    "status": "fail",
+                    "error_message": "Permission denied",
+                });
+            }
+
+            // stergem GameOfficialBots din baza de date pentru acest bot
+
+            const officialBots = await GameOfficialBotsModel.find({GameID: editGame.id})
+            try {
+                for (let i = 0; i < officialBots.length; ++i) {
+                    officialBots[i]?.delete();
+                }
+            } catch (error) {
+                res.json({
+                    "status": "fail",
+                    "error_message": error,
+                });
+            }
+
+            // modificam jocul
             
             editGame.Name = req.body.title;
             editGame.Description = req.body.statement;
@@ -55,13 +88,16 @@ export const Alter = async (req: Request, res: Response): Promise<void> =>
             editGame.AuthorID = req.body.author_id;
             const bots: Array<string> = req.body.official_bots;
             editGame.OfficialGameBots = bots.length;
-
-            // TODO: ce facem cu botii trimisi anterior??
+            editGame.Date = new Date();
 
             editGame.update().then(editGame => {
                 console.log("Updated game: ", editGame);
-                bots.map((bot, id) => CreateOfficialBot(bot, editGame.AuthorID, editGame.id, id));
-                res.json(editGame.id);
+                bots.map((bot, id) => {
+                    const botObj = JSON.parse(bot)
+                    const name: string | undefined = botObj.bot_name;
+                    CreateOfficialBot(botObj.bot_code, name, editGame.AuthorID, editGame.id, id);
+                })
+                res.json({"status": "ok", "game_id": editGame.id});
             })
             .catch(err => res.json({ "status": "fail", "error_message": err }));
         }
@@ -79,11 +115,16 @@ export const Alter = async (req: Request, res: Response): Promise<void> =>
     game.AuthorID = req.body.author_id;
     const bots: Array<string> = req.body.official_bots;
     game.OfficialGameBots = bots.length;
+    game.Date = new Date();
 
     game.save()
         .then(game => {
             console.log("Saved game: ", game);  
-            bots.map((bot, id) => CreateOfficialBot(bot, game.AuthorID, game.id, id));
+            bots.map((bot, id) => {
+                    const botObj = JSON.parse(bot)
+                    const name: string | undefined = botObj.bot_name;
+                    CreateOfficialBot(botObj.bot_code, name, game.AuthorID, game.id, id);
+            })
             res.json({"status": "ok", "game_id": game.id});
         })
         .catch(err => res.json({ "status": "fail", "error_message": err }));

@@ -5,34 +5,57 @@ import { GameOfficialBotsModel } from '../../models/GameOfficialBotsModel'
 
 export const Sources = async (req: Request, res: Response): Promise<void> => 
 {
+    // Permissions required: Creator of the game or administrator
 
-    // TODO: verify the permission (creator of the game or administrator)
+    if (!req.isAuthenticated()) {
+        res.json({
+            "status": "fail",
+            "error_message": "You need to be authenticated to do this operation",
+        });
+    }
 
-    const game_id: number = req.body.game_id;
+    const game_id: string = req.body.game_id;
 
     const game = await GamesModel.findById(game_id)
 
     if (game) {
 
-        var official_bots_info: (ReturnType<typeof BotsModel.findById>)[] = [];
+        if (!req.user || (req.user.IsAdministrator != true && req.user.id != game.AuthorID)) {
+            res.json({
+                "status": "fail",
+                "error_message": "Permission denied",
+            });
+        }
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const official_bots_info: Array<any> = [];
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const official_bots = 
-        (await GameOfficialBotsModel.find({GameId: game_id}, {BotID: 1})).forEach(function(bot){
-            const botInfo = BotsModel.findById(bot.BotID);
+        (await GameOfficialBotsModel.find({GameId: game_id})).forEach(async function(bot){
+            const botInfo = await BotsModel.findById(bot.BotID);
             if (botInfo) {
-                official_bots_info.push(botInfo);
+                official_bots_info.push({
+                    "_id": botInfo.id,
+                    "BotName": bot.BotName,
+                    "BotRank": bot.BotRank,
+                    "Code": botInfo.Code,
+                    "DateSubmitted": botInfo.DateSubmitted,
+                    "AuthorID": botInfo.AuthorID,
+                    "CompilationMessage": botInfo.CompilationMessage,
+                });
             }
         })
 
         res.json({
             "status": "ok",
             "game_engine": game.GameEngine,
-            "official_bots": official_bots_info
+            "official_bots": official_bots_info,
         })
     }
 
     res.json({
         "status": "fail",
-        "error_mesagge": "Game Id not found"
+        "error_mesagge": "Game Id not found",
     })
 }

@@ -17,6 +17,8 @@ class GamesItem {
     OfficialGameBots = 0;
     // Creator of the game.
     AuthorID = "";
+    // When the game was added
+    Date = new Date();
 }
 
 interface GamesDoc extends GamesItem, Document { }

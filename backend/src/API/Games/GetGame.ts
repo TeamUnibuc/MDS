@@ -3,11 +3,21 @@ import { GamesModel } from '../../models/GamesModel'
 
 export const GetGame = async (req: Request, res: Response): Promise<void> => 
 {
-    const game_id: number = req.body.game_id;
+    // Permissions required: None
 
-    const game = await GamesModel.findById(game_id, {Name: 1, Description: 1, AuthorID: 1});
+    const game_id: string = req.body.game_id;
 
-    // TODO: should we put author username and status of the response too? 
+    const game = await GamesModel.findById(game_id, {Name: 1, Description: 1, AuthorID: 1, Date: 1});
 
-    res.json(game)
+    if (game) {
+        res.json({
+            "status": "ok",
+            "game": game,
+        });
+    }
+    else res.json({
+        "status": "fail",
+        "error_message": "Id not found",
+    });
+
 }
