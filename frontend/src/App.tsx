@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { DefaultPage, TestEval, AddGame, Dashboard, SmartRegister } from './pages';
+import { DefaultPage, TestEval, AddGame, Dashboard } from './pages';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
 
 function App(): JSX.Element {
@@ -11,7 +11,6 @@ function App(): JSX.Element {
         <Route key="testeval" path="/testeval" exact component={TestEval}/>
         <Route key="addgame" path="/addgame" exact component={AddGame}/>
         <Route key="dashboard" path="/dashboard" exact component={Dashboard}/>
-        <Route key="smartregister" path="/smartregister" exact component={SmartRegister}/>
       </Switch>
     </Router>
   );
