@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import 'codemirror/keymap/sublime';
 import 'codemirror/theme/elegant.css';
 
-import { Container, Button } from '@material-ui/core'
+import { Container, Button, Box } from '@material-ui/core'
+import CodeMirror from '@uiw/react-codemirror'
 
 function AddGame(): JSX.Element {
     const [engine, setEngine] = useState('Engine code...')
@@ -25,6 +26,8 @@ function AddGame(): JSX.Element {
         }
 
         console.log(reqBody);
+
+        return;
 
         const data = await fetch('api/new_game', {
             method: "POST",
@@ -65,23 +68,26 @@ function AddGame(): JSX.Element {
 
         <br/>
 
+        <Box height="300px">
 
-        {/* <CodeMirror
-            value={engine}
-            options={{
-                theme: 'elegant',
-                keyMap: 'sublime',
-                mode: 'c++',
-                lineNumbers: true,
-            }}
-        /> */}
-        <textarea
+            <CodeMirror
+                value={engine}
+                onChange={(instance : CodeMirror.Editor) => setEngine(instance.getValue())}
+                options={{
+                    theme: 'elegant',
+                    keyMap: 'sublime',
+                    mode: 'c++',
+                    lineNumbers: true,
+                }}
+                />
+        </Box>
+        {/* <textarea
             style={{width: "90%"}}
             rows={20} 
             name={"Engine"}
             value={engine}
             onChange={(event) => setEngine(event.target.value)}
-        />
+        /> */}
         {bots.map((val, id) => {
             return <textarea
                         key={id}
