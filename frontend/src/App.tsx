@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { DefaultPage, TestEval, AddGame, Dashboard } from './pages'
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
@@ -6,11 +6,13 @@ import SmartHeader from './components/SmartHeader'
 import { Grid } from '@material-ui/core'
 
 function App(): JSX.Element {
+  const [pageName, setPageName] = useState('');
+
   return (
     <Grid container>
       <Router basename={process.env.PUBLIC_URL}>
       <Grid item xs={12}>
-        <SmartHeader />
+        <SmartHeader activePage={'oh well'}/>
       </Grid>
       <Grid item xs={12}>
         <Switch>

@@ -1,8 +1,27 @@
-import { CircularProgress } from '@material-ui/core';
+import { AppBar, CircularProgress, Toolbar, IconButton, Typography, Button, 
+        createStyles, makeStyles, Theme } 
+  from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu'
 import React, { useState, useEffect } from 'react';
 import { getAuthStatus } from '../../Fetch/auth';
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      flexGrow: 1,
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
+    },
+    title: {
+      flexGrow: 1,
+    },
+  }),
+);
+
 export default function Dashboard(): JSX.Element {
+    const classes = useStyles();
+
     const [user, setUser] = useState<{
       Username: string, 
       Email: string,
@@ -32,8 +51,8 @@ export default function Dashboard(): JSX.Element {
             setAuthenticated(false)
             setError(String(err))
         });
-    },  [])
-
+    }, [])
+    
     return (
         <div>
           {authenticated === null ? (
@@ -41,29 +60,29 @@ export default function Dashboard(): JSX.Element {
           ) : authenticated ? (
             <div>
               <h2>Welcome, {user?.Username}!</h2>
+              <div>
+                <p>Social accounts connected: </p>
+                {user?.Providers.facebookID && 
+                  <ul>
+                    <p>Facebook: {user.Providers.facebookID}</p>
+                  </ul>
+                }
+                {user?.Providers.googleID && 
+                  <ul>
+                    <p>Google: {user.Providers.googleID}</p>
+                  </ul>
+                }
+                {user?.Providers.githubID && 
+                  <ul>
+                    <p>Github: {user.Providers.githubID}</p>
+                  </ul>
+                }
+              </div>
             </div>
           ) : (
             <>
               <h1>Welcome, Guest</h1>
-              <p>Status: {error}</p>
-              <div>
-              <p>Social accounts connected: </p>
-              {user?.Providers.facebookID && 
-                <ul>
-                  <p>Facebook: {user.Providers.facebookID}</p>
-                </ul>
-              }
-              {user?.Providers.googleID && 
-                <ul>
-                  <p>Google: {user.Providers.googleID}</p>
-                </ul>
-              }
-              {user?.Providers.githubID && 
-                <ul>
-                  <p>Github: {user.Providers.githubID}</p>
-                </ul>
-              }
-            </div>
+              <p>Status: {error ? error : 'Everything is fine!'}</p>
             </>
           )}
         </div>
