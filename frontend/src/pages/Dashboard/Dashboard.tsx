@@ -1,5 +1,5 @@
+import { CircularProgress } from '@material-ui/core';
 import React, { useState, useEffect } from 'react';
-import SmartHeader from '../../components/SmartHeader';
 import { getAuthStatus } from '../../Fetch/auth';
 
 export default function Dashboard(): JSX.Element {
@@ -10,19 +10,17 @@ export default function Dashboard(): JSX.Element {
         googleID?: string,
         facebookID?: string,
         twitterID?: string,
-        githubID?: string,
+        githubID?: string, 
       }
     } | null>(null);
 
     const [error, setError] = useState('');
-    const [authenticated, setAuthenticated] = useState(false);
+    const [authenticated, setAuthenticated] = useState<boolean | null>(null);
 
     // Basically this is called only at start as it has no dependencies
     useEffect(() => {
       getAuthStatus()
         .then(responseJson => {
-            console.log("JSON Response")
-            console.log(responseJson)
             if (responseJson.authenticated) {
                 setAuthenticated(true)
                 setUser(responseJson.user)
@@ -37,35 +35,37 @@ export default function Dashboard(): JSX.Element {
     },  [])
 
     return (
-      <>
         <div>
-          {!authenticated ? (<>
-            <h1>Welcome, Guest</h1>
-            <p>Status: {error}</p>
-          </>) : (
+          {authenticated === null ? (
+            <CircularProgress />
+          ) : authenticated ? (
             <div>
               <h2>Welcome, {user?.Username}!</h2>
             </div>
+          ) : (
+            <>
+              <h1>Welcome, Guest</h1>
+              <p>Status: {error}</p>
+              <div>
+              <p>Social accounts connected: </p>
+              {user?.Providers.facebookID && 
+                <ul>
+                  <p>Facebook: {user.Providers.facebookID}</p>
+                </ul>
+              }
+              {user?.Providers.googleID && 
+                <ul>
+                  <p>Google: {user.Providers.googleID}</p>
+                </ul>
+              }
+              {user?.Providers.githubID && 
+                <ul>
+                  <p>Github: {user.Providers.githubID}</p>
+                </ul>
+              }
+            </div>
+            </>
           )}
         </div>
-        <div>
-          <p>Social accounts connected: </p>
-          {user?.Providers.facebookID && 
-            <ul>
-              <p>Facebook: {user.Providers.facebookID}</p>
-            </ul>
-          }
-          {user?.Providers.googleID && 
-            <ul>
-              <p>Google: {user.Providers.googleID}</p>
-            </ul>
-          }
-          {user?.Providers.githubID && 
-            <ul>
-              <p>Github: {user.Providers.githubID}</p>
-            </ul>
-          }
-        </div>
-      </>
-    );  
+    )
 }
