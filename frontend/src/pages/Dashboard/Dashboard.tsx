@@ -1,36 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import SmartHeader from '../../components/SmartHeader';
+import { getAuthStatus } from '../../Fetch/auth';
 
 export default function Dashboard(): JSX.Element {
     const [user, setUser] = useState<{
       Username: string, 
       Email: string,
       Providers: {
-        googleID: string,
-        facebookID: string,
-        twitterID: string,
-        githubID: string,
+        googleID?: string,
+        facebookID?: string,
+        twitterID?: string,
+        githubID?: string,
       }
     } | null>(null);
 
     const [error, setError] = useState('');
     const [authenticated, setAuthenticated] = useState(false);
 
-    const handleNotAuthenticated = () => {
-        setAuthenticated(false)
-    };
-
     // Basically this is called only at start as it has no dependencies
     useEffect(() => {
-        fetch("auth", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            }
-        }).then(async response => {
-            if (response.status === 200) return response.json();
-            throw new Error("failed to get auth status from server, http code: " + response.status);
-        }).then(responseJson => {
+      getAuthStatus()
+        .then(responseJson => {
             console.log("JSON Response")
             console.log(responseJson)
             if (responseJson.authenticated) {
@@ -47,11 +37,7 @@ export default function Dashboard(): JSX.Element {
     },  [])
 
     return (
-      <div>
-        <SmartHeader
-          authenticated={authenticated}
-          handleNotAuth={handleNotAuthenticated}
-        />
+      <>
         <div>
           {!authenticated ? (<>
             <h1>Welcome, Guest</h1>
@@ -80,6 +66,6 @@ export default function Dashboard(): JSX.Element {
             </ul>
           }
         </div>
-      </div>
+      </>
     );  
 }
