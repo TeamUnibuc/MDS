@@ -18,6 +18,8 @@ export const passport_configure = (app: Application): void =>
     app.use('/auth/google', googleRoutes)
     app.use('/auth/facebook', facebookRoutes)
     app.use('/auth/github', githubRoutes)
+
+    
 }
 
 // Registering strategies for passport
