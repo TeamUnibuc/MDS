@@ -1,0 +1,29 @@
+.btn-login-facebook, 
+.btn-login-facebook:hover {
+    background-color: #5890FF;
+}
+
+.btn-login-google,
+.btn-login-google:hover {
+    background-color: #dd4b39;
+}
+
+.btn-login-github,
+.btn-login-github:hover {
+    background-color: #333;
+}
+
+[class*=' btn-login'] {
+    margin: 0.3em;
+}
+
+[class*=' btn-login']:hover {
+    filter: brightness(90%);
+    -webkit-transition: 0.2s -webkit-filter linear;
+    -moz-transition: 0.2s -moz-filter linear;
+    -moz-transition: 0.2s filter linear;
+    -ms-transition: 0.2s -ms-filter linear;
+    -o-transition: 0.2s -o-filter linear;
+    transition: 0.2s filter linear, 0.2s -webkit-filter linear;
+    /* filter: grayscale(100%) brightness(40%) sepia(100%) hue-rotate(-50deg) saturate(600%) contrast(0.8); */
+}

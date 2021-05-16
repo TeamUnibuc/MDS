@@ -1,3 +1,4 @@
+import { StylesProvider } from '@material-ui/styles';
 import React from 'react';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
 
@@ -13,6 +14,8 @@ const theme = createMuiTheme()
 
 function App(): JSX.Element {
   return (
+    <StylesProvider injectFirst>
+
     <ThemeProvider theme={theme}>
       <Grid container>
         <Router basename={process.env.PUBLIC_URL}>
@@ -30,6 +33,7 @@ function App(): JSX.Element {
       </Router>
       </Grid>
     </ThemeProvider>
+    </StylesProvider>
   );
 }
 

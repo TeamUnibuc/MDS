@@ -13,6 +13,8 @@ import { Theme } from '@material-ui/core';
 import { createStyles } from '@material-ui/core';
 import { CircularProgress } from '@material-ui/core';
 
+import './SmartHeader.css'
+
 interface Props
 {
     activePage: string,
@@ -80,40 +82,44 @@ export default function SmartHeader({activePage}: Props): JSX.Element
         <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon />
         </IconButton>
+
         <Typography variant="h6" className={classes.title}>
             {activePage}
         </Typography>
+        
         {authenticated === null ? (
+        
             <CircularProgress color="secondary"/>
+        
         ) : authenticated == true ? (<>
+        
         <Box mr={2}>
             <Typography align="right" variant="h6" className={classes.title}>
                 {user?.Username}
             </Typography>
         </Box>
-        <Button variant="contained" color="secondary" onClick={handleLogoutClick}>Logout</Button>
+        <Button variant="contained" color="secondary" size="small" onClick={handleLogoutClick}>
+            Logout
+        </Button>
+       
         </>) : (<>
+        
             <Box mr={2}>
                 <Typography align="right" className={classes.title}>
                     Login
                 </Typography>
             </Box>
             <>
-            <div style={{color: '#1a75ff'}}>
-            <Button style={{margin: '0.3em'}} variant="contained" color="inherit" size="small" onClick={() => handleSmartLoginClick('facebook')}>
+            <Button className='btn-login-facebook' variant="contained" color="inherit" size="small" onClick={() => handleSmartLoginClick('facebook')}>
                 Facebook
             </Button>
-            </div>
-            <div style={{color: '#ff5500'}}>
-            <Button style={{margin: '0.3em'}} variant="contained" color="inherit" size="small" onClick={() => handleSmartLoginClick('google')}>
+            <Button className='btn-login-google' variant="contained" color="inherit" size="small" onClick={() => handleSmartLoginClick('google')}>
                 Google
             </Button>
-            </div>
-            <div style={{color: '#000033'}}>
-            <Button style={{margin: '0.3em'}} variant="contained" color="inherit" size="small" onClick={() => handleSmartLoginClick('github')}>
+            <Button className='btn-login-github' variant="contained" color="inherit" size="small" onClick={() => handleSmartLoginClick('github')}>
                 Github
             </Button>
-            </div>
+       
             </>
         </>)}
     </Toolbar>
