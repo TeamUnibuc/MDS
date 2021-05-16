@@ -5,14 +5,6 @@
   "version": "0.2.0",
   "configurations": [
     // This one doesn't reeally work, unfortunately
-    {
-      "name": "Attach to Chrome",
-      "port": 9222,
-      "request": "attach",
-      "type": "pwa-chrome",
-      "url": "http://localhost:7777",
-      "webRoot": "${workspaceRoot}"
-    },
     // {
     //   "command": "npm start",
     //   "name": "Run npm start",
@@ -32,9 +24,17 @@
     //   "internalConsoleOptions": "neverOpen"
     // },
     {
+      "name": "Attach to Chrome",
+      "port": 9222,
+      "request": "attach",
+      "type": "pwa-chrome",
+      "url": "http://localhost:7777",
+      "webRoot": "${workspaceRoot}"
+    },
+    {
       "type": "chrome",
       "request": "launch",
-      "name": "hrome",
+      "name": "Launch Chrome",
       "url": "http://localhost:7777",
       "webRoot": "${workspaceFolder}/frontend",
       "breakOnLoad": true,

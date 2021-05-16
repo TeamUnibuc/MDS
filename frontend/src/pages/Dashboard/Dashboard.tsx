@@ -1,42 +1,18 @@
-import { AppBar, CircularProgress, Toolbar, IconButton, Typography, Button, 
-        createStyles, makeStyles, Theme } 
-  from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu'
 import React, { useState, useEffect } from 'react';
-import { getAuthStatus } from '../../Fetch/auth';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
-    title: {
-      flexGrow: 1,
-    },
-  }),
-);
+import { AuthUser, getAuthStatus } from 'fetch/auth';
 
-export default function Dashboard(): JSX.Element {
-    const classes = useStyles();
+import { CircularProgress } from '@material-ui/core';
 
-    const [user, setUser] = useState<{
-      Username: string, 
-      Email: string,
-      Providers: {
-        googleID?: string,
-        facebookID?: string,
-        twitterID?: string,
-        githubID?: string, 
-      }
-    } | null>(null);
+export default function Dashboard(): JSX.Element 
+{
+    const [user, setUser] = useState<AuthUser | null>(null);
 
     const [error, setError] = useState('');
     const [authenticated, setAuthenticated] = useState<boolean | null>(null);
 
     // Basically this is called only at start as it has no dependencies
+    // ar trebui sa facem un fel de context in care sa tinem statusul asta de logat
     useEffect(() => {
       getAuthStatus()
         .then(responseJson => {

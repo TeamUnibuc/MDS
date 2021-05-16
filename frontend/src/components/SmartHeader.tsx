@@ -1,7 +1,8 @@
-import MenuIcon from '@material-ui/icons/Menu';
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
-import { getAuthStatus } from '../Fetch/auth';
+
+import Box from '@material-ui/core/Box';
+import MenuIcon from '@material-ui/icons/Menu';
+import { getAuthStatus } from 'fetch/auth';
 import { AppBar } from '@material-ui/core';
 import { Toolbar } from '@material-ui/core';
 import { IconButton } from '@material-ui/core';
@@ -11,7 +12,6 @@ import { makeStyles } from '@material-ui/core';
 import { Theme } from '@material-ui/core';
 import { createStyles } from '@material-ui/core';
 import { CircularProgress } from '@material-ui/core';
-import { spacing } from '@material-ui/system';
 
 interface Props
 {
@@ -47,25 +47,24 @@ export default function SmartHeader({activePage}: Props): JSX.Element
         }
       } | null>(null);
   
-      const [error, setError] = useState('');
-      const [authenticated, setAuthenticated] = useState<boolean | null>(null);
-  
-      // Basically this is called only at start as it has no dependencies
-      useEffect(() => {
-        getAuthStatus()
-          .then(responseJson => {
-              if (responseJson.authenticated) {
-                  setAuthenticated(true)
-                  setUser(responseJson.user)
-              }
-              else {
-                  setAuthenticated(false)
-              }
-          }).catch(err => {
-              setAuthenticated(false)
-              setError(String(err))
-          });
-      }, [])
+    const [authenticated, setAuthenticated] = useState<boolean | null>(null);
+
+    // Basically this is called only at start as it has no dependencies
+    useEffect(() => {
+    getAuthStatus()
+        .then(responseJson => {
+            if (responseJson.authenticated) {
+                setAuthenticated(true)
+                setUser(responseJson.user)
+            }
+            else {
+                setAuthenticated(false)
+            }
+        }).catch(err => {
+            setAuthenticated(false)
+            console.log(err)
+        });
+    }, [])
 
     const handleSmartLoginClick = (provider: string) => {
         window.open(`auth/${provider}/smart`, "_self");
@@ -85,26 +84,33 @@ export default function SmartHeader({activePage}: Props): JSX.Element
             {activePage}
         </Typography>
         {authenticated === null ? (
-            <CircularProgress />
-        ) : authenticated == true ? (
-            <Button color="inherit" onClick={handleLogoutClick}>Logout</Button>
-        ) : (<>
+            <CircularProgress color="secondary"/>
+        ) : authenticated == true ? (<>
+        <Box mr={2}>
             <Typography align="right" variant="h6" className={classes.title}>
-                Login:
+                {user?.Username}
             </Typography>
+        </Box>
+        <Button variant="contained" color="secondary" onClick={handleLogoutClick}>Logout</Button>
+        </>) : (<>
+            <Box mr={2}>
+                <Typography align="right" className={classes.title}>
+                    Login
+                </Typography>
+            </Box>
             <>
-            <div style={{color: '#1ad1ff'}}>
-            <Button style={{margin: '0.3em'}} variant="outlined" color="inherit" onClick={() => handleSmartLoginClick('facebook')}>
+            <div style={{color: '#1a75ff'}}>
+            <Button style={{margin: '0.3em'}} variant="contained" color="inherit" size="small" onClick={() => handleSmartLoginClick('facebook')}>
                 Facebook
             </Button>
             </div>
-            <div style={{color: '#DB4437'}}>
-            <Button style={{margin: '0.3em'}} variant="outlined" color="inherit" onClick={() => handleSmartLoginClick('google')}>
+            <div style={{color: '#ff5500'}}>
+            <Button style={{margin: '0.3em'}} variant="contained" color="inherit" size="small" onClick={() => handleSmartLoginClick('google')}>
                 Google
             </Button>
             </div>
             <div style={{color: '#000033'}}>
-            <Button style={{margin: '0.3em'}} variant="outlined" color="inherit" onClick={() => handleSmartLoginClick('github')}>
+            <Button style={{margin: '0.3em'}} variant="contained" color="inherit" size="small" onClick={() => handleSmartLoginClick('github')}>
                 Github
             </Button>
             </div>
@@ -112,26 +118,4 @@ export default function SmartHeader({activePage}: Props): JSX.Element
         </>)}
     </Toolbar>
     </AppBar>
-//   <ul className="menu">
-//         <li>
-//             <Link to="/">Home</Link>
-//         </li>
-//         {authenticated ? (
-//             <li onClick={handleLogoutClick}>
-//                 <Link to="#">Logout</Link>
-//             </li>
-//         ) : (<>
-//             <li onClick={() => handleSmartLoginClick('google')}>
-//                 <Link to="#">Google Login</Link>
-//             </li>
-            
-//             <li onClick={() => handleSmartLoginClick('facebook')}>
-//                 <Link to="#">Facebook Login</Link>
-//             </li>
-//             <li onClick={() => handleSmartLoginClick('github')}>
-//                 <Link to="#">Github Login</Link>
-//             </li>
-//             </>
-//         )}
-//     </ul>;
 }
