@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import Box from '@material-ui/core/Box';
 import MenuIcon from '@material-ui/icons/Menu';
-import { getAuthStatus } from 'fetch/auth';
+import { AuthUser, getAuthStatus } from 'fetch/auth';
 import { AppBar } from '@material-ui/core';
 import { Toolbar } from '@material-ui/core';
 import { IconButton } from '@material-ui/core';
@@ -34,20 +34,11 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export default function SmartHeader({activePage}: Props): JSX.Element
+const SmartHeader = ({activePage}: Props): JSX.Element =>
 {
     const classes = useStyles();
 
-    const [user, setUser] = useState<{
-        Username: string, 
-        Email: string,
-        Providers: {
-          googleID?: string,
-          facebookID?: string,
-          twitterID?: string,
-          githubID?: string, 
-        }
-      } | null>(null);
+    const [user, setUser] = useState<AuthUser | null>(null);
   
     const [authenticated, setAuthenticated] = useState<boolean | null>(null);
 
@@ -125,3 +116,5 @@ export default function SmartHeader({activePage}: Props): JSX.Element
     </Toolbar>
     </AppBar>
 }
+
+export default SmartHeader;
