@@ -13,7 +13,7 @@ export default function DeleteGame(): JSX.Element {
         console.log("Got called");
 
         const reqBody = {
-            gameId
+            game_id: gameId
         }
 
         console.log(reqBody);

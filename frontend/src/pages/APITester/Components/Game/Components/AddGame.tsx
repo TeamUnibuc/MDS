@@ -21,11 +21,11 @@ function AddGame(): JSX.Element {
         console.log("Got called");
 
         const reqBody = {
-            name,
-            description,
-            engine,
-            author,
-            bots,
+            title: name,
+            statement: description,
+            game_engine: engine,
+            author_id: author,
+            official_bots: bots,
         }
 
         console.log(reqBody);

@@ -13,7 +13,7 @@ export default function GameSource(): JSX.Element {
         console.log("Got called");
 
         const reqBody = {
-            gameId
+            game_id: gameId
         }
 
         console.log(reqBody);
