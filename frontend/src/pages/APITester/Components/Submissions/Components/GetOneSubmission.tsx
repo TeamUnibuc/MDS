@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
-import { useStyles } from '../GameAPIStyles';
+import { useStyles } from '../SubmissionsAPIStyles';
 
 import { Container, Button, Box } from '@material-ui/core'
 
-export default function GetOneGame(): JSX.Element {
+export default function GetOneSubmission(): JSX.Element {
     const classes = useStyles();
 
-    const [gameId, setGameId] = useState('Game id...')
+    const [submissionId, setSubmissionId] = useState('Submission id...')
 
     const processSubmit = async (event: React.SyntheticEvent) => {
         event.preventDefault();
         console.log("Got called");
 
         const reqBody = {
-            game_id: gameId
+            submission_id: submissionId
         }
 
         console.log(reqBody);
@@ -32,13 +32,13 @@ export default function GetOneGame(): JSX.Element {
     }
 
     return <Container className={classes.container}>
-        <h1>Retrieve One Game</h1>
+        <h1>Retrieve One Submission</h1>
         <textarea
             style={{width: "90%"}}
             rows={1} 
-            name={"Game Id"}
-            value={gameId}
-            onChange={(event) => setGameId(event.target.value)}
+            name={"Submission Id"}
+            value={submissionId}
+            onChange={(event) => setSubmissionId(event.target.value)}
         />
 
 
@@ -49,7 +49,7 @@ export default function GetOneGame(): JSX.Element {
                 onClick={processSubmit}
                 variant="contained"
                 color="primary"
-            >Retrieve Game</Button>
+            >Retrieve Submission</Button>
         </Box>
         
     </Container>;

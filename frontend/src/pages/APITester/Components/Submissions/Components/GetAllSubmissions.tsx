@@ -13,8 +13,8 @@ export default function GetAllSubmissions(): JSX.Element {
     const [reqOffset, setReqOffset] = useState(0);
     const [orderBy, setOrderBy] = useState('date');
     const [resultOrder, setResultOrder] = useState('decreasing');
-    // const [gameId, setGameId] = useState('Game id...')
-    // const [userId, setUserId] = useState('User id...')
+    const [gameId, setGameId] = useState('Game id...')
+    const [userId, setUserId] = useState('User id...')
 
     const order_bys = ['date', 'score'];
     const result_orders = ['increasing', 'decreasing'];
@@ -27,7 +27,9 @@ export default function GetAllSubmissions(): JSX.Element {
             requested_submissions: reqSubmissions,
             requested_offset: reqOffset,
             order_by: orderBy,
-            result_order: resultOrder
+            result_order: resultOrder,
+            game_id: gameId,
+            user_id: userId
         }
 
         console.log(reqBody);
@@ -41,15 +43,19 @@ export default function GetAllSubmissions(): JSX.Element {
     }
 
     return <Container className={classes.container}>
-        <h1>Get All Games</h1>
+        <h1>Get All Submissions</h1>
 
         <TextField
-            label="Requested Games"
+            label="Requested Submissions"
             type="number"
             value={reqSubmissions}
             onChange={(event) => setReqSubmissions(Number(event.target.value))}
             InputLabelProps={{
                 shrink: true,
+            }}
+            inputProps={{
+                min: 0,
+                step: 1
             }}
             helperText="Number of requested submissions"
         />
@@ -64,7 +70,29 @@ export default function GetAllSubmissions(): JSX.Element {
             InputLabelProps={{
                 shrink: true,
             }}
+            inputProps={{
+                min: 0,
+                step: 1
+            }}
             helperText="Number of submissions to skip (for pagination)"
+        />
+
+        <Box mt="20px" />
+
+        <TextField 
+            label="Game Id"
+            value={gameId}
+            onChange={(event) => setGameId(event.target.value)}
+            helperText="If exists, the submissions have to be made to this game"
+        />
+
+        <Box mt="20px" />
+
+        <TextField 
+            label="User Id"
+            value={userId}
+            onChange={(event) => setUserId(event.target.value)}
+            helperText="If exists, the submissions have to be made by the user"
         />
 
         <Box mt="20px" />
@@ -104,7 +132,7 @@ export default function GetAllSubmissions(): JSX.Element {
                 onClick={processSubmit}
                 variant="contained"
                 color="primary"
-            >Get All</Button>
+            >Get All Submissions</Button>
         </Box>
         
     </Container>;

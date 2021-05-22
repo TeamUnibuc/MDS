@@ -49,6 +49,10 @@ export default function GetAllGames(): JSX.Element {
             InputLabelProps={{
                 shrink: true,
             }}
+            inputProps={{
+                min: 0,
+                step: 1
+            }}
             helperText="Number of requested games"
         />
 
@@ -61,6 +65,10 @@ export default function GetAllGames(): JSX.Element {
             onChange={(event) => setReqOffset(Number(event.target.value))}
             InputLabelProps={{
                 shrink: true,
+            }}
+            inputProps={{
+                min: 0,
+                step: 1
             }}
             helperText="Number of games to skip (for pagination)"
         />
@@ -102,7 +110,7 @@ export default function GetAllGames(): JSX.Element {
                 onClick={processSubmit}
                 variant="contained"
                 color="primary"
-            >Get All</Button>
+            >Get All Games</Button>
         </Box>
         
     </Container>;

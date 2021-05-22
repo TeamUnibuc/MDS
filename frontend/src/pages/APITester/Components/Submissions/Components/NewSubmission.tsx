@@ -1,18 +1,23 @@
 import React, { useState } from 'react';
-import { useStyles } from '../GameAPIStyles';
+import { useStyles } from '../SubmissionsAPIStyles';
+import 'codemirror/keymap/sublime';
+import 'codemirror/theme/elegant.css';
 
 import { Container, Button, Box } from '@material-ui/core'
+import CodeMirror from '@uiw/react-codemirror'
 
-export default function GetOneGame(): JSX.Element {
+export default function NewSubmission(): JSX.Element {
     const classes = useStyles();
 
-    const [gameId, setGameId] = useState('Game id...')
+    const [submissionCode, setSubmissionCode] = useState('C++ code of the submission ...')
+    const [gameId, setGameId] = useState('Game id ...')
 
     const processSubmit = async (event: React.SyntheticEvent) => {
         event.preventDefault();
         console.log("Got called");
 
         const reqBody = {
+            submission_code: submissionCode,
             game_id: gameId
         }
 
@@ -32,13 +37,22 @@ export default function GetOneGame(): JSX.Element {
     }
 
     return <Container className={classes.container}>
-        <h1>Retrieve One Game</h1>
+        <h1>Create a new Submission</h1>
         <textarea
             style={{width: "90%"}}
             rows={1} 
             name={"Game Id"}
             value={gameId}
             onChange={(event) => setGameId(event.target.value)}
+        />
+
+
+        <textarea
+            style={{width: "90%"}}
+            rows={20} 
+            name={"Submission Id"}
+            value={submissionCode}
+            onChange={(event) => setSubmissionCode(event.target.value)}
         />
 
 
@@ -49,7 +63,7 @@ export default function GetOneGame(): JSX.Element {
                 onClick={processSubmit}
                 variant="contained"
                 color="primary"
-            >Retrieve Game</Button>
+            >Create New Submission</Button>
         </Box>
         
     </Container>;

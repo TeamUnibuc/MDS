@@ -3,14 +3,14 @@ import { useStyles } from './SubmissionsAPIStyles';
 
 import { TextField, MenuItem, Box } from '@material-ui/core';
 // import { AddGame, DeleteGame, GetAllGames, GetOneGame, GameSources } from './Components';
-import { GetAllSubmissions } from './Components'
+import { GetAllSubmissions, GetOneSubmission, NewSubmission } from './Components'
 
 export default function GameAPI() : JSX.Element {
     const classes = useStyles();
 
     const [apiType, setApiType] = useState('Get All')
 
-    const APITypes = ['Get All', 'Get One', 'Alter or Add Submission', 'Delete Submission', 'Get Sources']
+    const APITypes = ['Get All', 'Get One', 'Create New Submission']
     
     return (
         <>
@@ -33,10 +33,8 @@ export default function GameAPI() : JSX.Element {
             </TextField>
 
             {(apiType === 'Get All') && <GetAllSubmissions />}
-            {/* {(apiType === 'Get One') && <GetOneGame />} */}
-            {/* {(apiType === 'Alter or Add Game') && <AddGame />} */}
-            {/* {(apiType === 'Delete Game') && <DeleteGame />} */}
-            {/* {(apiType === 'Get Sources') && <GameSources />} */}
+            {(apiType === 'Get One') && <GetOneSubmission />}
+            {(apiType === 'Create New Submission') && <NewSubmission />}
         </>
     );
 }
