@@ -1,38 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import SmartHeader from '../../components/SmartHeader';
 
-export default function Dashboard(): JSX.Element {
-    const [user, setUser] = useState<{
-      Username: string, 
-      Email: string,
-      Providers: {
-        googleID: string,
-        facebookID: string,
-        twitterID: string,
-        githubID: string,
-      }
-    } | null>(null);
+import { AuthUser, getAuthStatus } from 'fetch/auth';
+
+import { CircularProgress } from '@material-ui/core';
+
+export default function Dashboard(): JSX.Element 
+{
+    const [user, setUser] = useState<AuthUser | null>(null);
 
     const [error, setError] = useState('');
-    const [authenticated, setAuthenticated] = useState(false);
-
-    const handleNotAuthenticated = () => {
-        setAuthenticated(false)
-    };
+    const [authenticated, setAuthenticated] = useState<boolean | null>(null);
 
     // Basically this is called only at start as it has no dependencies
+    // ar trebui sa facem un fel de context in care sa tinem statusul asta de logat
     useEffect(() => {
-        fetch("auth", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            }
-        }).then(async response => {
-            if (response.status === 200) return response.json();
-            throw new Error("failed to get auth status from server, http code: " + response.status);
-        }).then(responseJson => {
-            console.log("JSON Response")
-            console.log(responseJson)
+      getAuthStatus()
+        .then(responseJson => {
             if (responseJson.authenticated) {
                 setAuthenticated(true)
                 setUser(responseJson.user)
@@ -44,42 +27,40 @@ export default function Dashboard(): JSX.Element {
             setAuthenticated(false)
             setError(String(err))
         });
-    },  [])
-
+    }, [])
+    
     return (
-      <div>
-        <SmartHeader
-          authenticated={authenticated}
-          handleNotAuth={handleNotAuthenticated}
-        />
         <div>
-          {!authenticated ? (<>
-            <h1>Welcome, Guest</h1>
-            <p>Status: {error}</p>
-          </>) : (
+          {authenticated === null ? (
+            <CircularProgress />
+          ) : authenticated ? (
             <div>
               <h2>Welcome, {user?.Username}!</h2>
+              <div>
+                <p>Social accounts connected: </p>
+                {user?.Providers.facebookID && 
+                  <ul>
+                    <p>Facebook: {user.Providers.facebookID}</p>
+                  </ul>
+                }
+                {user?.Providers.googleID && 
+                  <ul>
+                    <p>Google: {user.Providers.googleID}</p>
+                  </ul>
+                }
+                {user?.Providers.githubID && 
+                  <ul>
+                    <p>Github: {user.Providers.githubID}</p>
+                  </ul>
+                }
+              </div>
             </div>
+          ) : (
+            <>
+              <h1>Welcome, Guest</h1>
+              <p>Status: {error ? error : 'Everything is fine!'}</p>
+            </>
           )}
         </div>
-        <div>
-          <p>Social accounts connected: </p>
-          {user?.Providers.facebookID && 
-            <ul>
-              <p>Facebook: {user.Providers.facebookID}</p>
-            </ul>
-          }
-          {user?.Providers.googleID && 
-            <ul>
-              <p>Google: {user.Providers.googleID}</p>
-            </ul>
-          }
-          {user?.Providers.githubID && 
-            <ul>
-              <p>Github: {user.Providers.githubID}</p>
-            </ul>
-          }
-        </div>
-      </div>
-    );  
+    )
 }
