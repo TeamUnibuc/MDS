@@ -72,7 +72,7 @@ export default function GetProblemStandings(): JSX.Element {
                 min: 0,
                 step: 1
             }}
-            helperText="Number of submissions to skip (for pagination)"
+            helperText="Number of standing entries to skip (for pagination)"
         />
 
         <Box mt="20px" />

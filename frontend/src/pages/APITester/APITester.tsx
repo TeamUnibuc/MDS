@@ -10,6 +10,7 @@ import CustomRequest from './Components/Custom/CustomRequest';
 import GameAPI from './Components/Game/GameAPI';
 import SubmissionsAPI from './Components/Submissions/SubmissionsAPI';
 import StandingsAPI from './Components/Standings/StandingsAPI';
+import UserAPI from './Components/User/UserAPI';
 
 export default function APITester() : JSX.Element{
     const classes = useStyles();
@@ -17,7 +18,7 @@ export default function APITester() : JSX.Element{
     const [api, setApi] = useState('Custom')
     const [apiResponse, setApiResponse] = useState('{}')
 
-    const APIs = [ 'Custom', 'Games', 'Users', 'Submission', 'Standings']
+    const APIs = [ 'Custom', 'Games', 'User', 'Submission', 'Standings']
 
     return (<ApiTesterContext.Provider value={ {apiResponse, setApiResponse} }>
         <Box className={classes.container}>
@@ -42,6 +43,7 @@ export default function APITester() : JSX.Element{
             {(api === 'Games') && <GameAPI />}
             {(api === 'Submission') && <SubmissionsAPI />}
             {(api === 'Standings') && <StandingsAPI />}
+            {(api === 'User') && <UserAPI />}
 
             <h2>Request Result:</h2>
             <Box style={{width:'500px', height: '300px'}}>

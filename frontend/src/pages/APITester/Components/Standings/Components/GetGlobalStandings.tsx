@@ -70,7 +70,7 @@ export default function GetGlobalStandings(): JSX.Element {
                 min: 0,
                 step: 1
             }}
-            helperText="Number of submissions to skip (for pagination)"
+            helperText="Number of entries to skip (for pagination)"
         />
 
         <Box mt="20px" />
