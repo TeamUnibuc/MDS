@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { useStyles } from './SubmissionsAPIStyles';
 
 import { TextField, MenuItem, Box } from '@material-ui/core';
-// import { AddGame, DeleteGame, GetAllGames, GetOneGame, GameSources } from './Components';
 import { GetAllSubmissions, GetOneSubmission, NewSubmission } from './Components'
 
-export default function GameAPI() : JSX.Element {
+export default function SubmissionsAPI() : JSX.Element {
     const classes = useStyles();
 
     const [apiType, setApiType] = useState('Get All')
@@ -16,7 +15,7 @@ export default function GameAPI() : JSX.Element {
         <>
             <Box mt="20px" />
             <label>
-                API to test:
+                Submission API to test:
             </label>
             
             <TextField 

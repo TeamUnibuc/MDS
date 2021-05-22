@@ -47,13 +47,27 @@ export default function NewSubmission(): JSX.Element {
         />
 
 
-        <textarea
-            style={{width: "90%"}}
-            rows={20} 
-            name={"Submission Id"}
-            value={submissionCode}
-            onChange={(event) => setSubmissionCode(event.target.value)}
-        />
+        <Box width="90%">
+            <label>
+                Submission C++ code:
+            </label>
+            <Box mt="20px" />
+            <Box height="300px" width="100%">
+                <CodeMirror
+                    value={submissionCode}
+                    onChange={(instance : CodeMirror.Editor) => setSubmissionCode(instance.getValue())}
+                    options={{
+                        theme: 'elegant',
+                        keyMap: 'sublime',
+                        mode: 'c++',
+                        lineNumbers: true,
+                    }}
+                />
+            </Box>
+            
+            <Box mt="20px" />
+        </Box>
+        
 
 
         <Box mt="20px" />

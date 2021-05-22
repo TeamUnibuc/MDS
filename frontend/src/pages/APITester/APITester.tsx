@@ -9,6 +9,7 @@ import { Box, TextField, MenuItem } from '@material-ui/core';
 import CustomRequest from './Components/Custom/CustomRequest';
 import GameAPI from './Components/Game/GameAPI';
 import SubmissionsAPI from './Components/Submissions/SubmissionsAPI';
+import StandingsAPI from './Components/Standings/StandingsAPI';
 
 export default function APITester() : JSX.Element{
     const classes = useStyles();
@@ -16,7 +17,7 @@ export default function APITester() : JSX.Element{
     const [api, setApi] = useState('Custom')
     const [apiResponse, setApiResponse] = useState('{}')
 
-    const APIs = [ 'Custom', 'Games', 'Users', 'Submission']
+    const APIs = [ 'Custom', 'Games', 'Users', 'Submission', 'Standings']
 
     return (<ApiTesterContext.Provider value={ {apiResponse, setApiResponse} }>
         <Box className={classes.container}>
@@ -40,6 +41,7 @@ export default function APITester() : JSX.Element{
             {(api === 'Custom') && <CustomRequest />}
             {(api === 'Games') && <GameAPI />}
             {(api === 'Submission') && <SubmissionsAPI />}
+            {(api === 'Standings') && <StandingsAPI />}
 
             <h2>Request Result:</h2>
             <Box style={{width:'500px', height: '300px'}}>

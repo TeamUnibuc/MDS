@@ -15,7 +15,7 @@ export default function GameAPI() : JSX.Element {
         <>
             <Box mt="20px" />
             <label>
-                API to test:
+                Game API to test:
             </label>
             
             <TextField 
