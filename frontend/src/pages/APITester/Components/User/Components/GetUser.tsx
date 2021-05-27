@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useStyles } from '../UserAPIStyles';
-
+import { prettyJSON } from 'utils';
 import { Container, Button, Box } from '@material-ui/core'
 
 export default function GetUser(): JSX.Element {
@@ -29,6 +29,8 @@ export default function GetUser(): JSX.Element {
         // })
         // const content = await data.json()
         // console.log(content)
+        // setApiResponse(prettyJSON(content));
+
     }
 
     return <Container className={classes.container}>

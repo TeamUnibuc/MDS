@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useStyles } from '../GameAPIStyles';
+import { prettyJSON } from 'utils';
 import api from 'api';
 import { ApiTesterContext } from '../../../ApiTesterContext'
 
@@ -34,7 +35,7 @@ export default function GetAllGames(): JSX.Element {
         
         // const content = await api.Games.GetAll(reqBody);
         // console.log(data)
-        // setApiResponse(JSON.stringify(content, undefined, 2));
+        // setApiResponse(prettyJSON(content));
         setApiResponse('{Lol}');
     }
 

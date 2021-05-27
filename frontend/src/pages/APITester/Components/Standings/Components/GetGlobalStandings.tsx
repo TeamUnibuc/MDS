@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useStyles } from '../StandingsAPIStyles';
+import { prettyJSON } from 'utils';
 import api from 'api';
 import { ApiTesterContext } from '../../../ApiTesterContext'
 
@@ -30,12 +31,10 @@ export default function GetGlobalStandings(): JSX.Element {
 
         console.log(reqBody);
 
-        // Example of how it should work, not fully working
-
-        // const data = await api.Games.GetAll(reqBody);
-        // console.log(data)
-
-        setApiResponse('{Lol}')
+        // const content = await api.Standings.GlobalStandings(reqBody);
+        // console.log(content);
+        // setApiResponse(prettyJSON(content));
+        setApiResponse('{Lol}');
     }
 
     return <Container className={classes.container}>

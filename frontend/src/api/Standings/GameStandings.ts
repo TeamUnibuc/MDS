@@ -1,21 +1,22 @@
 import { StandingsEntry } from '../Models'
 
-interface GlobalStandingsParameters {
+interface GameStandingsParameters {
     requested_entries : number,
     requested_offset : number,
+    GameID?: string,
     order_by: string,
     result_order: string,
 }
 
-interface GlobalStandingsResults {
+interface GameStandingsResults  {
     entries_found: number,
     entries_returned: number,
 
     entries: Array<StandingsEntry>
 }
 
-export const GlobalStandings = async (reqBody : GlobalStandingsParameters) : Promise<GlobalStandingsResults> => {
-    const data = await fetch('api/Standings/Global', {
+export const GameStandings = async (reqBody : GameStandingsParameters) : Promise<GameStandingsResults> => {
+    const data = await fetch('api/Standings/GameStandings', {
         method: "POST",
         headers:{
             'Content-Type': 'application/json'

@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import api from 'api';
+import { prettyJSON } from 'utils';
 import { useStyles } from '../GameAPIStyles';
 import 'codemirror/keymap/sublime';
 import 'codemirror/theme/elegant.css';
@@ -40,7 +41,7 @@ function AddGame(): JSX.Element {
 
         // const content = await api.Games.Alter(reqBody);
         // console.log(content);
-        // setApiResponse(JSON.stringify(content, undefined, 2));
+        // setApiResponse(prettyJSON(content));
         setApiResponse('{Lol}');
     }
 

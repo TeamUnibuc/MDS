@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useStyles } from '../StandingsAPIStyles';
+import { prettyJSON } from 'utils';
 import api from 'api';
 import { ApiTesterContext } from '../../../ApiTesterContext'
 
@@ -11,7 +12,7 @@ export default function GetProblemStandings(): JSX.Element {
 
     const [reqEntries, setReqEntries] = useState(10);
     const [reqOffset, setReqOffset] = useState(0);
-    const [gameId, setGameId] = useState('Game id...')
+    const [GameID, setGameID] = useState('Game id...')
     const [orderBy, setOrderBy] = useState('score');
     const [resultOrder, setResultOrder] = useState('decreasing');
     
@@ -27,16 +28,16 @@ export default function GetProblemStandings(): JSX.Element {
             requested_offset: reqOffset,
             order_by: orderBy,
             result_order: resultOrder,
-            game_id: gameId,
+            GameID
         }
 
         console.log(reqBody);
 
         // Example of how it should work, not fully working
 
-        // const data = await api.Games.GetAll(reqBody);
-        // console.log(data)
-
+        // const content = await api.Standings.GameStandings(reqBody);
+        // console.log(content);
+        // setApiResponse(prettyJSON(content));
         setApiResponse('{Lol}')
     }
 
@@ -79,8 +80,8 @@ export default function GetProblemStandings(): JSX.Element {
 
         <TextField 
             label="Game Id"
-            value={gameId}
-            onChange={(event) => setGameId(event.target.value)}
+            value={GameID}
+            onChange={(event) => setGameID(event.target.value)}
             helperText="id of the game we want to get standings to"
         />
 

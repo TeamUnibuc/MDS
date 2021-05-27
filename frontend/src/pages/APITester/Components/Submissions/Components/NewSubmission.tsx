@@ -28,7 +28,7 @@ export default function NewSubmission(): JSX.Element {
 
         // const content = await api.Submissions.NewSubmission(reqBody);
         // console.log(content);
-        // setApiResponse(JSON.stringify(content, undefined, 2));
+        // setApiResponse(prettyJSON(content));
         setApiResponse('{Submissions}');
     }
 

@@ -1,25 +1,17 @@
-import { SubmissionModel } from '../Models'
 
-interface GetAllParameters {
-    requested_games : number,
-    requested_offset : number,
-    game_id?: string,
-    user_id?: string,
-    order_by: string,
-    result_order: string,
+interface UserGlobalParameters {
+    UserID: string,
 }
 
-interface GetAllResults {
-    error_message?: string,
-    status: 'ok' | 'fail',
-    submissions_found: number,
-    submissions_returned: number,
-
-    submissions: Array<SubmissionModel>
+interface UserGlobalResults {
+    submissions?: number,
+    TotalBotsBeaten: number,
+    TotalPoints: number,
+    rank?: number
 }
 
-export const UserGlobalStandings = async (reqBody : GetAllParameters) : Promise<GetAllResults> => {
-    const data = await fetch('api/Submissions/GetAll', {
+export const UserGlobalStandings = async (reqBody : UserGlobalParameters) : Promise<UserGlobalResults> => {
+    const data = await fetch('api/Standings/UserStatsGlobal', {
         method: "POST",
         headers:{
             'Content-Type': 'application/json'

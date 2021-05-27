@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useStyles } from '../SubmissionsAPIStyles';
+import { prettyJSON } from 'utils';
 import api from 'api';
 import { ApiTesterContext } from '../../../ApiTesterContext';
 
@@ -38,7 +39,7 @@ export default function GetAllSubmissions(): JSX.Element {
 
         // const content = await api.Submissions.GetAll(regBody);
         // console.log(content);
-        // setApiResponse(JSON.stringify(content, undefined 2));
+        // setApiResponse(prettyJSON(content));
         setApiResponse('{Lol}')
     }
 

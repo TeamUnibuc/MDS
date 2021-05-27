@@ -1,6 +1,13 @@
 import { GlobalStandings } from './GlobalStandings';
-import { ProblemStandings } from './ProblemStandings';
+import { GameStandings } from './GameStandings';
 import { UserGlobalStandings } from './UserGlobalStandings';
-import { UserProblemStandings } from './UserProblemStandings';
+import { UserGameStandings } from './UserGameStandings';
 
-export { GlobalStandings, ProblemStandings, UserGlobalStandings, UserProblemStandings };
+const Standings = {
+    GlobalStandings,
+    GameStandings,
+    UserGlobalStandings,
+    UserGameStandings
+}
+
+export { Standings };

@@ -29,3 +29,11 @@ export interface BotModel {
     AuthorID: string,
     CompilationMessage: string
 }
+
+export interface StandingsEntry {
+    best_submission_id: string,
+    submissions: number,
+    Points: number,
+    AuthorID: string,
+    AuthorUsername: string,
+}
