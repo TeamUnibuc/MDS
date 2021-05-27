@@ -7,7 +7,7 @@ import { Container, Button, Box, TextField, MenuItem } from '@material-ui/core'
 
 export default function GetAllGames(): JSX.Element {
     const classes = useStyles();
-    const { setApiResponse } = useContext(ApiTesterContext)
+    const { setApiResponse } = useContext(ApiTesterContext);
 
     const [reqGames, setReqGames] = useState(10);
     const [reqOffset, setReqOffset] = useState(0);
@@ -31,11 +31,11 @@ export default function GetAllGames(): JSX.Element {
         console.log(reqBody);
 
         // Example of how it should work, not fully working
-
-        // const data = await api.Games.GetAll(reqBody);
+        
+        // const content = await api.Games.GetAll(reqBody);
         // console.log(data)
-
-        setApiResponse('{Lol}')
+        // setApiResponse(JSON.stringify(content, undefined, 2));
+        setApiResponse('{Lol}');
     }
 
     return <Container className={classes.container}>

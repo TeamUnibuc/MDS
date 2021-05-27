@@ -1,34 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useStyles } from '../GameAPIStyles';
+import api from 'api';
+import { ApiTesterContext } from '../../../ApiTesterContext';
 
 import { Container, Button, Box } from '@material-ui/core'
 
 export default function GameSource(): JSX.Element {
     const classes = useStyles();
+    const { setApiResponse } = useContext(ApiTesterContext);
 
-    const [gameId, setGameId] = useState('Game id...')
+    const [GameID, setGameID] = useState('Game id...')
 
     const processSubmit = async (event: React.SyntheticEvent) => {
         event.preventDefault();
         console.log("Got called");
 
         const reqBody = {
-            game_id: gameId
+            GameID
         }
 
         console.log(reqBody);
 
-        // TO DO: implement api on front end
-
-        // const data = await fetch('api/new_game', {
-        //     method: "POST",
-        //     headers:{
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(reqBody)
-        // })
-        // const content = await data.json()
-        // console.log(content)
+        // const content = await api.Games.Sources(reqBody);
+        // console.log(content);
+        // setApiResponse(JSON.stringify(content, undefined 2));
+        setApiResponse('{Lol}')
     }
 
     return <Container className={classes.container}>
@@ -37,8 +33,8 @@ export default function GameSource(): JSX.Element {
             style={{width: "90%"}}
             rows={1} 
             name={"Game Id"}
-            value={gameId}
-            onChange={(event) => setGameId(event.target.value)}
+            value={GameID}
+            onChange={(event) => setGameID(event.target.value)}
         />
 
         <Box mt="20px" />

@@ -1,7 +1,13 @@
+import { GameModel } from '../Models'
 
+interface GetOneResults {
+    error_message?: string,
+    status: 'ok' | 'fail',
+    game: GameModel
+}
 
-export const GetOne = async (reqBody : {game_id: string}) : Promise<void> => {
-    const data = await fetch('api/games/GetGame', {
+export const GetOne = async (reqBody : {GameID: string}) : Promise<GetOneResults> => {
+    const data = await fetch('api/Games/GetGame', {
         method: "POST",
         headers:{
             'Content-Type': 'application/json'

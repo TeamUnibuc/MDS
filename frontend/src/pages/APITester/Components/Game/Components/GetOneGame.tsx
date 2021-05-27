@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useStyles } from '../GameAPIStyles';
+import api from 'api';
+import { ApiTesterContext } from '../../../ApiTesterContext';
 
 import { Container, Button, Box } from '@material-ui/core'
 
 export default function GetOneGame(): JSX.Element {
     const classes = useStyles();
+    const { setApiResponse } = useContext(ApiTesterContext);
 
     const [gameId, setGameId] = useState('Game id...')
 
@@ -13,22 +16,16 @@ export default function GetOneGame(): JSX.Element {
         console.log("Got called");
 
         const reqBody = {
-            game_id: gameId
+            GameID: gameId
         }
 
         console.log(reqBody);
 
-        // TO DO: implement api on front end
-
-        // const data = await fetch('api/new_game', {
-        //     method: "POST",
-        //     headers:{
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(reqBody)
-        // })
-        // const content = await data.json()
+        // const content = await api.Games.GetOne(reqBody);
+        
         // console.log(content)
+        // setApiResponse(JSON.stringify(content, undefined, 2));
+        setApiResponse('{Lol}');
     }
 
     return <Container className={classes.container}>

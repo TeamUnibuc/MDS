@@ -1,11 +1,12 @@
 import { RequestStatus, BotModel } from '../Models'
 
-interface DeleteResults extends RequestStatus {
-    dummy?: 'dummy'
+interface SourceResults extends RequestStatus {
+    GameEngine: string,
+    OfficialGameBots: Array<BotModel>
 }
 
-export const Delete = async (reqBody : {GameID: string}) : Promise<DeleteResults> => {
-    const data = await fetch('api/Games/Delete', {
+export const Sources = async (reqBody : {GameID: string}) : Promise<SourceResults> => {
+    const data = await fetch('api/Games/Sources', {
         method: "POST",
         headers:{
             'Content-Type': 'application/json'

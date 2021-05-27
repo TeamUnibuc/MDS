@@ -1,44 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import api from 'api';
 import { useStyles } from '../GameAPIStyles';
 import 'codemirror/keymap/sublime';
 import 'codemirror/theme/elegant.css';
+import { ApiTesterContext } from '../../../ApiTesterContext'
 
 import { Container, Button, Box } from '@material-ui/core'
 import CodeMirror from '@uiw/react-codemirror'
 
 function AddGame(): JSX.Element {
     const classes = useStyles();
+    const { setApiResponse } = useContext(ApiTesterContext);
 
-    const [engine, setEngine] = useState('Engine code...')
-    const [author, setAuthor] = useState('Author id...')
-    const [name, setName] = useState('Game Title...')
-    const [description, setDescription] = useState('Game Statement...')
-    const [gameId, setGameId] = useState('Set Game Id ...')
-    const [bots, setBots] = useState<Array<string>>([])
+    const [GameEngine, setGameEngine] = useState('Engine code...')
+    const [AuthorID, setAuthorID] = useState('Author id...')
+    const [Name, setName] = useState('Game Title...')
+    const [Description, setDescription] = useState('Game Statement...')
+    const [GameID, setGameID] = useState('Set Game Id ...')
+    const [OfficialBots, setOfficialBots] = useState<Array<string>>([])
 
     const processSubmit = async (event: React.SyntheticEvent) => {
         event.preventDefault();
         console.log("Got called");
 
+        const OfficialGameBots = OfficialBots.map((it, idx) => ({
+            BotName: `Bot#${idx}`,
+            BotCode: it
+        }))
+
         const reqBody = {
-            title: name,
-            statement: description,
-            game_engine: engine,
-            author_id: author,
-            official_bots: bots,
+            Name,
+            Description,
+            GameEngine,
+            AuthorID,
+            OfficialGameBots
         }
 
         console.log(reqBody);
 
-        const data = await fetch('api/new_game', {
-            method: "POST",
-            headers:{
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(reqBody)
-        })
-        const content = await data.json()
-        console.log(content)
+        // const content = await api.Games.Alter(reqBody);
+        // console.log(content);
+        // setApiResponse(JSON.stringify(content, undefined, 2));
+        setApiResponse('{Lol}');
     }
 
     return <Container className={classes.container}>
@@ -47,23 +50,23 @@ function AddGame(): JSX.Element {
             style={{width: "90%"}}
             rows={1} 
             name={"Author"}
-            value={author}
-            onChange={(event) => setAuthor(event.target.value)}
+            value={AuthorID}
+            onChange={(event) => setAuthorID(event.target.value)}
         />
 
         <textarea
             style={{width: "90%"}}
             rows={1} 
             name={"Game"}
-            value={gameId}
-            onChange={(event) => setGameId(event.target.value)}
+            value={GameID}
+            onChange={(event) => setGameID(event.target.value)}
         />
 
         <textarea
             style={{width: "90%"}}
             rows={1} 
             name={"Title"}
-            value={name}
+            value={Name}
             onChange={(event) => setName(event.target.value)}
         />
         
@@ -71,7 +74,7 @@ function AddGame(): JSX.Element {
             style={{width: "90%"}}
             rows={20} 
             name={"Description"}
-            value={description}
+            value={Description}
             onChange={(event) => setDescription(event.target.value)}
         />
 
@@ -84,8 +87,8 @@ function AddGame(): JSX.Element {
             <Box mt="20px" />
             <Box height="300px" width="100%">
                 <CodeMirror
-                    value={engine}
-                    onChange={(instance : CodeMirror.Editor) => setEngine(instance.getValue())}
+                    value={GameEngine}
+                    onChange={(instance : CodeMirror.Editor) => setGameEngine(instance.getValue())}
                     options={{
                         theme: 'elegant',
                         keyMap: 'sublime',
@@ -97,7 +100,7 @@ function AddGame(): JSX.Element {
             
             <Box mt="20px" />
         </Box>
-        {bots.map((val, id) => <Box key={id} style={{width: "90%"}}>
+        {OfficialBots.map((val, id) => <Box key={id} style={{width: "90%"}}>
             <label>
                 {`Bot #${id} code`}
             </label>
@@ -106,9 +109,9 @@ function AddGame(): JSX.Element {
                 <CodeMirror
                     value={val}
                     onChange={(instance : CodeMirror.Editor) => {
-                        const new_bots = bots;
+                        const new_bots = OfficialBots;
                         new_bots[id] = instance.getValue();
-                        setBots(new_bots);
+                        setOfficialBots(new_bots);
                     }}
                 />
             </Box>
@@ -123,7 +126,7 @@ function AddGame(): JSX.Element {
         <Box className={classes.buttonContainer}>
             <Button
                 onClick={() => {
-                    setBots([...bots, "Bot #" + (bots.length + 1) + " code..."]);
+                    setOfficialBots([...OfficialBots, "Bot #" + (OfficialBots.length + 1) + " code..."]);
                 }}
                 variant="contained"
                 color="primary">
@@ -131,7 +134,7 @@ function AddGame(): JSX.Element {
             </Button>
             <Button
                 onClick={() => {
-                    setBots(bots.slice(0, bots.length - 2));
+                    setOfficialBots(OfficialBots.slice(0, OfficialBots.length - 2));
                 }}
                 variant="contained"
                 color="primary">
