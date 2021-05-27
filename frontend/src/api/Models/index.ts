@@ -12,12 +12,12 @@ export interface GameModel {
 }
 
 export interface SubmissionModel {
-    date: Date,
-    score: number,
-    game_id: string,
-    author_id: string,
-    author_username: string,
-    submission_id: string,
+    Date: Date,
+    Score: number,
+    GameID: string,
+    AuthorID: string,
+    AuthorUsername: string,
+    SubmissionID: string,
 }
 
 export interface BotModel {

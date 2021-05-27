@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useStyles } from '../SubmissionsAPIStyles';
 import 'codemirror/keymap/sublime';
 import 'codemirror/theme/elegant.css';
+import api from 'api';
+import { ApiTesterContext } from '../../../ApiTesterContext';
 
 import { Container, Button, Box } from '@material-ui/core'
 import CodeMirror from '@uiw/react-codemirror'
 
 export default function NewSubmission(): JSX.Element {
     const classes = useStyles();
+    const { setApiResponse } = useContext(ApiTesterContext);
 
     const [submissionCode, setSubmissionCode] = useState('C++ code of the submission ...')
     const [gameId, setGameId] = useState('Game id ...')
@@ -23,17 +26,10 @@ export default function NewSubmission(): JSX.Element {
 
         console.log(reqBody);
 
-        // TO DO: implement api on front end
-
-        // const data = await fetch('api/new_game', {
-        //     method: "POST",
-        //     headers:{
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(reqBody)
-        // })
-        // const content = await data.json()
-        // console.log(content)
+        // const content = await api.Submissions.NewSubmission(reqBody);
+        // console.log(content);
+        // setApiResponse(JSON.stringify(content, undefined, 2));
+        setApiResponse('{Submissions}');
     }
 
     return <Container className={classes.container}>

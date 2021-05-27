@@ -1,10 +1,9 @@
 import { Games } from './Games'
-import { GameModel } from './Models'
+import { Submissions } from './Submissions'
 
 const api = {
     Games,
+    Submissions
 }
-
-export type { GameModel }
 
 export default api;

@@ -1,12 +1,12 @@
+import { RequestStatus } from 'api/Models';
+
 interface NewSubmissionParameters {
-    game_id: string,
-    submission_code: string,
+    GameID: string,
+    SubmissionCode: string,
 }
 
-interface NewSubmissionResults {
-    error_message?: string,
-    status: 'ok' | 'fail',
-    submission_id?: string
+interface NewSubmissionResults extends RequestStatus {
+    SubmissionID?: string
 }
 
 export const NewSubmission = async (reqBody : NewSubmissionParameters) : Promise<NewSubmissionResults> => {

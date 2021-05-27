@@ -1,17 +1,15 @@
-import { SubmissionModel } from '../Models'
+import { RequestStatus, SubmissionModel } from '../Models'
 
 interface GetAllParameters {
     requested_games : number,
     requested_offset : number,
-    game_id?: string,
-    user_id?: string,
+    GameID?: string,
+    UserID?: string,
     order_by: string,
     result_order: string,
 }
 
-interface GetAllResults {
-    error_message?: string,
-    status: 'ok' | 'fail',
+interface GetAllResults extends RequestStatus {
     submissions_found: number,
     submissions_returned: number,
 

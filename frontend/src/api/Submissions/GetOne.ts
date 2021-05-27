@@ -1,16 +1,11 @@
+import { RequestStatus, SubmissionModel } from 'api/Models';
+
 interface Result{
     logs: string,
     won: boolean
 }
 
-interface GetOneResults {
-    error_message?: string,
-    status: 'ok' | 'fail',
-    date: Date,
-    score: number,
-    game_id: string,
-    author_id: string,
-    submission_id: string,
+interface GetOneResults extends RequestStatus, SubmissionModel {
 
     compiled: boolean,
     compilation_message?: string,
@@ -19,7 +14,7 @@ interface GetOneResults {
     finished_evaluation: boolean
 }
 
-export const GetOne = async (reqBody : {submission_id: string}) : Promise<GetOneResults> => {
+export const GetOne = async (reqBody : {SubmissionID: string}) : Promise<GetOneResults> => {
     const data = await fetch('api/Submissions/Details', {
         method: "POST",
         headers:{

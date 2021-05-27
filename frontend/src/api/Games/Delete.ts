@@ -1,4 +1,4 @@
-import { RequestStatus, BotModel } from '../Models'
+import { RequestStatus } from '../Models'
 
 interface DeleteResults extends RequestStatus {
     dummy?: 'dummy'

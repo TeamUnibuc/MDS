@@ -1,20 +1,20 @@
 import React, { useState, useContext } from 'react';
 import { useStyles } from '../SubmissionsAPIStyles';
 import api from 'api';
-import { ApiTesterContext } from '../../../ApiTesterContext'
+import { ApiTesterContext } from '../../../ApiTesterContext';
 
 import { Container, Button, Box, TextField, MenuItem } from '@material-ui/core'
 
 export default function GetAllSubmissions(): JSX.Element {
     const classes = useStyles();
-    const { setApiResponse } = useContext(ApiTesterContext)
+    const { setApiResponse } = useContext(ApiTesterContext);
 
     const [reqSubmissions, setReqSubmissions] = useState(10);
     const [reqOffset, setReqOffset] = useState(0);
     const [orderBy, setOrderBy] = useState('date');
     const [resultOrder, setResultOrder] = useState('decreasing');
-    const [gameId, setGameId] = useState('Game id...')
-    const [userId, setUserId] = useState('User id...')
+    const [GameID, setGameID] = useState('Game id...')
+    const [UserID, setUserID] = useState('User id...')
 
     const order_bys = ['date', 'score'];
     const result_orders = ['increasing', 'decreasing'];
@@ -28,17 +28,17 @@ export default function GetAllSubmissions(): JSX.Element {
             requested_offset: reqOffset,
             order_by: orderBy,
             result_order: resultOrder,
-            game_id: gameId,
-            user_id: userId
+            GameID,
+            UserID
         }
 
         console.log(reqBody);
 
         // Example of how it should work, not fully working
 
-        // const data = await api.Games.GetAll(reqBody);
-        // console.log(data)
-
+        // const content = await api.Submissions.GetAll(regBody);
+        // console.log(content);
+        // setApiResponse(JSON.stringify(content, undefined 2));
         setApiResponse('{Lol}')
     }
 
@@ -81,8 +81,8 @@ export default function GetAllSubmissions(): JSX.Element {
 
         <TextField 
             label="Game Id"
-            value={gameId}
-            onChange={(event) => setGameId(event.target.value)}
+            value={GameID}
+            onChange={(event) => setGameID(event.target.value)}
             helperText="If exists, the submissions have to be made to this game"
         />
 
@@ -90,8 +90,8 @@ export default function GetAllSubmissions(): JSX.Element {
 
         <TextField 
             label="User Id"
-            value={userId}
-            onChange={(event) => setUserId(event.target.value)}
+            value={UserID}
+            onChange={(event) => setUserID(event.target.value)}
             helperText="If exists, the submissions have to be made by the user"
         />
 
