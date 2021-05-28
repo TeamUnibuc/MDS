@@ -4,7 +4,7 @@ import { prettyJSON } from 'utils';
 import { useStyles } from '../GameAPIStyles';
 import 'codemirror/keymap/sublime';
 import 'codemirror/theme/elegant.css';
-import { ApiTesterContext } from '../../../ApiTesterContext'
+import { ApiTesterContext } from '../../../ApiTesterContext';
 
 import { Container, Button, Box } from '@material-ui/core'
 import CodeMirror from '@uiw/react-codemirror'

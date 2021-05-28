@@ -10,28 +10,28 @@ export default function EditAccount(): JSX.Element {
     const classes = useStyles();
     const { setApiResponse } = useContext(ApiTesterContext);
 
-    const [firstName, setFirstName] = useState('First Name ...');
-    const [lastName, setLastName] = useState('Last Name ...');
-    const [username, setUsername] = useState('Username ...')
-    const [visibleEmail, setVisibleEmail] = useState(true);
+    const [FirstName, setFirstName] = useState('First Name ...');
+    const [LastName, setLastName] = useState('Last Name ...');
+    const [Username, setUsername] = useState('Username ...')
+    const [VisibleEmail, setVisibleEmail] = useState(true);
 
     const processSubmit = async (event: React.SyntheticEvent) => {
         event.preventDefault();
         console.log("Got called");
 
         const reqBody = {
-            first_name: firstName,
-            last_name: lastName,
-            username: username,
-            email_is_visible: visibleEmail
+            FirstName,
+            LastName,
+            Username,
+            VisibleEmail
         }
 
         console.log(reqBody);
 
         // Example of how it should work, not fully working
 
-        // const data = await api.Games.GetAll(reqBody);
-        // console.log(data)
+        // const content = await api.Account.EditAccount(reqBody);
+        // console.log(content)
         // setApiResponse(prettyJSON(content));
 
         setApiResponse('{Lol}')
@@ -46,7 +46,7 @@ export default function EditAccount(): JSX.Element {
             style={{width: "90%"}}
             rows={1} 
             name={"First Name"}
-            value={firstName}
+            value={FirstName}
             onChange={(event) => setFirstName(event.target.value)}
         />
 
@@ -56,7 +56,7 @@ export default function EditAccount(): JSX.Element {
             style={{width: "90%"}}
             rows={1} 
             name={"Last Name"}
-            value={lastName}
+            value={LastName}
             onChange={(event) => setLastName(event.target.value)}
         />
 
@@ -66,12 +66,12 @@ export default function EditAccount(): JSX.Element {
             style={{width: "90%"}}
             rows={1} 
             name={"Username"}
-            value={username}
+            value={Username}
             onChange={(event) => setUsername(event.target.value)}
         />
 
         <FormControlLabel 
-            control={<Checkbox checked={visibleEmail} onChange={(event) => setVisibleEmail(event.target.checked)} />}
+            control={<Checkbox checked={VisibleEmail} onChange={(event) => setVisibleEmail(event.target.checked)} />}
             label="Email is Visible"
         />
 

@@ -20,8 +20,8 @@ export default function RetrieveInfo(): JSX.Element {
 
         // Example of how it should work, not fully working
 
-        // const data = await api.Games.GetAll(reqBody);
-        // console.log(data)
+        // const content = await api.Account.AccountDetails(reqBody);
+        // console.log(content)
         // setApiResponse(prettyJSON(content));
 
         setApiResponse('{Lol}')

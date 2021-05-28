@@ -1,16 +1,34 @@
-import React, { useState } from 'react';
-import { useStyles } from './CustomRequestStyles'
+import React, { useState, useContext } from 'react';
+import { useStyles } from './CustomRequestStyles';
+import { ApiTesterContext } from '../../ApiTesterContext';
+
 
 import CodeMirror from '@uiw/react-codemirror'
 import { TextField, Button, Box } from '@material-ui/core'
+import { prettyJSON } from 'utils';
 
 function CustomRequest() : JSX.Element {
-    const classes = useStyles()
+    const classes = useStyles();
+    const { setApiResponse } = useContext(ApiTesterContext);
     const [requestBody, setRequestBody] = useState('{}');
+    const [path, setPath] = useState('/api/...');
 
-    const handleSubmit = (event : React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
-        // fetch...
+    const handleSubmit = async (event : React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        
+        // const reqBody = JSON.parse(requestBody);
+        // const data = await fetch(path, {
+        //     method: "POST",
+        //     headers:{
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify(reqBody)
+        // })
+        // const content = await data.json();
+        // console.log(content);
+        // setApiResponse(prettyJSON(content));
+
+        setApiResponse('{Custom}');
     }
 
     return (
@@ -24,6 +42,8 @@ function CustomRequest() : JSX.Element {
                 name="path"
                 placeholder="/api/..."
                 helperText="Please enter path of the request"
+                value={path}
+                onChange={(event) => setPath(event.target.value)}
             />
 
             <Box mt="20px" />

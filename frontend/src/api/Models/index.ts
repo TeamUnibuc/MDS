@@ -1,3 +1,5 @@
+import { StringStream } from "codemirror";
+
 export interface RequestStatus {
     error_message? : string,
     status: 'ok' | 'fail'
@@ -36,4 +38,20 @@ export interface StandingsEntry {
     Points: number,
     AuthorID: string,
     AuthorUsername: string,
+}
+
+export interface AccountModel{
+    FirstName: string,
+    LastName: string,
+    Email: string,
+    DateJoined: Date,
+    UserID: string,
+    VisibleEmail: boolean
+}
+
+export interface UserModel{
+    FirstName: string,
+    LastName: string,
+    DateJoined: Date,
+    Email?: string
 }

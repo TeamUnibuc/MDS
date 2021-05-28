@@ -20,8 +20,8 @@ export default function DeleteAccount(): JSX.Element {
 
         // Example of how it should work, not fully working
 
-        // const data = await api.Games.GetAll(reqBody);
-        // console.log(data)
+        // const content = await api.Account.DeleteAccount(reqBody);
+        // console.log(content)
         // setApiResponse(prettyJSON(content));
 
         setApiResponse('{Lol}')

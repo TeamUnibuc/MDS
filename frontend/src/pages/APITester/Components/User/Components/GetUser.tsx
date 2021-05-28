@@ -1,19 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { ApiTesterContext } from '../../../ApiTesterContext';
 import { useStyles } from '../UserAPIStyles';
 import { prettyJSON } from 'utils';
+import api from 'api';
 import { Container, Button, Box } from '@material-ui/core'
 
 export default function GetUser(): JSX.Element {
     const classes = useStyles();
+    const { setApiResponse } = useContext(ApiTesterContext);
 
-    const [userId, setUserId] = useState('User id...')
+    const [UserID, setUserID] = useState('User id...')
 
     const processSubmit = async (event: React.SyntheticEvent) => {
         event.preventDefault();
         console.log("Got called");
 
         const reqBody = {
-            user_id: userId
+            UserID
         }
 
         console.log(reqBody);
@@ -28,9 +31,11 @@ export default function GetUser(): JSX.Element {
         //     body: JSON.stringify(reqBody)
         // })
         // const content = await data.json()
+        
+        // const content = await api.Users.GetUser(reqBody)
         // console.log(content)
         // setApiResponse(prettyJSON(content));
-
+        setApiResponse('{Users}');
     }
 
     return <Container className={classes.container}>
@@ -39,8 +44,8 @@ export default function GetUser(): JSX.Element {
             style={{width: "90%"}}
             rows={1} 
             name={"User Id"}
-            value={userId}
-            onChange={(event) => setUserId(event.target.value)}
+            value={UserID}
+            onChange={(event) => setUserID(event.target.value)}
         />
 
 
