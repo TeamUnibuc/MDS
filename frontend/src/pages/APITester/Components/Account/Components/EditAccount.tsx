@@ -4,7 +4,7 @@ import { prettyJSON } from 'utils';
 import api from 'api';
 import { ApiTesterContext } from '../../../ApiTesterContext'
 
-import { Container, Button, Box, TextField, MenuItem, Checkbox, FormControlLabel } from '@material-ui/core'
+import { Container, Button, Box, Checkbox, FormControlLabel } from '@material-ui/core'
 
 export default function EditAccount(): JSX.Element {
     const classes = useStyles();

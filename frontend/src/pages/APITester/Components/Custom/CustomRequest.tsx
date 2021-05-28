@@ -1,11 +1,11 @@
 import React, { useState, useContext } from 'react';
 import { useStyles } from './CustomRequestStyles';
 import { ApiTesterContext } from '../../ApiTesterContext';
+import { prettyJSON } from 'utils';
 
 
 import CodeMirror from '@uiw/react-codemirror'
 import { TextField, Button, Box } from '@material-ui/core'
-import { prettyJSON } from 'utils';
 
 function CustomRequest() : JSX.Element {
     const classes = useStyles();

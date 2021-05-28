@@ -4,7 +4,7 @@ import { prettyJSON } from 'utils';
 import api from 'api';
 import { ApiTesterContext } from '../../../ApiTesterContext'
 
-import { Container, Button, Box, TextField, MenuItem } from '@material-ui/core'
+import { Container, Button, Box } from '@material-ui/core'
 
 export default function RetrieveInfo(): JSX.Element {
     const classes = useStyles();

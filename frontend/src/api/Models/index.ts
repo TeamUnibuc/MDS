@@ -1,4 +1,3 @@
-import { StringStream } from "codemirror";
 
 export interface RequestStatus {
     error_message? : string,
