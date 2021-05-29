@@ -1,6 +1,6 @@
 import DefaultPage from './DefaultPage/DefaultPage'
 import TestEval from './TestEval/TestEval'
-import AddGame from './AddGame/AddGame'
 import Dashboard from './Dashboard/Dashboard'
+import APITester from  './APITester/APITester'
 
-export { DefaultPage, TestEval, AddGame, Dashboard }
+export { DefaultPage, TestEval, Dashboard, APITester }

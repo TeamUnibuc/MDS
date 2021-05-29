@@ -34,6 +34,9 @@ app.use(
 // Better logging
 app.use(morgan('dev'))
 
+// Automatically convert request bodies from string to json and vice-versa
+app.use(express.json())
+
 // Automatically get the json content of the request body
 app.use(
     express.urlencoded({

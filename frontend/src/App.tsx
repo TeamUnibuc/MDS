@@ -3,7 +3,7 @@ import React from 'react';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
 
 import SmartHeader from 'components/SmartHeader'
-import { DefaultPage, TestEval, AddGame, Dashboard } from 'pages'
+import { DefaultPage, TestEval, Dashboard, APITester } from 'pages'
 
 import { Grid } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/styles'
@@ -26,8 +26,8 @@ function App(): JSX.Element {
           <Switch>
             <Route key="default" path="/" exact component={DefaultPage}/>
             <Route key="testeval" path="/testeval" exact component={TestEval}/>
-            <Route key="addgame" path="/addgame" exact component={AddGame}/>
             <Route key="dashboard" path="/dashboard" exact component={Dashboard}/>
+            <Route key="apitester" path="/apitester" exact component={APITester}/>
           </Switch>
         </Grid>
       </Router>
