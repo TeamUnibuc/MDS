@@ -95,11 +95,11 @@ const SmartHeader = ({activePage}: Props): JSX.Element =>
        
         </>) : (<>
         
-            <Box mr={2}>
+            {/* <Box mr={2}>
                 <Typography align="right" className={classes.title}>
                     Login
                 </Typography>
-            </Box>
+            </Box> */}
             <>
             <Button className='btn-login-facebook' variant="contained" color="inherit" size="small" onClick={() => handleSmartLoginClick('facebook')}>
                 Facebook
