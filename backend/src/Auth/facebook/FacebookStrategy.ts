@@ -37,9 +37,10 @@ const FacebookOptions = {
 export const SmartFacebookStrategy = new OAuthFacebookStrategy(
     {
         ...FacebookOptions,
+        passReqToCallback: true,
         callbackURL: `${env.FRONTEND_BASE_URL}:${env.FRONTEND_PORT}/auth/facebook/smart-callback`,
     },
-    async function (accessToken, refreshToken, profile, done) {
+    async function (req, accessToken, refreshToken, profile, done) {
         const {user: user, email: email} = await obtainEmailAndUser(profile)
 
         if (!email) {
@@ -72,6 +73,7 @@ export const SmartFacebookStrategy = new OAuthFacebookStrategy(
             createdUserDoc.save()
                 .then(resp => {
                     console.log(`Saved in DB user: ${resp.Email}`)
+                    req.flash('success', 'Account Created')
                     return done(null, createdUserDoc)
                 })
                 .catch(err => {
@@ -89,7 +91,8 @@ export const SmartFacebookStrategy = new OAuthFacebookStrategy(
             await user.save()
         }
 
+        req.flash('success', 'Logged In')
         // Yay
-        return done(null, user)
+        return done(null, user, {message: 'Created account'})
     }
 );

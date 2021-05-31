@@ -1,3 +1,4 @@
+import { Request } from 'express';
 import { Strategy as OAuthGithubStrategy } from 'passport-github2'
 import { env } from '../../config';
 import { UsersModel } from '../../models/UsersModel';
@@ -23,22 +24,23 @@ export const GithubScopes = [ 'read:user', 'user:email' ]
 export const SmartGithubStrategy = new OAuthGithubStrategy(
     {
         ...GithubOptions,
+        passReqToCallback: true,
         callbackURL: `${env.FRONTEND_BASE_URL}:${env.FRONTEND_PORT}/auth/github/smart-callback`,
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    async function (accessToken: string, refreshToken: string, profile: any, done: any) {
+    async function (req: Request, accessToken: string, refreshToken: string, profile: any, done: any) {
         console.log('github profile: ', profile)
         const {user: user, email: email} = await obtainEmailAndUser(profile)
 
         if (!email) {
-            const msg = `Email not found in profile data`
+            const msg = `Email not found in profile data, please make sure you allow access to your Email from GitHub`
             console.log(msg)
             return done(null, undefined, {message: msg})
         }
 
         const displayname = String(profile.displayname)
         let firstName = displayname.substr(0, displayname.indexOf(' ')); // "72"
-        let lastName  = displayname.substr(displayname.indexOf(' ')+1); // "tocirah sneab"
+        let lastName  = displayname.substr(displayname.indexOf(' ') + 1); // "tocirah sneab"
 
         if (!firstName || !lastName) {
             firstName = String(profile.username)
@@ -70,6 +72,7 @@ export const SmartGithubStrategy = new OAuthGithubStrategy(
             createdUserDoc.save()
                 .then(resp => {
                     console.log(`Saved in DB user: ${resp.Email}`)
+                    req.flash('success', 'Account Created')
                     return done(null, createdUserDoc)
                 })
                 .catch(err => {
@@ -87,7 +90,8 @@ export const SmartGithubStrategy = new OAuthGithubStrategy(
             await user.save()
         }
 
+        req.flash('success', 'Logged In')
         // Yay
-        return done(null, user)
+        return done(null, user, {message: 'Created account'})
     }
 );
