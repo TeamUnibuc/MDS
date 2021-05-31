@@ -46,10 +46,17 @@ export const GetAll = async (req: Request, res: Response): Promise<void> =>
     submissions = [];
 
     for (let i = requested_offset; i < totalSubmissions.length && i < requested_offset + requested_submissions; ++i) {
-        submissions.push(totalSubmissions[i]);
+        submissions.push({
+            "Date": totalSubmissions[i].SubmissionDate,
+            "Score": totalSubmissions[i].Points,
+            "GameID": totalSubmissions[i].GameID,
+            "AuthorID": totalSubmissions[i].UserID,
+            "SubmissionID": totalSubmissions[i].id,
+        });
     }
 
     res.json({
+        "status": "ok",
         "submissions_found": submissions_found,
         "submissions_returned": submissions.length,
         "submissions": submissions,

@@ -1,6 +1,10 @@
 import express from 'express'
 import {GetAll} from './GetAll'
+import {Details} from './Details'
+import {New} from './New'
 
-export const gameRoutes = express.Router()
+export const submissionRoutes = express.Router()
 
-gameRoutes.post('/GetAll', GetAll)
+submissionRoutes.post('/GetAll', GetAll)
+submissionRoutes.post('/Details', Details)
+submissionRoutes.post('/New', New)
