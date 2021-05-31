@@ -79,12 +79,18 @@ export const GetAll = async (req: Request, res: Response): Promise<void> =>
     const games = [];
 
     for (let i = requested_offset; i < totalGames.length && i < requested_offset + requested_games; ++i) {
-        games.push(totalGames[i])
+        games.push({
+            "Name": totalGames[i].Name,
+            "Description": totalGames[i].Description,
+            "GameID": totalGames[i].id,
+            "AuthorID": totalGames[i].AuthorID,
+            "Date": totalGames[i].Date,
+        });
     }
 
     res.json({
         "games_found": games_found,
         "games_returned": games.length,
         "games": games,
-    })
+    });
 }

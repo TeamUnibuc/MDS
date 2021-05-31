@@ -12,9 +12,10 @@ export const Sources = async (req: Request, res: Response): Promise<void> =>
             "status": "fail",
             "error_message": "You need to be authenticated to do this operation",
         });
+        return;
     }
 
-    const game_id: string = req.body.game_id;
+    const game_id: string = req.body.GameID;
 
     const game = await GamesModel.findById(game_id)
 
@@ -25,6 +26,7 @@ export const Sources = async (req: Request, res: Response): Promise<void> =>
                 "status": "fail",
                 "error_message": "Permission denied",
             });
+            return;
         }
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -36,26 +38,27 @@ export const Sources = async (req: Request, res: Response): Promise<void> =>
             const botInfo = await BotsModel.findById(bot.BotID);
             if (botInfo) {
                 official_bots_info.push({
-                    "_id": botInfo.id,
+                    "BotID": botInfo.id,
                     "BotName": bot.BotName,
                     "BotRank": bot.BotRank,
-                    "Code": botInfo.Code,
+                    "BotCode": botInfo.Code,
                     "DateSubmitted": botInfo.DateSubmitted,
                     "AuthorID": botInfo.AuthorID,
                     "CompilationMessage": botInfo.CompilationMessage,
                 });
             }
-        })
+        });
 
         res.json({
             "status": "ok",
-            "game_engine": game.GameEngine,
-            "official_bots": official_bots_info,
-        })
+            "GameEngine": game.GameEngine,
+            "OfficialGameBots": official_bots_info,
+        });
     }
-
-    res.json({
-        "status": "fail",
-        "error_mesagge": "Game Id not found",
-    })
+    else {
+        res.json({
+            "status": "fail",
+            "error_mesagge": "Game Id not found",
+        });
+    }
 }

@@ -48,12 +48,13 @@ export const Alter = async (req: Request, res: Response): Promise<void> =>
             "status": "fail",
             "error_message": "You need to be authenticated to do this operation",
         });
+        return;
     }
 
-    if (req.body.game_id) {
+    if (req.body.GameID) {
         // edit a game
 
-        const game_id: string = req.body.game_id;
+        const game_id: string = req.body.GameID;
         
         const editGame = await GamesModel.findById(game_id)
 
@@ -64,6 +65,7 @@ export const Alter = async (req: Request, res: Response): Promise<void> =>
                     "status": "fail",
                     "error_message": "Permission denied",
                 });
+                return;
             }
 
             // stergem GameOfficialBots din baza de date pentru acest bot
@@ -78,15 +80,16 @@ export const Alter = async (req: Request, res: Response): Promise<void> =>
                     "status": "fail",
                     "error_message": error,
                 });
+                return;
             }
 
             // modificam jocul
             
-            editGame.Name = req.body.title;
-            editGame.Description = req.body.statement;
-            editGame.GameEngine = req.body.game_engine;
-            editGame.AuthorID = req.body.author_id;
-            const bots: Array<string> = req.body.official_bots;
+            editGame.Name = req.body.Name;
+            editGame.Description = req.body.Description;
+            editGame.GameEngine = req.body.GameEngine;
+            editGame.AuthorID = req.body.AuthorID;
+            const bots: Array<string> = req.body.OfficialGameBots;
             editGame.OfficialGameBots = bots.length;
             editGame.Date = new Date();
 
@@ -94,26 +97,27 @@ export const Alter = async (req: Request, res: Response): Promise<void> =>
                 console.log("Updated game: ", editGame);
                 bots.map((bot, id) => {
                     const botObj = JSON.parse(bot)
-                    const name: string | undefined = botObj.bot_name;
-                    CreateOfficialBot(botObj.bot_code, name, editGame.AuthorID, editGame.id, id);
+                    const name: string | undefined = botObj.BotName;
+                    CreateOfficialBot(botObj.BotCode, name, editGame.AuthorID, editGame.id, id);
                 })
-                res.json({"status": "ok", "game_id": editGame.id});
+                res.json({"status": "ok", "GameID": editGame.id});
             })
             .catch(err => res.json({ "status": "fail", "error_message": err }));
         }
         else res.json({ "status": "fail", "error_message": "Game Id not found" })
         
+        return;
     }
 
-    // create a new game, because key 'game_id' doesn't exist in request
+    // create a new game, because key 'GameID' doesn't exist in request
 
     const game = new GamesModel();
 
-    game.Name = req.body.title;
-    game.Description = req.body.statement;
-    game.GameEngine = req.body.game_engine;
-    game.AuthorID = req.body.author_id;
-    const bots: Array<string> = req.body.official_bots;
+    game.Name = req.body.Name;
+    game.Description = req.body.Description;
+    game.GameEngine = req.body.GameEngine;
+    game.AuthorID = req.body.AuthorID;
+    const bots: Array<string> = req.body.OfficialGameBots;
     game.OfficialGameBots = bots.length;
     game.Date = new Date();
 
@@ -122,11 +126,11 @@ export const Alter = async (req: Request, res: Response): Promise<void> =>
             console.log("Saved game: ", game);  
             bots.map((bot, id) => {
                     const botObj = JSON.parse(bot)
-                    const name: string | undefined = botObj.bot_name;
-                    CreateOfficialBot(botObj.bot_code, name, game.AuthorID, game.id, id);
+                    const name: string | undefined = botObj.BotName;
+                    CreateOfficialBot(botObj.BotCode, name, game.AuthorID, game.id, id);
             })
-            res.json({"status": "ok", "game_id": game.id});
+            res.json({"status": "ok", "GameID": game.id});
         })
         .catch(err => res.json({ "status": "fail", "error_message": err }));
-    
+        
 }

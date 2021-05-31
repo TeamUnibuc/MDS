@@ -10,9 +10,10 @@ export const Delete = async (req: Request, res: Response): Promise<void> =>
             "status": "fail",
             "error_message": "You need to be authenticated to do this operation",
         });
+        return;
     }
 
-    const game_id: string = req.body.game_id;
+    const game_id: string = req.body.GameID;
 
     const game = await GamesModel.findById(game_id);
 
@@ -23,10 +24,11 @@ export const Delete = async (req: Request, res: Response): Promise<void> =>
                 "status": "fail",
                 "error_message": "Permission denied",
             });
+            return;
         }
 
         try {
-            game?.delete()
+            game.delete()
             res.json({
                 "status": "ok",
             });
