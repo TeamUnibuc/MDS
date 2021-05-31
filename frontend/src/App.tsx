@@ -3,7 +3,7 @@ import React from 'react';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
 
 import SmartHeader from 'components/SmartHeader'
-import { DefaultPage, TestEval, Dashboard, APITester } from 'pages'
+import { DefaultPage, TestEval, Dashboard, APITester, Profile } from 'pages'
 
 import { Grid } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/styles'
@@ -28,6 +28,7 @@ function App(): JSX.Element {
             <Route key="testeval" path="/testeval" exact component={TestEval}/>
             <Route key="dashboard" path="/dashboard" exact component={Dashboard}/>
             <Route key="apitester" path="/apitester" exact component={APITester}/>
+            <Route key="apitester" path="/profile" exact component={Profile}/>
           </Switch>
         </Grid>
       </Router>
