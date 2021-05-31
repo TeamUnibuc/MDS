@@ -93,6 +93,6 @@ export const SmartFacebookStrategy = new OAuthFacebookStrategy(
 
         req.flash('success', 'Logged In')
         // Yay
-        return done(null, user, {message: 'Created account'})
+        return done(null, user)
     }
 );

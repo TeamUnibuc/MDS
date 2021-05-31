@@ -92,6 +92,6 @@ export const SmartGithubStrategy = new OAuthGithubStrategy(
 
         req.flash('success', 'Logged In')
         // Yay
-        return done(null, user, {message: 'Created account'})
+        return done(null, user)
     }
 );
