@@ -3,8 +3,6 @@ import express, { Application } from 'express'
 import { startMongoConnection } from './DBConnection'
 import { EngineConnection } from './EngineConnection'
 
-// import passport from 'passport'
-// import { GoogleStrategy } from './Auth/GoogleStrategy'
 import { routes as routesAPI } from './API/routes'
 import session from 'express-session'
 import cors from 'cors'
@@ -33,6 +31,9 @@ app.use(
 
 // Better logging
 app.use(morgan('dev'))
+
+// Automatically convert request bodies from string to json and vice-versa
+app.use(express.json())
 
 // Automatically get the json content of the request body
 app.use(

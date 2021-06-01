@@ -6,7 +6,6 @@ import { authRoutes } from './routes'
 import { googleRoutes } from './google/routes'
 import { facebookRoutes } from './facebook/routes'
 import { SmartFacebookStrategy } from './facebook/FacebookStrategy'
-import { appAuthMiddleware } from './Middleware/AppAuth'
 import { SmartGithubStrategy } from './github/GithubStrategy'
 import { githubRoutes } from './github/routes'
 
@@ -14,7 +13,6 @@ export const passport_configure = (app: Application): void =>
 {
     app.use(passport.initialize())
     app.use(passport.session())
-    app.use(appAuthMiddleware)
 
     app.use('/auth', authRoutes)
     app.use('/auth/google', googleRoutes)
@@ -22,13 +20,14 @@ export const passport_configure = (app: Application): void =>
     app.use('/auth/github', githubRoutes)
 }
 
+// Registering strategies for passport
 passport.use('google-smart', SmartGoogleStrategy)
 
 passport.use('facebook-smart', SmartFacebookStrategy)
 
 passport.use('github-smart', SmartGithubStrategy)
 
-
+// Serialize / Deserialize functions for passport
 passport.serializeUser((user, done) => {
     done(null, user.Email)
 })
