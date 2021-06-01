@@ -17,13 +17,15 @@ class UsersItem {
     Username = "";
     // Date the user registered.
     DateJoined = new Date();
-    // List of Providers the user with this email connected
+    // List of Providers the user with this email connected.
     Providers = {
         googleID : "",
         facebookID : "",
         twitterID : "",
         githubID : "",
-    }
+    };
+    // Exists if the user is an administrator.
+    IsAdministrator ?: boolean = false;
 }
 
 export interface UsersDoc extends UsersItem, Document { }
@@ -56,6 +58,7 @@ const UsersSchema: Schema<UsersDoc> = new Schema<UsersDoc>({
             githubID: { type: String },
         })),
     },
+    IsAdministrator: { type: Boolean, required: false },
 });
 
 UsersSchema.statics.findByEmail = function(email: string)

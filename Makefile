@@ -10,7 +10,7 @@ init:
 	$(MAKE) init_environment
 
 init_ia_sandbox:
-	@sudo ./Engine/init_ia_sandbox.sh
+	@sudo ./engine/init_ia_sandbox.sh
 
 init_environment:
 	conda env update --name $(CONDA_ENV) --file $(CONDA_ENV).yml

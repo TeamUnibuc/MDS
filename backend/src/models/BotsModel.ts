@@ -14,6 +14,8 @@ class BotsItem {
     DateSubmitted = new Date();
     // ID of the author.
     AuthorID = "";
+    // Compilation message.
+    CompilationMessage = "";
 }
 
 interface BotsDoc extends BotsItem, Document { }
@@ -22,6 +24,7 @@ const BotsSchema: Schema = new Schema({
     Code: { type: String, required: true },
     DateSubmitted: { type: Date, required: true },
     AuthorID: { type: String, required: true },
+    CompilationMessage: { type: String, required: true },
 });
 
 // Export the model and return your interface
