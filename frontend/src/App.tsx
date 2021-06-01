@@ -16,32 +16,34 @@ const theme = createMuiTheme()
 function App(): JSX.Element {
   return (
     <StylesProvider injectFirst>
-
     <ThemeProvider theme={theme}>
 
       <Router basename={process.env.PUBLIC_URL}>
       <SnackProvider>
+
         <Snackbar />
 
         <Grid container>
+
           <Grid item xs={12}>
             <SmartHeader activePage={'oh well'}/>
           </Grid>
-          <Grid item xs={12}>
 
+          <Grid item xs={12}>
             <Switch>
               <Route key="default" path="/" exact component={DefaultPage}/>
-            <Route key="testeval" path="/testeval" exact component={TestEval}/>
-            <Route key="dashboard" path="/dashboard" exact component={Dashboard}/>
-            <Route key="apitester" path="/apitester" exact component={APITester}/>
-            <Route key="profile" path="/profile" exact component={Profile}/>
+              <Route key="testeval" path="/testeval" exact component={TestEval}/>
+              <Route key="dashboard" path="/dashboard" exact component={Dashboard}/>
+              <Route key="apitester" path="/apitester" exact component={APITester}/>
+              <Route key="profile" path="/profile" exact component={Profile}/>
             </Switch>
-          
           </Grid>
+
         </Grid>
 
       </SnackProvider>
       </Router>
+
     </ThemeProvider>
     </StylesProvider>
   );
