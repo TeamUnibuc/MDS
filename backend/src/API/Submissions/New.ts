@@ -53,6 +53,10 @@ const CreateNewFight = async (BotIDs: Array<string>, GameID: string): Promise<st
             console.log("EngineConnection error!");
             throw new Error(fightInfo.reason);
         }
+    })
+    .catch(e => {
+        console.log("EngineConnection.Fight failed!", e);
+        throw new Error(e);
     });
 
     return fight.save()
@@ -97,6 +101,9 @@ export const New = async (req: Request, res: Response): Promise<void> =>
             officialBots.map(bot => {
                 CreateNewFight([botID, bot.BotID], gameID).then(fightID => {
                     fightIds.push(fightID);
+                })
+                .catch(e => {
+                    throw new Error(e);
                 })
             });
 

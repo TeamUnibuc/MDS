@@ -27,17 +27,30 @@ export const Delete = async (req: Request, res: Response): Promise<void> =>
             return;
         }
 
-        try {
-            game.delete()
+        game.delete().then(game => {
+            console.log("Delete game:", game);
             res.json({
                 "status": "ok",
-            });
-        } catch (error) {
+            })
+        })
+        .catch(e => {
             res.json({
                 "status": "fail",
-                "error_message": error,
-            });
-        }
+                "error_message": e,
+            })
+        });
+
+        // try {
+        //     game.delete()
+        //     res.json({
+        //         "status": "ok",
+        //     });
+        // } catch (error) {
+        //     res.json({
+        //         "status": "fail",
+        //         "error_message": error,
+        //     });
+        // }
     }
     else {
         res.json({

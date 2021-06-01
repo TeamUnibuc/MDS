@@ -1,5 +1,4 @@
 import express from 'express'
-import {getGames} from './cevafunctie'
 import {GetAll} from './GetAll'
 import {GetGame} from './GetGame'
 import {Alter} from './Alter'
@@ -14,7 +13,5 @@ gameRoutes.post('/GetGame', GetGame)
 gameRoutes.post('/Alter', Alter)
 gameRoutes.post('/Sources', Sources)
 gameRoutes.post('/Delete', Delete)
-
-gameRoutes.post('/GetGames', getGames)
 
 

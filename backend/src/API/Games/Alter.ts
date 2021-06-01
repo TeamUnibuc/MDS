@@ -73,7 +73,7 @@ export const Alter = async (req: Request, res: Response): Promise<void> =>
             const officialBots = await GameOfficialBotsModel.find({GameID: editGame.id})
             try {
                 for (let i = 0; i < officialBots.length; ++i) {
-                    officialBots[i]?.delete();
+                    await officialBots[i]?.delete();
                 }
             } catch (error) {
                 res.json({
@@ -95,10 +95,10 @@ export const Alter = async (req: Request, res: Response): Promise<void> =>
 
             editGame.update().then(editGame => {
                 console.log("Updated game: ", editGame);
-                bots.map((bot, id) => {
+                bots.map(async (bot, id) => {
                     const botObj = JSON.parse(bot)
                     const name: string | undefined = botObj.BotName;
-                    CreateOfficialBot(botObj.BotCode, name, editGame.AuthorID, editGame.id, id);
+                    await CreateOfficialBot(botObj.BotCode, name, editGame.AuthorID, editGame.id, id);
                 })
                 res.json({"status": "ok", "GameID": editGame.id});
             })
@@ -124,10 +124,10 @@ export const Alter = async (req: Request, res: Response): Promise<void> =>
     game.save()
         .then(game => {
             console.log("Saved game: ", game);  
-            bots.map((bot, id) => {
+            bots.map(async (bot, id) => {
                     const botObj = JSON.parse(bot)
                     const name: string | undefined = botObj.BotName;
-                    CreateOfficialBot(botObj.BotCode, name, game.AuthorID, game.id, id);
+                    await CreateOfficialBot(botObj.BotCode, name, game.AuthorID, game.id, id);
             })
             res.json({"status": "ok", "GameID": game.id});
         })

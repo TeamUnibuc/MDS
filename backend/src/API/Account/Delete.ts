@@ -13,15 +13,28 @@ export const Delete = async (req: Request, res: Response): Promise<void> =>
         return;
     }
 
-    try {
-        req.user.delete();
+    req.user.delete().then(user => {
+        console.log("Delete user:", user);
         res.json({
             "status": "ok",
         })
-    } catch (error) {
+    })
+    .catch(e => {
         res.json({
             "status": "fail",
-            "error_message": error,
+            "error_message": e,
         })
-    }
+    });
+
+    // try {
+    //     req.user.delete();
+    //     res.json({
+    //         "status": "ok",
+    //     })
+    // } catch (error) {
+    //     res.json({
+    //         "status": "fail",
+    //         "error_message": error,
+    //     })
+    // }
 }
