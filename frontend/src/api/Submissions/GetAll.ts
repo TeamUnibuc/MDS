@@ -1,7 +1,7 @@
 import { RequestStatus, SubmissionModel } from '../Models'
 
 interface GetAllParameters {
-    requested_games : number,
+    requested_submissions : number,
     requested_offset : number,
     GameID?: string,
     UserID?: string,

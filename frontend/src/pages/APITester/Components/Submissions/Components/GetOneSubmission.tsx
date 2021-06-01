@@ -22,10 +22,10 @@ export default function GetOneSubmission(): JSX.Element {
 
         console.log(reqBody);
 
-        // const content = await api.Submissions.GetOne(reqBody);
-        // console.log(content);
-        // setApiResponse(prettyJSON(content));
-        setApiResponse('{Submissions}');
+        const content = await api.Submissions.GetOne(reqBody);
+        console.log(content);
+        setApiResponse(prettyJSON(content));
+        // setApiResponse('{Submissions}');
     }
 
     return <Container className={classes.container}>

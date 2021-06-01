@@ -29,6 +29,7 @@ function AddGame(): JSX.Element {
             BotCode: it
         }))
 
+        // TODO: add gameid
         const reqBody = {
             Name,
             Description,
@@ -39,10 +40,10 @@ function AddGame(): JSX.Element {
 
         console.log(reqBody);
 
-        // const content = await api.Games.Alter(reqBody);
-        // console.log(content);
-        // setApiResponse(prettyJSON(content));
-        setApiResponse('{Lol}');
+        const content = await api.Games.Alter(reqBody);
+        console.log(content);
+        setApiResponse(prettyJSON(content));
+        // setApiResponse('{Lol}');
     }
 
     return <Container className={classes.container}>

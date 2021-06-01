@@ -37,10 +37,10 @@ export default function GetAllSubmissions(): JSX.Element {
 
         // Example of how it should work, not fully working
 
-        // const content = await api.Submissions.GetAll(regBody);
-        // console.log(content);
-        // setApiResponse(prettyJSON(content));
-        setApiResponse('{Lol}')
+        const content = await api.Submissions.GetAll(reqBody);
+        console.log(content);
+        setApiResponse(prettyJSON(content));
+        // setApiResponse('{Lol}')
     }
 
     return <Container className={classes.container}>

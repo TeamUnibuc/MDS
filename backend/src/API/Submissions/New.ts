@@ -12,6 +12,7 @@ const CreateNewBotEntry = (Code: string, AuthorID: string): Promise<string> => {
     bot.Code = Code;
     bot.AuthorID = AuthorID;
     bot.DateSubmitted = new Date();
+    bot.CompilationMessage = "Not compiled yet!"
 
     return bot.save()
         .then(val => {
@@ -40,10 +41,10 @@ const CreateNewFight = async (BotIDs: Array<string>, GameID: string): Promise<st
 
     if (!game) throw new Error("Game Id not found for this fight!");
 
-    EngineConnection.Fight(game.GameEngine, botsCode).then(fightInfo => {
+    await EngineConnection.Fight(game.GameEngine, botsCode).then(fightInfo => {
         if (fightInfo.status == "ok") {
             fight.BattleLogs = fightInfo.logs;
-            fight.WinnerID = fightInfo.winner;
+            fight.WinnerID = BotIDs[fightInfo.winner];
         }
         else if (fightInfo.status == "compilation_error") {
             fight.WinnerID = "-1";
@@ -82,7 +83,7 @@ export const New = async (req: Request, res: Response): Promise<void> =>
         return;
     }
 
-    const gameID = req.body.GameId;
+    const gameID = req.body.GameID;
     const code = req.body.SubmissionCode;
 
     try {
@@ -98,14 +99,14 @@ export const New = async (req: Request, res: Response): Promise<void> =>
 
             const fightIds: Array<string> = [];
 
-            officialBots.map(bot => {
+            await Promise.all(officialBots.map(bot =>
                 CreateNewFight([botID, bot.BotID], gameID).then(fightID => {
                     fightIds.push(fightID);
                 })
                 .catch(e => {
                     throw new Error(e);
                 })
-            });
+            ));
 
             submission.FightIDs = fightIds;
 

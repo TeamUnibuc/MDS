@@ -43,18 +43,19 @@ export const GetAll = async (req: Request, res: Response): Promise<void> =>
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const orderedGames: any[] = []
 
-        totalGames = await (await GamesModel.find({}, {Name: 1, Description: 1, AuthorID: 1, Date: 1})).forEach(
-            async function (game) {
-                const nrSubmissions = await SubmissionsModel.find({GameID: game.id}).count();
-                orderedGames.push([nrSubmissions, game]);
-            }
-        )
+        totalGames = await GamesModel.find({}, {Name: 1, Description: 1, AuthorID: 1, Date: 1})
+            
+        
+        for (const game of totalGames) {
+            const nrSubmissions = await SubmissionsModel.find({GameID: game.id}).count();
+            orderedGames.push([nrSubmissions, game]);
+        }
 
         orderedGames.sort(function(a, b) {return a[0] - b[0]});
         if (orderValue == -1) orderedGames.reverse();
 
         totalGames = []
-        for (let i = 0; i < orderedGames.length; ++i) totalGames.push(orderedGames[1]);
+        for (let i = 0; i < orderedGames.length; ++i) totalGames.push(orderedGames[i][1]);
     }
     else {
         // sort the games by the number of people who solved the game.
@@ -62,18 +63,18 @@ export const GetAll = async (req: Request, res: Response): Promise<void> =>
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const orderedGames: any[] = []
 
-        totalGames = await (await GamesModel.find({}, {Name: 1, Description: 1, AuthorID: 1, Date: 1})).forEach(
-            async function (game) {
-                const userIds = await SubmissionsModel.find({GameID: game.id, Points: 100}).distinct('UserID');
-                orderedGames.push([userIds.length, game]);
-            }
-        )
+        totalGames = await GamesModel.find({}, {Name: 1, Description: 1, AuthorID: 1, Date: 1})
+        
+        for (const game of totalGames) {
+            const userIds = await SubmissionsModel.find({GameID: game.id, Points: 100}).distinct('UserID');
+            orderedGames.push([userIds.length, game]);
+        }
 
         orderedGames.sort(function(a, b) {return a[0] - b[0]});
         if (orderValue == -1) orderedGames.reverse();
 
         totalGames = []
-        for (let i = 0; i < orderedGames.length; ++i) totalGames.push(orderedGames[1]);
+        for (let i = 0; i < orderedGames.length; ++i) totalGames.push(orderedGames[i][1]);
     }
 
     const games = [];
