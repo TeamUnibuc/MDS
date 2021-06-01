@@ -12,6 +12,7 @@ class FightsItem {
     // Game of fight was about.
     GameID = "";
     // Bot who won the fight.
+    // -1 if nobody won.
     WinnerID = "";
     // Logs of the battle.
     BattleLogs = "";

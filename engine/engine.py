@@ -97,11 +97,12 @@ class Match:
         if os.path.exists("/lib64"):
             mounts = mounts + ["--mount", "/lib64:/lib64:exec"]
 
+        file_extension = str(random.randint(1, int(1e18)))
         config = [
             "--env", "PATH=/usr/bin",
             "-o", "json",
-            "--stdout", self.working_dir + "/stdout",
-            "--stderr", self.working_dir + "/stderr", 
+            "--stdout", self.working_dir + "/stdout" + file_extension,
+            "--stderr", self.working_dir + "/stderr" + file_extension, 
             "--"] + args
 
         # Running command.
@@ -113,9 +114,9 @@ class Match:
             sandbox_status += "Error: " + sandbox_error
 
         # Retrieving stdout and stderr.
-        with open(self.working_dir + "/stdout", "r") as fin:
+        with open(self.working_dir + "/stdout" + file_extension, "r") as fin:
             stdout = fin.read()
-        with open(self.working_dir + "/stderr", "r") as fin:
+        with open(self.working_dir + "/stderr" + file_extension, "r") as fin:
             stderr = fin.read()
 
         return sandbox_status, stdout, stderr
@@ -197,7 +198,8 @@ def Simulate(engine: str, bots: list, injects: list):
             }
         else:
             ret["status"] = {
-                "status": "ok"
+                "status": "ok",
+                "compilation_message": compilation_status[2]
             }
 
     # Process manager, creating process-independent dictionaries.
@@ -223,13 +225,21 @@ def Simulate(engine: str, bots: list, injects: list):
     for proc in bots_process:
         proc.join()
 
+    # Get compilation messages.
+    engine_compilation_message = ""
+    bots_compilation_message = []
+
     if engine_status["status"]["status"] != "ok":
         return engine_status["status"]
+    else:
+        engine_compilation_message = engine_status["status"]["compilation_message"]
 
     for status in bots_status:
         if status["status"]["status"] != "ok":
             return status["status"]
-    
+        else:
+            bots_compilation_message.append(status["status"]["compilation_message"])
+
     # Run the actual match.
     match.Move("/engine/engine", "/engine_bin")
     for bot in range(NR_BOTS):
@@ -243,13 +253,15 @@ def Simulate(engine: str, bots: list, injects: list):
             raise Exception("Didn't finish successfully")
 
         winner = int(match_status[2])
-        if winner < 0 or winner >= NR_BOTS:
+        if winner < -1 or winner >= NR_BOTS:
             raise Exception(f"Invalid winner: {winner}")
 
         ans = {
             "status": "ok",
             "logs": match_status[1],
-            "winner": match_status[2]
+            "winner": match_status[2],
+            "engine_compilation_message": engine_compilation_message,
+            "bots_compilation_message": bots_compilation_message,
         }
         return ans
     except Exception as e:
