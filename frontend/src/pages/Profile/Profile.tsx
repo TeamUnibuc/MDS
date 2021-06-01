@@ -1,5 +1,5 @@
+import React from 'react'
 import { Container, Divider, Box } from '@material-ui/core'
-import React, { useState } from 'react'
 import AccountDelete from './Components/AccountDelete'
 import UpdateUsername from './Components/UpdateUsername'
 

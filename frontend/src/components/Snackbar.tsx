@@ -13,6 +13,7 @@ interface SnackState {
     open: boolean,
     vertical: "top" | "bottom",
     horizontal: "center" | "left" | "right",
+    duration: number,
 }
 
 interface SnackContextType {
@@ -26,6 +27,7 @@ const defaultState: SnackState = {
     open: false,
     vertical: 'top',
     horizontal: 'center',
+    duration: 3000,
 }
 
 const SnackContext = React.createContext<SnackContextType>({
@@ -59,10 +61,6 @@ function Alert(props: AlertProps): JSX.Element
     return <MUIAlert elevation={6} variant="filled" {...props} />;
 }
 
-function TransitionUp(props: TransitionProps) {
-    return <Slide {...props} direction="up" />;
-  }
-
 function Snackbar(): JSX.Element 
 {
     const {state, setState} = useSnackbar()
@@ -88,13 +86,13 @@ function Snackbar(): JSX.Element
         setState({...state, open: false});
     };
 
-    const {open, msg, severity, vertical, horizontal} = state;
+    const {duration, open, msg, severity, vertical, horizontal} = state;
 
 
     return (
       <MUISnackbar 
         open={open} 
-        autoHideDuration={6000} 
+        autoHideDuration={duration} 
         onClose={handleClose}
         anchorOrigin={{ vertical, horizontal }}
         // TransitionComponent={TransitionUp}   // NU am reusit sa fac sa mearga tranzitia asta idioata

@@ -9,6 +9,7 @@ import { DefaultPage, TestEval, Dashboard, APITester, Profile } from 'pages'
 import { Grid } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/styles'
 import { createMuiTheme } from '@material-ui/core/styles';
+import { UserStatusProvider } from 'Contexts/UserStatus';
 
 // Daca vrem sa adaugam culori la theme, aici trebuie sa facem asta
 const theme = createMuiTheme()
@@ -20,6 +21,7 @@ function App(): JSX.Element {
 
       <Router basename={process.env.PUBLIC_URL}>
       <SnackProvider>
+      <UserStatusProvider>
 
         <Snackbar />
 
@@ -36,11 +38,17 @@ function App(): JSX.Element {
               <Route key="dashboard" path="/dashboard" exact component={Dashboard}/>
               <Route key="apitester" path="/apitester" exact component={APITester}/>
               <Route key="profile" path="/profile" exact component={Profile}/>
+
+              <Route path='/deleteLogout' component={() => { 
+                window.location.href = process.env.PUBLIC_URL + '/deleteLogout?info_msg=Account Deleted'; 
+                return null;
+              }}/>
             </Switch>
           </Grid>
 
         </Grid>
 
+      </UserStatusProvider>
       </SnackProvider>
       </Router>
 
