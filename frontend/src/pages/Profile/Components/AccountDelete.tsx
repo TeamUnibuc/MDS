@@ -19,7 +19,7 @@ function AccountDelete(): JSX.Element
     }
 
     if (deleted) {
-        return <Redirect to="/Dashboard" />
+        return <Redirect to="/Dashboard?info_msg=Account deleted" />
     }
 
     return <Button onClick={handleClick}>
