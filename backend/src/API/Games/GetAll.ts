@@ -45,7 +45,7 @@ export const GetAll = async (req: Request, res: Response): Promise<void> =>
 
         totalGames = await (await GamesModel.find({}, {Name: 1, Description: 1, AuthorID: 1, Date: 1})).forEach(
             async function (game) {
-                const nrSubmissions = await SubmissionsModel.find({GameID: game.id});
+                const nrSubmissions = await SubmissionsModel.find({GameID: game.id}).count();
                 orderedGames.push([nrSubmissions, game]);
             }
         )
