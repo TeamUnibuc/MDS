@@ -3,8 +3,6 @@ import express, { Application } from 'express'
 import { startMongoConnection } from './DBConnection'
 import { EngineConnection } from './EngineConnection'
 
-// import passport from 'passport'
-// import { GoogleStrategy } from './Auth/GoogleStrategy'
 import { routes as routesAPI } from './API/routes'
 import session from 'express-session'
 import cors from 'cors'

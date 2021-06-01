@@ -20,13 +20,13 @@ authRoutes.get('/', (req, res) => {
 // Logs the user out
 authRoutes.get('/logout', (req, res) => {
     req.logout()
-    res.redirect(`${frontendPath}/Dashboard?msg=LoggedOutOK`)
+    res.redirect(`${frontendPath}/Dashboard?info_msg=Logged Out`)
 })
 
 // SMART strategies
 authRoutes.get('/smart-fail', (req, res) => {
     const errMsg = req.flash('error')
-    res.redirect(`${frontendPath}/Dashboard?msg=${errMsg}`)
+    res.redirect(`${frontendPath}/Dashboard?error_msg=${errMsg}`)
 })
 
 authRoutes.get('/smart-success', (req, res) => {
@@ -37,7 +37,8 @@ authRoutes.get('/smart-success', (req, res) => {
     }
     if (!user.Username) {
         // User has username, so it is a real existing user in DB
-        return res.redirect(`${frontendPath}/Dashboard?msg=WTF--user-doesnt-have-username???`)
+        return res.redirect(`${frontendPath}/Dashboard?error_msg=WTF--user-doesnt-have-username???`)
     }
-    res.redirect(`${frontendPath}/Dashboard?msg=Created-account-OK`)
+    const msg = req.flash('success')
+    res.redirect(`${frontendPath}/Dashboard?success_msg=${msg}`)
 })

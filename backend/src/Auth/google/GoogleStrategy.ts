@@ -23,9 +23,10 @@ export const GoogleScopes = ['profile', 'email']
 export const SmartGoogleStrategy = new OAuthGoogleStrategy(
     {
         ...GoogleOptions,
+        passReqToCallback: true,
         callbackURL: `${env.FRONTEND_BASE_URL}:${env.FRONTEND_PORT}/auth/google/smart-callback`,
     },
-    async function (accessToken, refreshToken, profile, done) {
+    async function (req, accessToken, refreshToken, profile, done) {
         const {user: user, email: email} = await obtainEmailAndUser(profile)
 
         if (!email) {
@@ -59,6 +60,7 @@ export const SmartGoogleStrategy = new OAuthGoogleStrategy(
             createdUserDoc.save()
                 .then(resp => {
                     console.log(`Saved in DB user: ${resp.Email}`)
+                    req.flash('success', 'Account Created')
                     return done(null, createdUserDoc)
                 })
                 .catch(err => {
@@ -68,14 +70,13 @@ export const SmartGoogleStrategy = new OAuthGoogleStrategy(
             return ;
         }
 
-        // User-ul este in baza de date, dar s-ar putea sa nu aiba username setat
-
         // User-ul exista, verificam daca trebuie sa adaugam provider-ul
         if (!user.Providers.googleID) {
             user.Providers.googleID = profile.id;
             await user.save()
         }
 
+        req.flash('success', 'Logged In')
         // Yay
         return done(null, user)
     }
