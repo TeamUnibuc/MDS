@@ -4,7 +4,7 @@ import { Alert, AlertTitle } from '@material-ui/lab'
 
 function UpdateUsername(): JSX.Element
 {
-    return <Alert severity="error">
+    return <Alert severity="success">
         <AlertTitle>Error!</AlertTitle>
         Updating Username not implemented!
     </Alert>

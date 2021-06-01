@@ -3,8 +3,8 @@ import { Button, makeStyles } from '@material-ui/core'
 
 import api from 'api'
 import { Redirect } from 'react-router-dom'
-import { useSnackbar } from 'components/Snackbar'
 import { useUserStatus } from 'Contexts/UserStatus'
+import { useSnackbar } from 'Contexts/Snackbar'
 
 const useStyles = makeStyles(() => ({
     buttonDelete: {

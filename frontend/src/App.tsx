@@ -1,15 +1,16 @@
-import { StylesProvider } from '@material-ui/styles';
 import React from 'react';
+import { StylesProvider } from '@material-ui/styles';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
 
 import SmartHeader from 'components/SmartHeader'
-import { Snackbar, SnackProvider } from 'components/Snackbar'
+import Snackbar from 'components/Snackbar'
 import { DefaultPage, TestEval, Dashboard, APITester, Profile } from 'pages'
 
 import { Grid } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/styles'
 import { createMuiTheme } from '@material-ui/core/styles';
 import { UserStatusProvider } from 'Contexts/UserStatus';
+import { SnackProvider } from 'Contexts/Snackbar';
 
 // Daca vrem sa adaugam culori la theme, aici trebuie sa facem asta
 const theme = createMuiTheme()
