@@ -1,7 +1,9 @@
 import { GetUser } from './GetUser'
+import { GetByUsername } from './GetByUsername'
 
 const Users = {
-    GetUser
+    GetUser,
+    GetByUsername,
 }
 
 export { Users }

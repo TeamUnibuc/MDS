@@ -1,16 +1,15 @@
 import React, { useState } from 'react'
-
 import { EditFields } from '../Profile'
 import TextField from '@material-ui/core/TextField';
 import { Box, Button, makeStyles } from '@material-ui/core';
-import api from 'api';
 import { useSnackbar } from 'Contexts/Snackbar';
 import { useUserStatus } from 'Contexts/UserStatus';
 import { EditAccountResults } from 'api/Account/EditAccount';
-
+import api from 'api';
 
 interface Props {
     profile: EditFields,
+    setProfile(fields: EditFields): void,
 }
 
 const useStyles = makeStyles(() => ({
@@ -19,40 +18,51 @@ const useStyles = makeStyles(() => ({
     }
 }))
 
-function UpdateUsername({profile}: Props): JSX.Element
+
+const UpdateName = ({profile, setProfile}: Props): JSX.Element => 
 {
     const classes = useStyles()
-    const [isError, setError] = useState(false)
-    const [errorMsg, setErrorMsg] = useState("")
-    const [usernameVal, setUsernameVal] = useState(profile.Username)
+    const [firstName, setFirstName] = useState(profile.FirstName)
+    const [lastName, setLastName] = useState(profile.LastName)
     const {state: snackState, setState: setSnackState} = useSnackbar()
     const {reloadUserState} = useUserStatus()
 
-    const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const onFirstNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         console.log(event)
-        setUsernameVal(event.target.value ?? "")
+        setFirstName(event.target.value ?? "")
+    }
+
+    const onLastNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(event)
+        setLastName(event.target.value ?? "")
     }
 
     const handleFail = (res: EditAccountResults) => {
-        console.log('FAIL: ', res)
-        setError(true)
-        setErrorMsg(res.error_message ?? "")
+        setSnackState({...snackState,
+            open: true,
+            severity: "warning",
+            duration: 1500,
+            msg: res.error_message ?? "Oopsie, something bad happened :(",
+        })
     }
 
     const handleClick = () => {
-        console.log('click save with new user: ', usernameVal)
-        api.Account.EditAccount({...profile, Username: usernameVal})
+        const newProfile = {
+            ...profile, 
+            FirstName: firstName,
+            LastName: lastName,
+        }
+        api.Account.EditAccount(newProfile)
         .then(res => {
             if (res.status === "ok") {
-                setError(false)
-                setErrorMsg('')
                 setSnackState({...snackState, 
                     open: true, 
                     severity: "success", 
-                    msg: "Username changed successfully!",
+                    msg: "Name changed successfully!",
                     duration: 1200,
                 })
                 reloadUserState()
+                setProfile(newProfile)
             }
             else {
                 handleFail(res)
@@ -62,19 +72,21 @@ function UpdateUsername({profile}: Props): JSX.Element
         })
     }
 
-    console.log("Before rendering UpdateUsername: ")
-    console.log(`isError: ${isError}`)
-
     return <>
-    <h3>Change your username</h3>
+    <h3>Update First and Last name</h3>
     <TextField 
-        error={isError}
         type="string" 
-        id="username-field"
-        label="Username"
-        helperText={errorMsg}
-        defaultValue={profile.Username}
-        onChange={onChange}
+        id="firstname-field"
+        label="First Name"
+        defaultValue={profile.FirstName}
+        onChange={onFirstNameChange}
+    />
+    <TextField 
+        type="string" 
+        id="lastname-field"
+        label="Last Name"
+        defaultValue={profile.LastName}
+        onChange={onLastNameChange}
     />
     <Box mt={3} pl={1}>
         <Button 
@@ -87,4 +99,4 @@ function UpdateUsername({profile}: Props): JSX.Element
     </>
 }
 
-export default UpdateUsername
+export default UpdateName

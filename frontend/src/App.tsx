@@ -3,14 +3,19 @@ import { StylesProvider } from '@material-ui/styles';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
 
 import SmartHeader from 'components/SmartHeader'
-import { TestEval, Dashboard, APITester, Standings, Problemset, Users, Submissions, Home } from 'pages'
+import { TestEval, Dashboard, APITester } from 'pages'
 
-import { Grid } from '@material-ui/core'
+import { Grid, Box, Container } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/styles'
 import { createMuiTheme } from '@material-ui/core/styles';
 import { UserStatusProvider } from 'Contexts/UserStatus';
 import { SnackProvider } from 'Contexts/Snackbar';
 import Snackbar from 'components/Snackbar';
+import Home from 'pages/Home/Home';
+import Problemset from 'pages/Problemset/Problemset';
+import Users from 'pages/Users/Users';
+import Standings from 'pages/Standings/Standings';
+import Submissions from 'pages/Submissions/Submissions';
 
 // Daca vrem sa adaugam culori la theme, aici trebuie sa facem asta
 const theme = createMuiTheme()
@@ -33,6 +38,9 @@ function App(): JSX.Element {
           </Grid>
 
           <Grid item xs={12}>
+            <Box pt={2}>
+            <Container>
+            
             <Switch>
               <Route key="Home" path="/" exact component={Home}/>
               <Route key="Problemset" path="/problemset" component={Problemset} />
@@ -46,6 +54,9 @@ function App(): JSX.Element {
 
               <Route key="dashboard" path="/dashboard" exact component={Dashboard}/>
             </Switch>
+            
+            </Container>
+            </Box>
           </Grid>
 
         </Grid>

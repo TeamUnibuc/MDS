@@ -8,7 +8,7 @@ import * as React from 'react'
  * 
  * authenticated === false ==>> Stim ca user-ul nu este logat
  */
-interface UserStatusState {
+export interface UserStatusState {
     authenticated?: boolean,
     user?: AuthUser,
 }

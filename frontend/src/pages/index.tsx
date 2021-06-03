@@ -7,5 +7,17 @@ import Problemset from './Problemset/Problemset'
 import Users from './Users/Users'
 import Submissions from './Submissions/Submissions'
 import Home from './Home/Home'
+import Profile from './Profile/Profile'
 
-export { DefaultPage, TestEval, Dashboard, APITester, Standings, Problemset, Users, Submissions, Home }
+export { 
+    DefaultPage, 
+    TestEval, 
+    Dashboard, 
+    APITester, 
+    Standings, 
+    Problemset, 
+    Users, 
+    Submissions, 
+    Home,
+    Profile 
+}

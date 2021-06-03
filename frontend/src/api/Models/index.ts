@@ -44,13 +44,12 @@ export interface AccountModel{
     LastName: string,
     Email: string,
     DateJoined: Date,
-    UserID: string,
-    VisibleEmail: boolean
+    UserID: string
 }
 
 export interface UserModel{
     FirstName: string,
     LastName: string,
     DateJoined: Date,
-    Email?: string
+    Email: string
 }

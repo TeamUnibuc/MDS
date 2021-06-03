@@ -17,6 +17,7 @@ export interface AuthUser {
     Email: string,
     Username: string,
     DateJoined: Date,
+    IsAdministrator?: boolean,
     UserID: string,
     Providers: {
         googleID?: string,
@@ -35,5 +36,9 @@ export const getAuthStatus = (): Promise<AuthStatusResponse> =>
         }
     })
 
-    return jsonWrapper(prom);
+    return jsonWrapper(prom).then(res => {
+        res.user.DateJoined = new Date(res.user.DateJoined)
+        // console.log(res)
+        return res
+    });
 }

@@ -7,8 +7,8 @@ export const Edit = async (req: Request, res: Response): Promise<void> =>
 
     if (!req.user || !req.isAuthenticated()) {
         res.json({
-            "status": "fail",
-            "error_message": "You need to be authenticated to do this operation",
+            status: "fail",
+            error_message: "You need to be authenticated to do this operation",
         });
         return;
     }
@@ -17,16 +17,14 @@ export const Edit = async (req: Request, res: Response): Promise<void> =>
     const lastName: string = req.body.LastName;
     const userName: string = req.body.Username;
 
-    // const user = await UsersModel.findById(req.user.id);
-
-    // if (!user) {
-    //     res.json({
-    //         "status": "fail",
-    //         "error_message": "User not found",
-    //     });
-    //     return;
-    // }
-
+    if (!userName) {
+        res.json({
+            status: "fail",
+            error_message: "Empty username",
+        })
+        return 
+    }
+    
     req.user.FirstName = firstName;
     req.user.LastName = lastName;
     req.user.Username = userName;
@@ -34,13 +32,13 @@ export const Edit = async (req: Request, res: Response): Promise<void> =>
     req.user.save().then(user => {
         console.log("Update user ", user);
         res.json({
-            "status": "ok",
+            status: "ok",
         })
     })
     .catch(e => {
         res.json({
-            "status": "fail",
-            "error_message": e,
+            status: "fail",
+            error_message: e,
         })
     })
 }

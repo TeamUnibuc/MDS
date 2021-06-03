@@ -3,11 +3,10 @@ import { RequestStatus } from '../Models'
 interface EditAccountParameters {
     FirstName: string,
     LastName: string,
-    Username: string,
-    VisibleEmail: boolean
+    Username: string
 }
 
-interface EditAccountResults extends RequestStatus {
+export interface EditAccountResults extends RequestStatus {
     dummy?: 'dummy'
 }
 

@@ -14,19 +14,20 @@ export const GetByUsername = async (req: Request, res: Response): Promise<void> 
     try {
         const user = userList[0]
         res.json({
-            "status": "ok",
-            "FirstName": user.FirstName,
-            "LastName": user.LastName,
-            "DateJoined": user.DateJoined,
-            "Email": user.Email,
-            "Username": user.Username,
+            status: "ok",
+            FirstName: user.FirstName,
+            LastName: user.LastName,
+            DateJoined: user.DateJoined,
+            Email: user.Email,
+            Username: user.Username,
+            UserID: user.id,
         });
         return;
     }
     catch (err) {
         res.json({
-            "status": "fail",
-            "error_message": "Username does not exist!",
+            status: "fail",
+            error_message: "Username does not exist!",
         });
     }
 }
