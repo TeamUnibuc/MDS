@@ -16,19 +16,19 @@ function CustomRequest() : JSX.Element {
     const handleSubmit = async (event : React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         
-        // const reqBody = JSON.parse(requestBody);
-        // const data = await fetch(path, {
-        //     method: "POST",
-        //     headers:{
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(reqBody)
-        // })
-        // const content = await data.json();
-        // console.log(content);
-        // setApiResponse(prettyJSON(content));
+        const reqBody = JSON.parse(requestBody);
+        const data = await fetch(path, {
+            method: "POST",
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(reqBody)
+        })
+        const content = await data.json();
+        console.log(content);
+        setApiResponse(prettyJSON(content));
 
-        setApiResponse('{Custom}');
+        // setApiResponse('{Custom}');
     }
 
     return (

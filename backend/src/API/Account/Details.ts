@@ -20,5 +20,6 @@ export const Details = async (req: Request, res: Response): Promise<void> =>
         "Email": req.user.Email,
         "DateJoined": req.user.DateJoined,
         "UserID": req.user.id,
+        "Username": req.user.Username,
     });
 }

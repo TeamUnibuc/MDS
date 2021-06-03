@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import { GameRankingsModel } from '../../models/GameRankingsModel';
 import { GamesModel } from '../../models/GamesModel'
 
 export const Delete = async (req: Request, res: Response): Promise<void> => 
@@ -27,8 +28,24 @@ export const Delete = async (req: Request, res: Response): Promise<void> =>
             return;
         }
 
-        game.delete().then(game => {
+        game.delete().then(async game => {
             console.log("Delete game:", game);
+
+            const gameRankings = await GameRankingsModel.find({GameID: game_id});
+
+            try {
+                // eslint-disable-next-line no-loops/no-loops
+                for (let i = 0; i < gameRankings.length; ++i) {
+                    await gameRankings[i]?.delete();
+                }
+            } catch (error) {
+                res.json({
+                    "status": "fail",
+                    "error_message": "Game deleted, but rank not deleted!",
+                });
+                return;
+            }
+
             res.json({
                 "status": "ok",
             })

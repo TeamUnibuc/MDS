@@ -56,7 +56,7 @@ export default function APITester() : JSX.Element{
                         keyMap: 'sublime',
                         mode: 'javascript',
                         lineNumbers: true,
-                        readOnly: "nocursor"
+                        readOnly: true
                     }}
                 />
             </Box>

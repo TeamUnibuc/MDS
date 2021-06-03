@@ -21,7 +21,7 @@ export const Details = async (req: Request, res: Response): Promise<void> =>
         return;
     }
 
-    const submission_id: string = req.body.game_id;
+    const submission_id: string = req.body.SubmissionID;
 
     const submission = await SubmissionsModel.findById(submission_id);
 

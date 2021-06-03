@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react';
 import { useStyles } from '../StandingsAPIStyles';
-import { prettyJSON } from 'utils';
-import api from 'api';
 import { ApiTesterContext } from '../../../ApiTesterContext'
 
-import { Container, Button, Box, TextField, MenuItem } from '@material-ui/core'
+import { Container, Button, Box } from '@material-ui/core'
+import { prettyJSON } from 'utils';
+import api from 'api';
 
 export default function GetUserGlobalStandings(): JSX.Element {
     const classes = useStyles();
@@ -24,11 +24,11 @@ export default function GetUserGlobalStandings(): JSX.Element {
 
         // Example of how it should work, not fully working
 
-        // const content = await api.Standings.UserGlobalStandings(reqBody);
-        // console.log(content)
-        // setApiResponse(prettyJSON(content));
+        const content = await api.Standings.UserGlobalStandings(reqBody);
+        console.log(content)
+        setApiResponse(prettyJSON(content));
 
-        setApiResponse('{Lol}')
+        // setApiResponse('{Lol}')
     }
 
     return <Container className={classes.container}>

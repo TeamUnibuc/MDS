@@ -1,3 +1,4 @@
+/* eslint-disable no-loops/no-loops */
 import { Request, Response } from 'express'
 import { GamesModel } from '../../models/GamesModel'
 import { BotsModel } from '../../models/BotsModel'
@@ -33,8 +34,8 @@ export const Sources = async (req: Request, res: Response): Promise<void> =>
         const official_bots_info: Array<any> = [];
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const official_bots = 
-        (await GameOfficialBotsModel.find({GameId: game_id})).forEach(async function(bot){
+        const official_bots = await GameOfficialBotsModel.find({GameID: game_id})
+        for(const bot of official_bots){
             const botInfo = await BotsModel.findById(bot.BotID);
             if (botInfo) {
                 official_bots_info.push({
@@ -47,7 +48,7 @@ export const Sources = async (req: Request, res: Response): Promise<void> =>
                     "CompilationMessage": botInfo.CompilationMessage,
                 });
             }
-        });
+        }
 
         res.json({
             "status": "ok",

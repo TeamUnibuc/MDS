@@ -22,10 +22,10 @@ export default function GameSource(): JSX.Element {
 
         console.log(reqBody);
 
-        // const content = await api.Games.Sources(reqBody);
-        // console.log(content);
-        // setApiResponse(prettyJSON(content));
-        setApiResponse('{Lol}')
+        const content = await api.Games.Sources(reqBody);
+        console.log(content);
+        setApiResponse(prettyJSON(content));
+        // setApiResponse('{Lol}')
     }
 
     return <Container className={classes.container}>

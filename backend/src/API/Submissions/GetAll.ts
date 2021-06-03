@@ -25,8 +25,8 @@ export const GetAll = async (req: Request, res: Response): Promise<void> =>
 
     let submissions = [];
 
-    if (req.body.game_id) {
-        const game_id: string = req.body.game_id;
+    if (req.body.GameID) {
+        const game_id: string = req.body.GameID;
         for (const submission of totalSubmissions)
             if (submission.GameID == game_id) submissions.push(submission);
         totalSubmissions = submissions;
@@ -34,8 +34,8 @@ export const GetAll = async (req: Request, res: Response): Promise<void> =>
 
     submissions = [];
 
-    if (req.body.user_id) {
-        const user_id: string = req.body.user_id;
+    if (req.body.UserID) {
+        const user_id: string = req.body.UserID;
         for (const submission of totalSubmissions)
             if (submission.UserID == user_id) submissions.push(submission);
         totalSubmissions = submissions;

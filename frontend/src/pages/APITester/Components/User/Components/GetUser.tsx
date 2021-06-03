@@ -32,10 +32,10 @@ export default function GetUser(): JSX.Element {
         // })
         // const content = await data.json()
         
-        // const content = await api.Users.GetUser(reqBody)
-        // console.log(content)
-        // setApiResponse(prettyJSON(content));
-        setApiResponse('{Users}');
+        const content = await api.Users.GetUser(reqBody)
+        console.log(content)
+        setApiResponse(prettyJSON(content));
+        // setApiResponse('{Users}');
     }
 
     return <Container className={classes.container}>

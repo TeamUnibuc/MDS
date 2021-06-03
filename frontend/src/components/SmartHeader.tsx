@@ -14,6 +14,7 @@ import { createStyles } from '@material-ui/core';
 import { CircularProgress } from '@material-ui/core';
 
 import './SmartHeader.css'
+import { useUserStatus } from 'Contexts/UserStatus';
 
 interface Props
 {
@@ -38,25 +39,15 @@ const SmartHeader = ({activePage}: Props): JSX.Element =>
 {
     const classes = useStyles();
 
-    const [user, setUser] = useState<AuthUser | null>(null);
-  
-    const [authenticated, setAuthenticated] = useState<boolean | null>(null);
+    // const [user, setUser] = useState<AuthUser | null>(null)
+    // const [authenticated, setAuthenticated] = useState<boolean | null>(null)
+    const {state, setState, reloadUserState} = useUserStatus()
+
+    const {user, authenticated} = state
 
     // Basically this is called only at start as it has no dependencies
     useEffect(() => {
-    getAuthStatus()
-        .then(responseJson => {
-            if (responseJson.authenticated) {
-                setAuthenticated(true)
-                setUser(responseJson.user)
-            }
-            else {
-                setAuthenticated(false)
-            }
-        }).catch(err => {
-            setAuthenticated(false)
-            console.log(err)
-        });
+        reloadUserState()
     }, [])
 
     const handleSmartLoginClick = (provider: string) => {
