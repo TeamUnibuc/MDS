@@ -43,7 +43,6 @@ function UpdateUsername({profile}: Props): JSX.Element
         console.log('click save with new user: ', usernameVal)
         api.Account.EditAccount({...profile, Username: usernameVal})
         .then(res => {
-            console.log('Succes: ', res)
             if (res.status === "ok") {
                 setError(false)
                 setErrorMsg('')

@@ -24,17 +24,7 @@ export const Edit = async (req: Request, res: Response): Promise<void> =>
         })
         return 
     }
-
-    // const user = await UsersModel.findById(req.user.id);
-
-    // if (!user) {
-    //     res.json({
-    //         "status": "fail",
-    //         "error_message": "User not found",
-    //     });
-    //     return;
-    // }
-
+    
     req.user.FirstName = firstName;
     req.user.LastName = lastName;
     req.user.Username = userName;
