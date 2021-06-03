@@ -11,7 +11,7 @@ interface UserGlobalResults {
 }
 
 export const UserGlobalStandings = async (reqBody : UserGlobalParameters) : Promise<UserGlobalResults> => {
-    const data = await fetch('api/Standings/UserStatsGlobal', {
+    const data = await fetch('/api/Standings/UserStatsGlobal', {
         method: "POST",
         headers:{
             'Content-Type': 'application/json'

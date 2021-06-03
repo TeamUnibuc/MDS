@@ -15,7 +15,7 @@ interface GetOneResults extends RequestStatus, SubmissionModel {
 }
 
 export const GetOne = async (reqBody : {SubmissionID: string}) : Promise<GetOneResults> => {
-    const data = await fetch('api/Submissions/Details', {
+    const data = await fetch('/api/Submissions/Details', {
         method: "POST",
         headers:{
             'Content-Type': 'application/json'

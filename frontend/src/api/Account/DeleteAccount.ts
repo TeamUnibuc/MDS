@@ -9,7 +9,7 @@ interface DeleteAccountResults extends RequestStatus {
 }
 
 export const DeleteAccount = async (reqBody : DeleteAccountParameters) : Promise<DeleteAccountResults> => {
-    const data = await fetch('api/Account/Delete', {
+    const data = await fetch('/api/Account/Delete', {
         method: "POST",
         headers:{
             'Content-Type': 'application/json'

@@ -51,12 +51,12 @@ const SmartHeader = ({activePage}: Props): JSX.Element =>
     }, [])
 
     const handleSmartLoginClick = (provider: string) => {
-        window.open(`auth/${provider}/smart`, "_self");
+        window.open(`/auth/${provider}/smart`, "_self");
     };
 
     const handleLogoutClick = () => {
         // Set authenticated state to false in the HomePage component
-        window.open(`auth/logout`, "_self");
+        window.open(`/auth/logout`, "_self");
     };
     
     return <AppBar position="static">

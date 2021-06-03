@@ -16,7 +16,7 @@ interface GameStandingsResults  {
 }
 
 export const GameStandings = async (reqBody : GameStandingsParameters) : Promise<GameStandingsResults> => {
-    const data = await fetch('api/Standings/GameStandings', {
+    const data = await fetch('/api/Standings/GameStandings', {
         method: "POST",
         headers:{
             'Content-Type': 'application/json'

@@ -14,7 +14,7 @@ interface UserProblemResults extends RequestStatus {
 }
 
 export const UserGameStandings = async (reqBody : UserProblemParameters) : Promise<UserProblemResults> => {
-    const data = await fetch('api/Standings/UserStatsGame', {
+    const data = await fetch('/api/Standings/UserStatsGame', {
         method: "POST",
         headers:{
             'Content-Type': 'application/json'

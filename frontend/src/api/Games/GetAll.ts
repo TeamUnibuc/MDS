@@ -13,7 +13,7 @@ interface GetAllResults {
 }
 
 export const GetAll = async (reqBody : GetAllParameters) : Promise<GetAllResults> => {
-    const data = await fetch('api/Games/GetAll', {
+    const data = await fetch('/api/Games/GetAll', {
         method: "POST",
         headers:{
             'Content-Type': 'application/json'
