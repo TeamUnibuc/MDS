@@ -6,6 +6,7 @@ import { BotsModel } from '../../models/BotsModel'
 import { FightsModel } from '../../models/FightsModel'
 import { SubmissionsModel } from '../../models/SubmissionsModel'
 import { EngineConnection } from '../../EngineConnection'
+import { GameRankingsModel } from '../../models/GameRankingsModel'
 
 const CreateNewBotEntry = (Code: string, AuthorID: string): Promise<string> => {
     const bot = new BotsModel();
@@ -119,7 +120,29 @@ export const New = async (req: Request, res: Response): Promise<void> =>
 
             submission.Points = nrWins * 100 / officialBots.length;
 
-            submission.save()
+            const gameRank = await GameRankingsModel.find({GameID: gameID, UserID: req.user.id});
+
+            if (!gameRank || gameRank.length == 0) {
+                const newRank = new GameRankingsModel();
+                newRank.GameID = gameID;
+                newRank.UserID = req.user.id;
+                newRank.Points = submission.Points;
+                await newRank.save()
+                    .catch(e => {
+                        console.log("Unable to save rank!");
+                        throw new Error(e);
+                    });
+            }
+            else if (gameRank[0].Points < submission.Points) {
+                gameRank[0].Points = submission.Points;
+                await gameRank[0].save()
+                    .catch(e => {
+                        console.log("Unable to save rank!");
+                        throw new Error(e);
+                    });
+            }
+
+            await submission.save()
                 .then(submission => {
                     console.log("Saved submission: ", submission);
                     res.json({
