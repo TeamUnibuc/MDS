@@ -19,7 +19,7 @@ interface AlterResults extends RequestStatus {
 }
 
 export const Alter = async (reqBody : AlterParameters) : Promise<AlterResults> => {
-    const data = await fetch('api/Games/Alter', {
+    const data = await fetch('/api/Games/Alter', {
         method: "POST",
         headers:{
             'Content-Type': 'application/json'

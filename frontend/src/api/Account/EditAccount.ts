@@ -11,7 +11,7 @@ export interface EditAccountResults extends RequestStatus {
 }
 
 export const EditAccount = async (reqBody : EditAccountParameters) : Promise<EditAccountResults> => {
-    const data = await fetch('api/Account/Edit', {
+    const data = await fetch('/api/Account/Edit', {
         method: "POST",
         headers:{
             'Content-Type': 'application/json'

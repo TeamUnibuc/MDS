@@ -17,7 +17,7 @@ interface GetAllResults extends RequestStatus {
 }
 
 export const GetAll = async (reqBody : GetAllParameters) : Promise<GetAllResults> => {
-    const data = await fetch('api/Submissions/GetAll', {
+    const data = await fetch('/api/Submissions/GetAll', {
         method: "POST",
         headers:{
             'Content-Type': 'application/json'

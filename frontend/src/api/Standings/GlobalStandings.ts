@@ -3,11 +3,11 @@ import { StandingsEntry } from '../Models'
 interface GlobalStandingsParameters {
     requested_entries : number,
     requested_offset : number,
-    order_by: string,
-    result_order: string,
+    order_by?: string,
+    result_order?: string,
 }
 
-interface GlobalStandingsResults {
+export interface GlobalStandingsResults {
     entries_found: number,
     entries_returned: number,
 
@@ -15,7 +15,7 @@ interface GlobalStandingsResults {
 }
 
 export const GlobalStandings = async (reqBody : GlobalStandingsParameters) : Promise<GlobalStandingsResults> => {
-    const data = await fetch('api/Standings/Global', {
+    const data = await fetch('/api/Standings/Global', {
         method: "POST",
         headers:{
             'Content-Type': 'application/json'

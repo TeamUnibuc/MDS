@@ -6,7 +6,7 @@ interface SourceResults extends RequestStatus {
 }
 
 export const Sources = async (reqBody : {GameID: string}) : Promise<SourceResults> => {
-    const data = await fetch('api/Games/Sources', {
+    const data = await fetch('/api/Games/Sources', {
         method: "POST",
         headers:{
             'Content-Type': 'application/json'

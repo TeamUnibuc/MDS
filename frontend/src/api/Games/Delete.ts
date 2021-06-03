@@ -5,7 +5,7 @@ interface DeleteResults extends RequestStatus {
 }
 
 export const Delete = async (reqBody : {GameID: string}) : Promise<DeleteResults> => {
-    const data = await fetch('api/Games/Delete', {
+    const data = await fetch('/api/Games/Delete', {
         method: "POST",
         headers:{
             'Content-Type': 'application/json'

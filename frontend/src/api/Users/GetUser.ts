@@ -16,7 +16,7 @@ interface GetUserResults extends UserModel {
 }
 
 export const GetUser = async (reqBody : GetUserParameters) : Promise<GetUserResults> => {
-    const data = await fetch('api/Users/Get', {
+    const data = await fetch('/api/Users/Get', {
         method: "POST",
         headers:{
             'Content-Type': 'application/json'

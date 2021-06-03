@@ -9,7 +9,7 @@ interface AccountDetailsResults extends RequestStatus, AccountModel {
 }
 
 export const AccountDetails = async (reqBody : AccountDetailsParameters) : Promise<AccountDetailsResults> => {
-    const data = await fetch('api/Account/Details', {
+    const data = await fetch('/api/Account/Details', {
         method: "POST",
         headers:{
             'Content-Type': 'application/json'

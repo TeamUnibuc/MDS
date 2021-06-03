@@ -10,7 +10,7 @@ interface NewSubmissionResults extends RequestStatus {
 }
 
 export const NewSubmission = async (reqBody : NewSubmissionParameters) : Promise<NewSubmissionResults> => {
-    const data = await fetch('api/Submissions/New', {
+    const data = await fetch('/api/Submissions/New', {
         method: "POST",
         headers:{
             'Content-Type': 'application/json'

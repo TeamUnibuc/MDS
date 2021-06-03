@@ -23,7 +23,7 @@ function TestEval(): JSX.Element {
             bots: [bot1, bot2]
         }
 
-        const data = await fetch('api/fight', {
+        const data = await fetch('/api/fight', {
             method: "POST",
             headers:{
                 'Content-Type': 'application/json'

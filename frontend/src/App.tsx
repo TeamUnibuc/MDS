@@ -43,7 +43,7 @@ function App(): JSX.Element {
             
             <Switch>
               <Route key="Home" path="/" exact component={Home}/>
-              <Route key="Problemset" path="/problemset" exact component={Problemset} />
+              <Route key="Problemset" path="/problemset" component={Problemset} />
               <Route key="Users" path="/users" exact component={Users} />
               <Route key="Standings" path="/standings" exact component={Standings}/>
               <Route key="Submissions" path="/submissions" exact component={Submissions}/>

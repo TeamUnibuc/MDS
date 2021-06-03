@@ -23,7 +23,7 @@ export default function GetUser(): JSX.Element {
 
         // TO DO: implement api on front end
 
-        // const data = await fetch('api/new_game', {
+        // const data = await fetch('/api/new_game', {
         //     method: "POST",
         //     headers:{
         //         'Content-Type': 'application/json'

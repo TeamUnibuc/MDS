@@ -10,11 +10,21 @@ authRoutes.get('/', (req, res) => {
     let user = null;
     if (req.isAuthenticated()) {
         user = req.user;
-        console.log('DateJonied: ', req.user.DateJoined)
+        // user.UserID = user.id;
+        console.log(user);
+        // delete user._id;
     }
     res.json({
         authenticated: user ? true : false,
-        user: user,
+        user: {
+            UserID: req.user?.id,
+            Username: user?.Username,
+            Email: user?.Email,
+            FirstName: user?.FirstName,
+            LastName: user?.LastName,
+            DateJoined: user?.DateJoined,
+            Providers: user?.Providers,
+        },
     })
 })
 

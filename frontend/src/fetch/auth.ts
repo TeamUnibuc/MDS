@@ -18,6 +18,7 @@ export interface AuthUser {
     Username: string,
     DateJoined: Date,
     IsAdministrator?: boolean,
+    UserID: string,
     Providers: {
         googleID?: string,
         facebookID?: string,
@@ -28,7 +29,7 @@ export interface AuthUser {
 
 export const getAuthStatus = (): Promise<AuthStatusResponse> =>
 {
-    const prom = fetch("auth", {
+    const prom = fetch("/auth", {
         method: "GET",
         headers: {
             "Content-Type": "application/json",

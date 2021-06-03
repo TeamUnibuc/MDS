@@ -17,6 +17,8 @@ class UsersItem {
     Username = "";
     // Date the user registered.
     DateJoined = new Date();
+    // ID of the user.
+    UserID = "";
     // List of Providers the user with this email connected.
     Providers = {
         googleID : "",
@@ -81,6 +83,8 @@ declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Express {
         // eslint-disable-next-line @typescript-eslint/no-empty-interface
-        export interface User extends UsersDoc { }
+        export interface User extends UsersDoc {
+            UserID: string;
+        }
     }
 }
