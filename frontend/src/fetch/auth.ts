@@ -17,6 +17,7 @@ export interface AuthUser {
     Email: string,
     Username: string,
     DateJoined: Date,
+    IsAdministrator?: boolean,
     Providers: {
         googleID?: string,
         facebookID?: string,

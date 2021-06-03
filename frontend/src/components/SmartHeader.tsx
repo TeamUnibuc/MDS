@@ -41,7 +41,7 @@ const SmartHeader = ({activePage}: Props): JSX.Element =>
 
     // const [user, setUser] = useState<AuthUser | null>(null)
     // const [authenticated, setAuthenticated] = useState<boolean | null>(null)
-    const {state, setState, reloadUserState} = useUserStatus()
+    const {state, reloadUserState} = useUserStatus()
 
     const {user, authenticated} = state
 
