@@ -32,7 +32,7 @@ export const UserStatsGlobal = async (req: Request, res: Response): Promise<void
 
     for (let i = 0; i < orderedUsers.length; ++i)
         if (orderedUsers[i][1] == userID) {
-            userTotalPoints = orderedUsers[0];
+            userTotalPoints = orderedUsers[i][0];
             userRank = i + 1;
             break;
         }
