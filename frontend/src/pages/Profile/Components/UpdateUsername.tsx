@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import { EditFields } from '../Profile'
 import TextField from '@material-ui/core/TextField';
-import { Box, Button, duration, makeStyles } from '@material-ui/core';
+import { Box, Button, makeStyles } from '@material-ui/core';
 import api from 'api';
 import { useSnackbar } from 'Contexts/Snackbar';
 import { useUserStatus } from 'Contexts/UserStatus';
@@ -66,6 +66,7 @@ function UpdateUsername({profile}: Props): JSX.Element
     console.log(`isError: ${isError}`)
 
     return <>
+    <h3>Change your username</h3>
     <TextField 
         error={isError}
         type="string" 
@@ -75,7 +76,7 @@ function UpdateUsername({profile}: Props): JSX.Element
         defaultValue={profile.Username}
         onChange={onChange}
     />
-    <Box display="inline" pt={3}>
+    <Box mt={3} pl={1}>
         <Button 
             variant='contained' 
             className={classes.saveButton}

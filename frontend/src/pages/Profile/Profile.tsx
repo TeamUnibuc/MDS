@@ -110,7 +110,9 @@ function Profile(): JSX.Element
         <ProfileShow profile={profile} />
         {editable && <>
             <MyDivider />
-            <UpdateName profile={profile} />
+            <UpdateName 
+                profile={profile} 
+                setProfile={(fields: EditFields) => setProfile({...profile, ...fields})}/>
 
             <MyDivider />
             <UpdateUsername profile={profile} />
