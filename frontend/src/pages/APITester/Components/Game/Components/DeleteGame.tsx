@@ -22,10 +22,10 @@ export default function DeleteGame(): JSX.Element {
 
         console.log(reqBody);
 
-        // const content = await api.Games.Delete(reqBody);
-        // console.log(content);
-        // setApiResponse(prettyJSON(content));
-        setApiResponse('{Lol}');
+        const content = await api.Games.Delete(reqBody);
+        console.log(content);
+        setApiResponse(prettyJSON(content));
+        // setApiResponse('{Lol}');
     }
 
     return <Container className={classes.container}>

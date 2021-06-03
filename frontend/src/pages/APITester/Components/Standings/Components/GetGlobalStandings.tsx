@@ -31,10 +31,10 @@ export default function GetGlobalStandings(): JSX.Element {
 
         console.log(reqBody);
 
-        // const content = await api.Standings.GlobalStandings(reqBody);
-        // console.log(content);
-        // setApiResponse(prettyJSON(content));
-        setApiResponse('{Lol}');
+        const content = await api.Standings.GlobalStandings(reqBody);
+        console.log(content);
+        setApiResponse(prettyJSON(content));
+        // setApiResponse('{Lol}');
     }
 
     return <Container className={classes.container}>

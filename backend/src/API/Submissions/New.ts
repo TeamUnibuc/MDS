@@ -6,12 +6,14 @@ import { BotsModel } from '../../models/BotsModel'
 import { FightsModel } from '../../models/FightsModel'
 import { SubmissionsModel } from '../../models/SubmissionsModel'
 import { EngineConnection } from '../../EngineConnection'
+import { GameRankingsModel } from '../../models/GameRankingsModel'
 
 const CreateNewBotEntry = (Code: string, AuthorID: string): Promise<string> => {
     const bot = new BotsModel();
     bot.Code = Code;
     bot.AuthorID = AuthorID;
     bot.DateSubmitted = new Date();
+    bot.CompilationMessage = "Not compiled yet!"
 
     return bot.save()
         .then(val => {
@@ -40,10 +42,10 @@ const CreateNewFight = async (BotIDs: Array<string>, GameID: string): Promise<st
 
     if (!game) throw new Error("Game Id not found for this fight!");
 
-    EngineConnection.Fight(game.GameEngine, botsCode).then(fightInfo => {
+    await EngineConnection.Fight(game.GameEngine, botsCode).then(fightInfo => {
         if (fightInfo.status == "ok") {
             fight.BattleLogs = fightInfo.logs;
-            fight.WinnerID = fightInfo.winner;
+            fight.WinnerID = BotIDs[fightInfo.winner];
         }
         else if (fightInfo.status == "compilation_error") {
             fight.WinnerID = "-1";
@@ -82,7 +84,7 @@ export const New = async (req: Request, res: Response): Promise<void> =>
         return;
     }
 
-    const gameID = req.body.GameId;
+    const gameID = req.body.GameID;
     const code = req.body.SubmissionCode;
 
     try {
@@ -98,14 +100,14 @@ export const New = async (req: Request, res: Response): Promise<void> =>
 
             const fightIds: Array<string> = [];
 
-            officialBots.map(bot => {
+            await Promise.all(officialBots.map(bot =>
                 CreateNewFight([botID, bot.BotID], gameID).then(fightID => {
                     fightIds.push(fightID);
                 })
                 .catch(e => {
                     throw new Error(e);
                 })
-            });
+            ));
 
             submission.FightIDs = fightIds;
 
@@ -118,7 +120,29 @@ export const New = async (req: Request, res: Response): Promise<void> =>
 
             submission.Points = nrWins * 100 / officialBots.length;
 
-            submission.save()
+            const gameRank = await GameRankingsModel.find({GameID: gameID, UserID: req.user.id});
+
+            if (!gameRank || gameRank.length == 0) {
+                const newRank = new GameRankingsModel();
+                newRank.GameID = gameID;
+                newRank.UserID = req.user.id;
+                newRank.Points = submission.Points;
+                await newRank.save()
+                    .catch(e => {
+                        console.log("Unable to save rank!");
+                        throw new Error(e);
+                    });
+            }
+            else if (gameRank[0].Points < submission.Points) {
+                gameRank[0].Points = submission.Points;
+                await gameRank[0].save()
+                    .catch(e => {
+                        console.log("Unable to save rank!");
+                        throw new Error(e);
+                    });
+            }
+
+            await submission.save()
                 .then(submission => {
                     console.log("Saved submission: ", submission);
                     res.json({

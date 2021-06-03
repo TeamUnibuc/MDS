@@ -29,20 +29,22 @@ function AddGame(): JSX.Element {
             BotCode: it
         }))
 
+        // TODO: add gameid
         const reqBody = {
             Name,
             Description,
             GameEngine,
             AuthorID,
-            OfficialGameBots
+            OfficialGameBots,
+            GameID
         }
 
         console.log(reqBody);
 
-        // const content = await api.Games.Alter(reqBody);
-        // console.log(content);
-        // setApiResponse(prettyJSON(content));
-        setApiResponse('{Lol}');
+        const content = await api.Games.Alter(reqBody);
+        console.log(content);
+        setApiResponse(prettyJSON(content));
+        // setApiResponse('{Lol}');
     }
 
     return <Container className={classes.container}>

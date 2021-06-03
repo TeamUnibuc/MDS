@@ -30,11 +30,11 @@ export default function EditAccount(): JSX.Element {
 
         // Example of how it should work, not fully working
 
-        // const content = await api.Account.EditAccount(reqBody);
-        // console.log(content)
-        // setApiResponse(prettyJSON(content));
+        const content = await api.Account.EditAccount(reqBody);
+        console.log(content)
+        setApiResponse(prettyJSON(content));
 
-        setApiResponse('{Lol}')
+        // setApiResponse('{Lol}')
     }
 
     return <Container className={classes.container}>

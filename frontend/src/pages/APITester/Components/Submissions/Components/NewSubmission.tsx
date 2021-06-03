@@ -7,6 +7,7 @@ import { ApiTesterContext } from '../../../ApiTesterContext';
 
 import { Container, Button, Box } from '@material-ui/core'
 import CodeMirror from '@uiw/react-codemirror'
+import { prettyJSON } from 'utils';
 
 export default function NewSubmission(): JSX.Element {
     const classes = useStyles();
@@ -20,16 +21,16 @@ export default function NewSubmission(): JSX.Element {
         console.log("Got called");
 
         const reqBody = {
-            submission_code: submissionCode,
-            game_id: gameId
+            SubmissionCode: submissionCode,
+            GameID: gameId
         }
 
         console.log(reqBody);
 
-        // const content = await api.Submissions.NewSubmission(reqBody);
-        // console.log(content);
-        // setApiResponse(prettyJSON(content));
-        setApiResponse('{Submissions}');
+        const content = await api.Submissions.NewSubmission(reqBody);
+        console.log(content);
+        setApiResponse(prettyJSON(content));
+        // setApiResponse('{Submissions}');
     }
 
     return <Container className={classes.container}>

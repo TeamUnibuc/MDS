@@ -1,5 +1,8 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
+// this is not used
+// we should delete it
+
 /**
  * GobalRankings Table
  * 

@@ -35,10 +35,10 @@ export default function GetProblemStandings(): JSX.Element {
 
         // Example of how it should work, not fully working
 
-        // const content = await api.Standings.GameStandings(reqBody);
-        // console.log(content);
-        // setApiResponse(prettyJSON(content));
-        setApiResponse('{Lol}')
+        const content = await api.Standings.GameStandings(reqBody);
+        console.log(content);
+        setApiResponse(prettyJSON(content));
+        // setApiResponse('{Lol}')
     }
 
     return <Container className={classes.container}>
