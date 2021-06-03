@@ -2,15 +2,17 @@
 import { Request, Response } from 'express'
 import { UsersModel } from '../../models/UsersModel';
 
-export const Get = async (req: Request, res: Response): Promise<void> => 
+export const GetByUsername = async (req: Request, res: Response): Promise<void> => 
 {
     // Permissions required: None
 
-    const userID: string = req.body.UserID;
+    const Username: string = req.body.Username;
 
-    const user = await UsersModel.findById(userID);
+    // Should contain exctly one element
+    const userList = await UsersModel.find({ Username: Username });
 
-    if (user) {
+    try {
+        const user = userList[0]
         res.json({
             "status": "ok",
             "FirstName": user.FirstName,
@@ -21,9 +23,10 @@ export const Get = async (req: Request, res: Response): Promise<void> =>
         });
         return;
     }
-
-    res.json({
-        "status": "fail",
-    });
-
+    catch (err) {
+        res.json({
+            "status": "fail",
+            "error_message": "Username does not exist!",
+        });
+    }
 }

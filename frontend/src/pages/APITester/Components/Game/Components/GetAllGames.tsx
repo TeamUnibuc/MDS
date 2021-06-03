@@ -33,10 +33,10 @@ export default function GetAllGames(): JSX.Element {
 
         // Example of how it should work, not fully working
         
-        // const content = await api.Games.GetAll(reqBody);
-        // console.log(data)
-        // setApiResponse(prettyJSON(content));
-        setApiResponse('{Lol}');
+        const content = await api.Games.GetAll(reqBody);
+        console.log(content)
+        setApiResponse(prettyJSON(content));
+        // setApiResponse('{Lol}');
     }
 
     return <Container className={classes.container}>

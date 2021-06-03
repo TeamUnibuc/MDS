@@ -22,11 +22,11 @@ export default function GetOneGame(): JSX.Element {
 
         console.log(reqBody);
 
-        // const content = await api.Games.GetOne(reqBody);
+        const content = await api.Games.GetOne(reqBody);
         
-        // console.log(content)
-        // setApiResponse(prettyJSON(content));
-        setApiResponse('{Lol}');
+        console.log(content)
+        setApiResponse(prettyJSON(content));
+        // setApiResponse('{Lol}');
     }
 
     return <Container className={classes.container}>

@@ -20,11 +20,11 @@ export default function RetrieveInfo(): JSX.Element {
 
         // Example of how it should work, not fully working
 
-        // const content = await api.Account.AccountDetails(reqBody);
-        // console.log(content)
-        // setApiResponse(prettyJSON(content));
+        const content = await api.Account.AccountDetails(reqBody);
+        console.log(content)
+        setApiResponse(prettyJSON(content));
 
-        setApiResponse('{Lol}')
+        // setApiResponse('{Lol}')
     }
 
     return <Container className={classes.container}>

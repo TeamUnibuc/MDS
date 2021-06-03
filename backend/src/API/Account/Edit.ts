@@ -31,7 +31,7 @@ export const Edit = async (req: Request, res: Response): Promise<void> =>
     req.user.LastName = lastName;
     req.user.Username = userName;
 
-    req.user.update().then(user => {
+    req.user.save().then(user => {
         console.log("Update user ", user);
         res.json({
             "status": "ok",
