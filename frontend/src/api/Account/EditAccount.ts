@@ -6,7 +6,7 @@ interface EditAccountParameters {
     Username: string
 }
 
-interface EditAccountResults extends RequestStatus {
+export interface EditAccountResults extends RequestStatus {
     dummy?: 'dummy'
 }
 

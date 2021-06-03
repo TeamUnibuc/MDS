@@ -2,8 +2,11 @@ import React, { useState } from 'react'
 
 import { EditFields } from '../Profile'
 import TextField from '@material-ui/core/TextField';
-import { Box, Button, makeStyles } from '@material-ui/core';
+import { Box, Button, duration, makeStyles } from '@material-ui/core';
 import api from 'api';
+import { useSnackbar } from 'Contexts/Snackbar';
+import { useUserStatus } from 'Contexts/UserStatus';
+import { EditAccountResults } from 'api/Account/EditAccount';
 
 
 interface Props {
@@ -22,21 +25,46 @@ function UpdateUsername({profile}: Props): JSX.Element
     const [isError, setError] = useState(false)
     const [errorMsg, setErrorMsg] = useState("")
     const [usernameVal, setUsernameVal] = useState(profile.Username)
+    const {state: snackState, setState: setSnackState} = useSnackbar()
+    const {reloadUserState} = useUserStatus()
 
-    const onChange = (event: React.SyntheticEvent) => {
-        setUsernameVal(event.currentTarget.nodeValue ?? "")
+    const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(event)
+        setUsernameVal(event.target.value ?? "")
+    }
+
+    const handleFail = (res: EditAccountResults) => {
+        console.log('FAIL: ', res)
+        setError(true)
+        setErrorMsg(res.error_message ?? "")
     }
 
     const handleClick = () => {
+        console.log('click save with new user: ', usernameVal)
         api.Account.EditAccount({...profile, Username: usernameVal})
         .then(res => {
-            setError(false)
-            setErrorMsg('')
+            console.log('Succes: ', res)
+            if (res.status === "ok") {
+                setError(false)
+                setErrorMsg('')
+                setSnackState({...snackState, 
+                    open: true, 
+                    severity: "success", 
+                    msg: "Username changed successfully!",
+                    duration: 1200,
+                })
+                reloadUserState()
+            }
+            else {
+                handleFail(res)
+            }
         }).catch(res => {
-            setError(true)
-            setErrorMsg(res.error_message)
+            handleFail(res)
         })
     }
+
+    console.log("Before rendering UpdateUsername: ")
+    console.log(`isError: ${isError}`)
 
     return <>
     <TextField 
