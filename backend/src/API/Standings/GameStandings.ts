@@ -60,7 +60,7 @@ export const GameStandings = async (req: Request, res: Response): Promise<void> 
 
     res.json({
         "entries_returned": entries.length,
-        "entries_found": totalUsers.length,
+        "entries_found": orderedUsers.length,
         "entries": entries,
     });
 

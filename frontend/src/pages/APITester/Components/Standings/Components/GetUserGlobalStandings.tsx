@@ -3,6 +3,8 @@ import { useStyles } from '../StandingsAPIStyles';
 import { ApiTesterContext } from '../../../ApiTesterContext'
 
 import { Container, Button, Box } from '@material-ui/core'
+import { prettyJSON } from 'utils';
+import api from 'api';
 
 export default function GetUserGlobalStandings(): JSX.Element {
     const classes = useStyles();
