@@ -35,7 +35,8 @@ function AddGame(): JSX.Element {
             Description,
             GameEngine,
             AuthorID,
-            OfficialGameBots
+            OfficialGameBots,
+            GameID
         }
 
         console.log(reqBody);

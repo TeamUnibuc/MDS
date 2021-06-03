@@ -24,11 +24,11 @@ export default function GetUserGlobalStandings(): JSX.Element {
 
         // Example of how it should work, not fully working
 
-        // const content = await api.Standings.UserGlobalStandings(reqBody);
-        // console.log(content)
-        // setApiResponse(prettyJSON(content));
+        const content = await api.Standings.UserGlobalStandings(reqBody);
+        console.log(content)
+        setApiResponse(prettyJSON(content));
 
-        setApiResponse('{Lol}')
+        // setApiResponse('{Lol}')
     }
 
     return <Container className={classes.container}>

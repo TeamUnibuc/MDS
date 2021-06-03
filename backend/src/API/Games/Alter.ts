@@ -93,7 +93,7 @@ export const Alter = async (req: Request, res: Response): Promise<void> =>
             editGame.OfficialGameBots = bots.length;
             editGame.Date = new Date();
 
-            editGame.update().then(editGame => {
+            editGame.save().then(editGame => {
                 console.log("Updated game: ", editGame);
                 bots.map(async (bot, id) => {
                     const botObj = JSON.parse(bot)
