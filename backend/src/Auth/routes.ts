@@ -20,25 +20,25 @@ authRoutes.get('/', (req, res) => {
 // Logs the user out
 authRoutes.get('/logout', (req, res) => {
     req.logout()
-    res.redirect(`${frontendPath}/Dashboard?info_msg=Logged Out`)
+    res.redirect(`${frontendPath}/?info_msg=Logged Out`)
 })
 
 // SMART strategies
 authRoutes.get('/smart-fail', (req, res) => {
     const errMsg = req.flash('error')
-    res.redirect(`${frontendPath}/Dashboard?error_msg=${errMsg}`)
+    res.redirect(`${frontendPath}/?error_msg=${errMsg}`)
 })
 
 authRoutes.get('/smart-success', (req, res) => {
     const user = req.user;
     console.log(user)
     if (!user) {
-        return res.redirect(`${frontendPath}/Dashboard?msg=WTF--user-object-missing-in-request`)
+        return res.redirect(`${frontendPath}/?error_msg=WTF--user-object-missing-in-request`)
     }
     if (!user.Username) {
         // User has username, so it is a real existing user in DB
-        return res.redirect(`${frontendPath}/Dashboard?error_msg=WTF--user-doesnt-have-username???`)
+        return res.redirect(`${frontendPath}/?error_msg=WTF--user-doesnt-have-username???`)
     }
     const msg = req.flash('success')
-    res.redirect(`${frontendPath}/Dashboard?success_msg=${msg}`)
+    res.redirect(`${frontendPath}/?success_msg=${msg}`)
 })
