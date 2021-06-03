@@ -35,5 +35,9 @@ export const getAuthStatus = (): Promise<AuthStatusResponse> =>
         }
     })
 
-    return jsonWrapper(prom);
+    return jsonWrapper(prom).then(res => {
+        res.user.DateJoined = new Date(res.user.DateJoined)
+        // console.log(res)
+        return res
+    });
 }

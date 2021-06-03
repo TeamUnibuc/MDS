@@ -8,7 +8,9 @@ export const Get = async (req: Request, res: Response): Promise<void> =>
 
     const userID: string = req.body.UserID;
 
+    console.log('trying to find user by ID: ', userID)
     const user = await UsersModel.findById(userID);
+    console.log(user)
 
     if (user) {
         res.json({

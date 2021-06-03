@@ -5,7 +5,14 @@ interface GetUserParameters {
 }
 
 interface GetUserResults extends UserModel {
-    dummy? : 'dummy'
+    status: string,
+    FirstName: string,
+    LastName: string,
+    DateJoined: Date,
+    Email: string,
+    Username: string,
+    
+    error_message?: string,
 }
 
 export const GetUser = async (reqBody : GetUserParameters) : Promise<GetUserResults> => {

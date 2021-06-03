@@ -1,6 +1,5 @@
-import { Alert, AlertTitle } from '@material-ui/lab'
-import { AuthUser } from 'fetch/auth'
 import React from 'react'
+import { Alert, AlertTitle } from '@material-ui/lab'
 import { EditFields } from '../Profile'
 
 interface Props {

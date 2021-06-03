@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Container, Divider, Box, CircularProgress } from '@material-ui/core'
+import { Divider, Box, CircularProgress } from '@material-ui/core'
+import { Alert, AlertTitle } from '@material-ui/lab'
 import AccountDelete from './Components/AccountDelete'
 import UpdateUsername from './Components/UpdateUsername'
 import { Redirect, useLocation } from 'react-router-dom'
-import { useUserStatus } from 'Contexts/UserStatus'
+import { UserStatusState, useUserStatus } from 'Contexts/UserStatus'
 import { AuthUser } from 'fetch/auth'
-import { Account } from '../../api/Account'
+import api from 'api'
 import ProfileShow from './Components/ProfileShow'
 import UpdateName from './Components/UpdateName'
 
@@ -21,59 +22,91 @@ const MyDivider = (): JSX.Element => {
     </Box>
 }
 
+const computeUsername = (url: string, state: UserStatusState): string => 
+{
+    let queryUsername = new URLSearchParams(url).get(`handle`)
+    console.log('compute username, state of logged: ', state)
+    if (!queryUsername && state.user && state.authenticated)
+        queryUsername = state.user.Username
+    
+    return (queryUsername ?? "")
+}
+
+const computeEditable = (state: UserStatusState, qryUsername: string) => 
+{
+    return (state.authenticated &&  
+            state.user?.Username === qryUsername) ?? false
+}
+
+const SomethingWrong = ({children}: {children: React.ReactNode}): JSX.Element =>
+{
+    return <Alert severity="warning">
+        <AlertTitle>Error!</AlertTitle>
+        {children}
+    </Alert> 
+}
+
 function Profile(): JSX.Element
 {
+    console.log('Rendering Profile component')
+
     const location = useLocation()
+    /// starea daca sunt logat sau nu, sau daca inca se incarca
     const {state: userState} = useUserStatus()
+    /// starea profilului incarcat pe baza queryUsername
+    /// ceva != undefined, =>> ura!!
     const [profile, setProfile] = useState<AuthUser | undefined>(undefined)
+    /// Daca query-ul catre Backend a returnat un user, nu a gasit, sau se incarca
+    const [userFound, setUserFound] = useState<boolean | undefined>(undefined)
+
+    const queryUsername = computeUsername(location.search, userState)
+    const editable = computeEditable(userState, queryUsername)
 
     // fetch details of the user
     useEffect(() => {
-        // const receivedProfile = await Account.GetByUsername({Username: queryUsername})
-        const receivedProfile = {
-            FirstName: "test first name",
-            LastName: "some Last name",
-            Email: "example mail",
-            Username: "usernameeee",
-            DateJoined: new Date(),
-            IsAdministrator: false,
-            Providers: {},
-        }
-        setTimeout(() => {
-            setProfile(receivedProfile)
-        }, 1500)
-    }, [])
+        if (!queryUsername)
+            return
 
+        api.Users.GetByUsername({Username: queryUsername})
+        .then(res => {
+            console.log('setting with profile: ', res)
+            if (res.status === "ok") {
+                setProfile({...res, Providers: {}})
+                setUserFound(true)
+            }
+            else {
+                setUserFound(false)
+            }
+
+        })
+    }, [queryUsername])
+
+    //  queryUsername depinde de ?handle=... si de faptul daca sunt logat sau nu 
     if (userState.authenticated === undefined) {
-        console.log('deocamndata user stare necunoscuta')
-        return <Box pt={1}>
-            <Container><CircularProgress color="secondary"/></Container></Box>
-    }
+        return <CircularProgress color="secondary"/>
+    }  
 
-    // figure out what you have to display from URL string
-    let queryUsername = new URLSearchParams(location.search).get(`handle`)
-    if (!queryUsername && userState.user && userState.authenticated)
-        queryUsername = userState.user.Username
-    
-    console.log("auth user: ", userState.user)
-    console.log("username gasit: ", queryUsername)
-
-    const editable = (userState.authenticated && userState.user?.Username === queryUsername) ?? false
-    // const editable = true
+    // daca am un queryUsername invalid
     if (!queryUsername || queryUsername.length == 0)
-        return <Redirect to="/Home?warning_msg=Invalid user to view" />
-
-    // We have to display username 'queryUsername', we can edit if 'editable'
+        return <SomethingWrong>
+            Invalid user to view
+        </SomethingWrong>
     
+    // am un queryUsername valid, inca nu s-a incarcat
+    if (userFound === undefined) {
+        return <CircularProgress color="secondary"/>
+    }  
 
-    if (profile === undefined) {
-        return <Box pt={1}>
-        <Container><CircularProgress color="secondary"/></Container></Box>
+    // User-ul nu exista
+    if (userFound === false || profile === undefined) {
+        return <SomethingWrong>
+            User <strong>{queryUsername}</strong> doesn&apos;t seem to exist!
+        </SomethingWrong>
     }
 
-    return (
-    <Box pt={1}>
-    <Container>
+    
+    // We have to display username 'queryUsername', we can edit if 'editable'
+    return (<>
         <ProfileShow profile={profile} />
         {editable && <>
             <MyDivider />
@@ -85,9 +118,7 @@ function Profile(): JSX.Element
             <MyDivider />
             <AccountDelete/>
         </>}
-    </Container>
-    </Box>
-    )
+    </>)
 }
 
 export default Profile

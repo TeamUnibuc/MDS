@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
 
-import { Alert, AlertTitle } from '@material-ui/lab'
-import { AuthUser } from 'fetch/auth'
 import { EditFields } from '../Profile'
 import TextField from '@material-ui/core/TextField';
-import { Box, Button, createStyles, makeStyles } from '@material-ui/core';
+import { Box, Button, makeStyles } from '@material-ui/core';
 import api from 'api';
 
 
@@ -21,8 +19,8 @@ const useStyles = makeStyles(() => ({
 function UpdateUsername({profile}: Props): JSX.Element
 {
     const classes = useStyles()
-    const [isError, setError] = useState(true)
-    const [errorMsg, setErrorMsg] = useState("aoleu")
+    const [isError, setError] = useState(false)
+    const [errorMsg, setErrorMsg] = useState("")
     const [usernameVal, setUsernameVal] = useState(profile.Username)
 
     const onChange = (event: React.SyntheticEvent) => {

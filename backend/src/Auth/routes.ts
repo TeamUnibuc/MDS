@@ -10,6 +10,7 @@ authRoutes.get('/', (req, res) => {
     let user = null;
     if (req.isAuthenticated()) {
         user = req.user;
+        console.log('DateJonied: ', req.user.DateJoined)
     }
     res.json({
         authenticated: user ? true : false,
