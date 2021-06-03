@@ -3,11 +3,11 @@ import { StandingsEntry } from '../Models'
 interface GlobalStandingsParameters {
     requested_entries : number,
     requested_offset : number,
-    order_by: string,
-    result_order: string,
+    order_by?: string,
+    result_order?: string,
 }
 
-interface GlobalStandingsResults {
+export interface GlobalStandingsResults {
     entries_found: number,
     entries_returned: number,
 

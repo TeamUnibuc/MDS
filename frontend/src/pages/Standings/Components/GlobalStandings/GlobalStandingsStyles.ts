@@ -5,6 +5,12 @@ const useStyles = makeStyles({
     table: {
         minWidth: 700,
     },
+    cellRow: {
+        display: 'flex',
+        flexDirection: 'row-reverse',
+        alignContent: 'center',
+        alignItems: 'center'
+    }
 });
 
 const StyledTableCell = withStyles((theme) => ({
