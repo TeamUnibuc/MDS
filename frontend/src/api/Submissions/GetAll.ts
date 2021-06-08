@@ -9,7 +9,7 @@ interface GetAllParameters {
     result_order: string,
 }
 
-interface GetAllResults extends RequestStatus {
+export interface GetAllResults extends RequestStatus {
     submissions_found: number,
     submissions_returned: number,
 
