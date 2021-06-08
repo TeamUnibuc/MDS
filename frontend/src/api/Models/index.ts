@@ -9,7 +9,8 @@ export interface GameModel {
     Description: string,
     GameID: string,
     AuthorID: string,
-    AuthorUsername: string
+    AuthorUsername: string,
+    Date: Date
 }
 
 export interface SubmissionModel {
@@ -19,6 +20,7 @@ export interface SubmissionModel {
     AuthorID: string,
     AuthorUsername: string,
     SubmissionID: string,
+    SubmissionCode: string,
 }
 
 export interface BotModel {

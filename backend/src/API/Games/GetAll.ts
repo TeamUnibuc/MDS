@@ -2,6 +2,7 @@
 import { Request, Response } from 'express'
 import { GamesModel } from '../../models/GamesModel'
 import { SubmissionsModel } from '../../models/SubmissionsModel';
+import { UsersModel } from '../../models/UsersModel';
 
 export const GetAll = async (req: Request, res: Response): Promise<void> => 
 {
@@ -19,7 +20,7 @@ export const GetAll = async (req: Request, res: Response): Promise<void> =>
 
     const games_found: number = await GamesModel.count();
 
-    let totalGames;
+    let totalGames: any[];
 
     if (order_by == 'date') {
         // sort the games by the date the game was added
@@ -80,12 +81,19 @@ export const GetAll = async (req: Request, res: Response): Promise<void> =>
     const games = [];
 
     for (let i = requested_offset; i < totalGames.length && i < requested_offset + requested_games; ++i) {
+        const username = await UsersModel.find({_id: totalGames[i].AuthorID}).exec()
+                                .catch(err => console.log("Unable to find user with ID " + totalGames[i].AuthorID + ": " + err));
+
+        if (!username || username.length == 0)
+            continue;
+
         games.push({
             "Name": totalGames[i].Name,
             "Description": totalGames[i].Description,
             "GameID": totalGames[i].id,
             "AuthorID": totalGames[i].AuthorID,
             "Date": totalGames[i].Date,
+            "AuthorUsername": (username ? username[0].Username : undefined),
         });
     }
 
