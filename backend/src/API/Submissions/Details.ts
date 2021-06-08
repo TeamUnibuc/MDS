@@ -59,15 +59,17 @@ export const Details = async (req: Request, res: Response): Promise<void> =>
             })
         }
 
-        const user = await UsersModel.findById(submission.UserID);
-
+        const user = await UsersModel.findById(submission.UserID, {Username: 1})
+                            .catch(() => null);
+        
         res.json({
             "status": "ok",
             "Date": submission.SubmissionDate,
             "Score": submission.Points,
             "GameID": submission.GameID,
+            "GameName": (game?.Name ?? "Inexistent"),
             "AuthorID": submission.UserID,
-            "AuthorUsername": user?.Username,
+            "AuthorUsername": (user?.Username ?? "Inexistent"),
             "SubmissionID": submission.id,
             "compilation_message": bot?.CompilationMessage,
             "results": fightsInfo,

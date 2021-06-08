@@ -3,6 +3,7 @@ import { StylesProvider } from '@material-ui/styles';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
 
 import SmartHeader from 'components/SmartHeader'
+import Snackbar from 'components/Snackbar';
 import { TestEval, Dashboard, APITester, Submissions, Submission, Standings, Users, Problemset, Home } from 'pages'
 
 import { Grid, Box, Container } from '@material-ui/core'
@@ -10,7 +11,6 @@ import { ThemeProvider } from '@material-ui/styles'
 import { createMuiTheme } from '@material-ui/core/styles';
 import { UserStatusProvider } from 'Contexts/UserStatus';
 import { SnackProvider } from 'Contexts/Snackbar';
-import Snackbar from 'components/Snackbar';
 
 // Daca vrem sa adaugam culori la theme, aici trebuie sa facem asta
 const theme = createMuiTheme()

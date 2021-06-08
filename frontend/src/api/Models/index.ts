@@ -17,6 +17,7 @@ export interface SubmissionModel {
     Date: Date,
     Score: number,
     GameID: string,
+    GameName: string,
     AuthorID: string,
     AuthorUsername: string,
     SubmissionID: string,
