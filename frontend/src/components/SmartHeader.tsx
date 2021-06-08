@@ -15,6 +15,7 @@ import { CircularProgress } from '@material-ui/core';
 
 import './SmartHeader.css'
 import { useUserStatus } from 'Contexts/UserStatus';
+import Sidebar from './Sidebar';
 
 interface Props
 {
@@ -45,6 +46,8 @@ const SmartHeader = ({activePage}: Props): JSX.Element =>
 
     const {user, authenticated} = state
 
+    const [drawerOpen, setDrawerOpen] = useState(false)
+
     // Basically this is called only at start as it has no dependencies
     useEffect(() => {
         reloadUserState()
@@ -58,10 +61,22 @@ const SmartHeader = ({activePage}: Props): JSX.Element =>
         // Set authenticated state to false in the HomePage component
         window.open(`/auth/logout`, "_self");
     };
+
+    const toggleDrawer = () => {
+        console.log('Toggled Drawer!!')
+        setDrawerOpen(!drawerOpen)
+    }
     
-    return <AppBar position="static">
+    return <>
+    <Sidebar open={drawerOpen} toggleDrawer={toggleDrawer}/>
+    <AppBar position="static">
     <Toolbar>
-        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+        <IconButton 
+            edge="start" 
+            className={classes.menuButton} 
+            color="inherit" 
+            aria-label="menu"
+            onClick={toggleDrawer}>
             <MenuIcon />
         </IconButton>
 
@@ -106,6 +121,7 @@ const SmartHeader = ({activePage}: Props): JSX.Element =>
         </>)}
     </Toolbar>
     </AppBar>
+    </>
 }
 
 export default SmartHeader;
