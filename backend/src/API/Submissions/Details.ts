@@ -1,6 +1,7 @@
 /* eslint-disable no-loops/no-loops */
 import { Request, Response } from 'express'
 import { BotsModel } from '../../models/BotsModel';
+import { UsersModel } from '../../models/UsersModel';
 import { FightsModel } from '../../models/FightsModel';
 import { GamesModel } from '../../models/GamesModel';
 import { SubmissionsModel } from '../../models/SubmissionsModel'
@@ -58,16 +59,19 @@ export const Details = async (req: Request, res: Response): Promise<void> =>
             })
         }
 
+        const user = await UsersModel.findById(submission.UserID);
+
         res.json({
             "status": "ok",
             "Date": submission.SubmissionDate,
             "Score": submission.Points,
             "GameID": submission.GameID,
             "AuthorID": submission.UserID,
+            "AuthorUsername": user?.Username,
             "SubmissionID": submission.id,
             "compilation_message": bot?.CompilationMessage,
             "results": fightsInfo,
-            "SubmissionCode": bot?.Code,
+            "SubmissionCode": bot?.Code
         });
         return;
     }
