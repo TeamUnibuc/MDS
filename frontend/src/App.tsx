@@ -16,6 +16,7 @@ import Problemset from 'pages/Problemset/Problemset';
 import Users from 'pages/Users/Users';
 import Standings from 'pages/Standings/Standings';
 import Submissions from 'pages/Submissions/Submissions';
+import Sidebar from 'components/Sidebar';
 
 // Daca vrem sa adaugam culori la theme, aici trebuie sa facem asta
 const theme = createMuiTheme()
