@@ -6,10 +6,11 @@ import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
+import Box from '@material-ui/core/Box';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import { useUserStatus } from 'Contexts/UserStatus';
 
 const useStyles = makeStyles({
   list: {
@@ -29,6 +30,7 @@ interface Props {
 const Sidebar = ({open, toggleDrawer}: Props): JSX.Element => 
 {
   const [toRender, setRender] = useState('nothing')
+  const {state, reloadUserState} = useUserStatus()
 
   const classes = useStyles();
 
@@ -46,21 +48,34 @@ const Sidebar = ({open, toggleDrawer}: Props): JSX.Element =>
       {[['Home', '/'], 
         ['Problemset', '/Problemset'], 
         ['Standings', '/Standings']].map(([text, link], index) => (
+        
+          <Box key={text}>
+          <Link to={link} onClick={toggleDrawer} style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}> 
+          
+            <ListItemIcon >{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+            <ListItem button >
+            </ListItem>
+              {text} 
+          </Link>
+
+          </Box>
+          
+      ))}
+    </List>
+    <Divider />
+    {state.authenticated && 
+      <List >
+      {[['Profile', '/users'], 
+        ['New Game', '/Problemset/New'], 
+        ].map(([text, link], index) => (
         <ListItem button key={text}>
           <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
           <Link to={link} onClick={toggleDrawer}> {text} </Link>
         </ListItem>
       ))}
     </List>
-    <Divider />
-    <List>
-      {['All mail', 'Trash', 'Spam'].map((text, index) => (
-        <ListItem button key={text}>
-          <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-          <ListItemText primary={text} />
-        </ListItem>
-      ))}
-    </List>
+    }
+    
     </div>
     );
   
