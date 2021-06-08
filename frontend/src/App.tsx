@@ -33,25 +33,25 @@ function App(): JSX.Element {
           </Grid>
 
           <Grid item xs={12}>
-            <Box pt={2}>
-            <Container>
-            
-            <Switch>
-              <Route key="Home" path="/" exact component={Home}/>
-              <Route key="Problemset" path="/problemset" component={Problemset} />
-              <Route key="Users" path="/users" exact component={Users} />
-              <Route key="Standings" path="/standings" exact component={Standings}/>
-              <Route key="Submissions" path="/submissions" exact component={Submissions}/>
-              <Route key="Submission" path="/submission" component={Submission}/>
+            <Box pt={2} marginBottom="100px">
+              <Container>
+              
+                <Switch>
+                  <Route key="Home" path="/" exact component={Home}/>
+                  <Route key="Problemset" path="/problemset" component={Problemset} />
+                  <Route key="Users" path="/users" exact component={Users} />
+                  <Route key="Standings" path="/standings" exact component={Standings}/>
+                  <Route key="Submissions" path="/submissions" exact component={Submissions}/>
+                  <Route key="Submission" path="/submission" component={Submission}/>
 
-              <Route key="apitester" path="/apitester" exact component={APITester}/>
+                  <Route key="apitester" path="/apitester" exact component={APITester}/>
 
-              <Route key="testeval" path="/testeval" exact component={TestEval}/>
+                  <Route key="testeval" path="/testeval" exact component={TestEval}/>
 
-              <Route key="dashboard" path="/dashboard" exact component={Dashboard}/>
-            </Switch>
-            
-            </Container>
+                  <Route key="dashboard" path="/dashboard" exact component={Dashboard}/>
+                </Switch>
+              
+              </Container>
             </Box>
           </Grid>
 
