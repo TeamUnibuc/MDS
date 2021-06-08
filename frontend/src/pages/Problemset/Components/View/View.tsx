@@ -54,6 +54,16 @@ export default function View() : JSX.Element {
             </div>
 
             {/* If is authenticated, show submission options */}
+            {user.authenticated && (user.user?.IsAdministrator || user.user?.UserID == game.game.AuthorID) && 
+            <Button
+            variant="contained"
+            color="primary"
+            onClick={ () => window.location.href='/problemset/update?gameID='+ game.game.GameID}
+            >
+                Update
+            </Button> }
+
+            {/* If is authenticated, show submission options */}
             {user.authenticated &&
             <div style={{padding: "50px"}}>
                 <Box width="90%" style={{border: "1px solid black"}}>
