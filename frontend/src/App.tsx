@@ -34,7 +34,7 @@ function App(): JSX.Element {
         <Grid container>
 
           <Grid item xs={12}>
-            <SmartHeader activePage={'oh well'}/>
+            <SmartHeader activePage={'Fight Bots'}/>
           </Grid>
 
           <Grid item xs={12}>
