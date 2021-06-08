@@ -67,6 +67,7 @@ export const Details = async (req: Request, res: Response): Promise<void> =>
             "SubmissionID": submission.id,
             "compilation_message": bot?.CompilationMessage,
             "results": fightsInfo,
+            "SubmissionCode": bot?.Code,
         });
         return;
     }
