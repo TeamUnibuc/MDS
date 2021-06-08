@@ -20,6 +20,7 @@ export interface SubmissionModel {
     AuthorID: string,
     AuthorUsername: string,
     SubmissionID: string,
+    SubmissionCode: string,
 }
 
 export interface BotModel {
