@@ -9,7 +9,8 @@ export interface GameModel {
     Description: string,
     GameID: string,
     AuthorID: string,
-    AuthorUsername: string
+    AuthorUsername: string,
+    Date: Date
 }
 
 export interface SubmissionModel {

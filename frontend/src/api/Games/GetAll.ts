@@ -6,7 +6,7 @@ interface GetAllParameters {
     order_by?: string,
     result_order?: string,
 }
-interface GetAllResults {
+export interface GetAllResults {
     games_found: number,
     games_returned: number,
     games: Array<GameModel>

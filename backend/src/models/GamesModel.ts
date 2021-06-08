@@ -29,6 +29,7 @@ const GamesSchema: Schema = new Schema({
     GameEngine: { type: String, required: true },
     OfficialGameBots: { type: Number, required: true },
     AuthorID: { type: String, required: true },
+    Date: { type: Date, required: true },
 });
 
 // Export the model and return your interface
