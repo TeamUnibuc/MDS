@@ -5,7 +5,7 @@ interface Result{
     won: boolean
 }
 
-interface GetOneResults extends RequestStatus, SubmissionModel {
+export interface GetOneResults extends RequestStatus, SubmissionModel {
 
     compiled: boolean,
     compilation_message?: string,
