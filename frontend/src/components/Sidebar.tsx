@@ -1,16 +1,20 @@
-import React, { useState } from 'react'
-import { Redirect } from 'react-router-dom'
-import { Link } from 'react-router-dom'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
-import Box from '@material-ui/core/Box';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
+import AddBoxIcon from '@material-ui/icons/AddBox';
+import StorageIcon from '@material-ui/icons/Storage';
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import { useUserStatus } from 'Contexts/UserStatus';
+import { Link } from '@material-ui/core';
+import HomeIcon from '@material-ui/icons/Home';
+
+
 
 const useStyles = makeStyles({
   list: {
@@ -29,55 +33,81 @@ interface Props {
 
 const Sidebar = ({open, toggleDrawer}: Props): JSX.Element => 
 {
-  const [toRender, setRender] = useState('nothing')
-  const {state, reloadUserState} = useUserStatus()
+  const {state: {user, authenticated}} = useUserStatus()
 
   const classes = useStyles();
 
-  const drawerClosed = (e: React.SyntheticEvent) => {
+  const drawerClosed = () => {
     toggleDrawer()
   }
-
-  if (toRender !== 'nothing')
-    return <Redirect to={toRender}></Redirect>
 
   const list = () => (
     // <Divider />   
     <div className={classes.list}> 
     <List >
-      {[['Home', '/'], 
-        ['Problemset', '/Problemset'], 
-        ['Standings', '/Standings']].map(([text, link], index) => (
-        
-          <Box key={text}>
-          <Link to={link} onClick={toggleDrawer} style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}> 
-          
-            <ListItemIcon >{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItem button >
-            </ListItem>
-              {text} 
+
+        <Link href="/">
+        <ListItem button>
+          <ListItemIcon> <HomeIcon /> </ListItemIcon>
+            Home
+        </ListItem>
           </Link>
 
-          </Box>
-          
-      ))}
+          <Link href="/Problemset">
+        <ListItem button>
+          <ListItemIcon> <LibraryBooksIcon /> </ListItemIcon>
+          Problemset
+        </ListItem>
+          </Link>
+
+          <Link href="/Standings">
+        <ListItem button>
+          <ListItemIcon> <FormatListNumberedIcon /> </ListItemIcon>
+          Standings
+        </ListItem>
+          </Link>
+
+        
+          <Link href="/Submissions">
+        <ListItem button>
+          <ListItemIcon> <StorageIcon /> </ListItemIcon>
+          Submissions
+        </ListItem>
+          </Link>
+
     </List>
     <Divider />
-    {state.authenticated && 
+    {authenticated && user &&
       <List >
-      {[['Profile', '/users'], 
-        ['New Game', '/Problemset/New'], 
-        ].map(([text, link], index) => (
-        <ListItem button key={text}>
-          <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-          <Link to={link} onClick={toggleDrawer}> {text} </Link>
+
+
+        <Link href="/Users">
+        <ListItem button>
+          <ListItemIcon> <AccountCircleIcon /> </ListItemIcon>
+          Profile
         </ListItem>
-      ))}
+          </Link>
+
+
+          <Link href={`/Submissions?User_ID=${user.UserID}`}>   
+        <ListItem button>
+          <ListItemIcon> <StorageIcon /> </ListItemIcon>
+          My Submissions
+        </ListItem>
+          </Link>
+
+        <Link href="/Problemset/New">
+        <ListItem button>
+          <ListItemIcon> <AddBoxIcon /> </ListItemIcon>
+          New Game
+        </ListItem>
+          </Link>
+
     </List>
     }
     
     </div>
-    );
+  )
   
   return (
     <Drawer 
