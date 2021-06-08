@@ -89,7 +89,7 @@ const Sidebar = ({open, toggleDrawer}: Props): JSX.Element =>
           </Link>
 
 
-          <Link href={`/Submissions?User_ID=${user.UserID}`}>   
+          <Link href={`/Submissions?UserID=${user.UserID}`}>   
         <ListItem button>
           <ListItemIcon> <StorageIcon /> </ListItemIcon>
           My Submissions
