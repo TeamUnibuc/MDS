@@ -38,6 +38,7 @@ export interface StandingsEntry {
     best_submission_id: string,
     submissions: number,
     Points: number,
+    TotalPoints: number,
     AuthorID: string,
     AuthorUsername: string,
 }

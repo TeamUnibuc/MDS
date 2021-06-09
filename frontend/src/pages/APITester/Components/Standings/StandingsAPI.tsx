@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { useStyles } from './StandingsAPIStyles';
+// import { useStyles } from './StandingsAPIStyles';
 
 import { TextField, MenuItem, Box } from '@material-ui/core';
 
 import { GetGlobalStandings, GetProblemStandings, GetUserGameStandings, GetUserGlobalStandings } from './Components'
 
 export default function StandingsAPI() : JSX.Element {
-    const classes = useStyles();
+    // const classes = useStyles();
 
     const [apiType, setApiType] = useState('Get Problem Standings')
 

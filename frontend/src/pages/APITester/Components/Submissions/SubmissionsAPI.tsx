@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useStyles } from './SubmissionsAPIStyles';
+// import { useStyles } from './SubmissionsAPIStyles';
 
 import { TextField, MenuItem, Box } from '@material-ui/core';
 import { GetAllSubmissions, GetOneSubmission, NewSubmission } from './Components'
 
 export default function SubmissionsAPI() : JSX.Element {
-    const classes = useStyles();
+    // const classes = useStyles();
 
     const [apiType, setApiType] = useState('Get All')
 

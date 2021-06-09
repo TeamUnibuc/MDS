@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 
 import Box from '@material-ui/core/Box';
 import MenuIcon from '@material-ui/icons/Menu';
-import { AuthUser, getAuthStatus } from 'fetch/auth';
 import { AppBar } from '@material-ui/core';
 import { Toolbar } from '@material-ui/core';
 import { IconButton } from '@material-ui/core';
@@ -88,7 +87,7 @@ const SmartHeader = ({activePage}: Props): JSX.Element =>
         
             <CircularProgress color="secondary"/>
         
-        ) : authenticated == true ? (<>
+        ) : authenticated === true ? (<>
         
         <Box mr={2}>
             <Typography align="right" variant="h6" className={classes.title}>
