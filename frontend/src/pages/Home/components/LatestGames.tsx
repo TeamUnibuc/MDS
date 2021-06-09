@@ -10,7 +10,7 @@ const useStyles = makeStyles({
       maxWidth: 480,
       backgroundColor: '#CDDDDD',
       marginRight: 20,
-      marginBottom: 20,
+      marginBottom: 10,
     },
     title: {
       fontSize: 14,
@@ -47,67 +47,73 @@ export default function LatestGames(): JSX.Element
     }, [])
 
     return <Box>
-    <Box mb={3}>
-    <Typography variant="h4">
-        Latest Games
+        <Box mb={3}>
+            <Typography variant="h4">
+                Latest Games
     </Typography>
 
-    </Box>
+        </Box>
 
-    <Box 
-      display="flex" 
-      flexDirection="row"
-      flexWrap="wrap">
+        <Box
+            display="flex"
+            flexDirection="row"
+            flexWrap="wrap">
 
-        {games.map((game, index) => 
-            <Card key={index} 
-            className={classes.root} 
-            variant="outlined">
-        <CardContent >
-          
-          <Typography className={classes.title} color="textSecondary" gutterBottom>
-            # {index + 1}
-          </Typography>
-          
-          
-            <Box 
-              display="flex" 
-              flexDirection="row" 
-              justifyContent="space-between">
-                <Box display="flex" flexDirection="row" alignItems="center">
+            {games.map((game, index) =>
+                <Card key={index}
+                    className={classes.root}
+                    variant="outlined">
+                    <CardContent >
 
-                <Link 
-                  to={`/problemset/view?GameID=${game.GameID}`}
-                  className={classes.link} >
-                    <Typography variant="h5" component="h2">
-                        {game.Name}
-                    </Typography>
-                </Link>
-                    {/* <Typography className={classes.pos} color="textSecondary">
+                        <Typography className={classes.title} color="textSecondary" gutterBottom>
+                            # {index + 1}
+                        </Typography>
+
+
+                        <Box
+                            display="flex"
+                            flexDirection="row"
+                            justifyContent="space-between">
+                            <Box display="flex" flexDirection="row" alignItems="center">
+
+                                <Link
+                                    to={`/problemset/view?GameID=${game.GameID}`}
+                                    className={classes.link} >
+                                    <Typography variant="h5" component="h2">
+                                        {game.Name}
+                                    </Typography>
+                                </Link>
+                                {/* <Typography className={classes.pos} color="textSecondary">
             adjective
         </Typography> */}
-                </Box>
+                            </Box>
 
-                <Box display="flex" flexDirection="row" alignItems="center">
-                <Link 
-                  to={`/users?handle=${game.AuthorUsername}`}
-                  className={classes.link} >
-                    <Typography component="p">
-                        {game.AuthorUsername}
-                    </Typography>
-                </Link>
-                </Box>
-    
-            </Box>
-        </CardContent>
-        {/* <CardActions>
+                            <Box display="flex" flexDirection="row" alignItems="center">
+                                <Link
+                                    to={`/users?handle=${game.AuthorUsername}`}
+                                    className={classes.link} >
+                                    <Typography component="p">
+                                        {game.AuthorUsername}
+                                    </Typography>
+                                </Link>
+                            </Box>
+
+                        </Box>
+                        <Typography className={classes.title} color="textSecondary" gutterBottom>
+                            {(new Date(game.Date)).toLocaleString('ro-RO')}
+                        </Typography>
+                        <Box>
+
+                        </Box>
+                    </CardContent>
+                    {/* <CardActions>
           <Button size="small">Learn More</Button>
         </CardActions> */}
-      </Card>
-        )
-        
-    }
+                </Card>
+            )
 
-    </Box>
+            }
+
+        </Box>
     </Box>
 }
