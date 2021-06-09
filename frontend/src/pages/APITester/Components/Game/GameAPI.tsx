@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useStyles } from './GameAPIStyles';
+// import { useStyles } from './GameAPIStyles';
 
 import { TextField, MenuItem, Box } from '@material-ui/core';
 import { AddGame, DeleteGame, GetAllGames, GetOneGame, GameSources } from './Components';
 
 export default function GameAPI() : JSX.Element {
-    const classes = useStyles();
+    // const classes = useStyles();
 
     const [apiType, setApiType] = useState('Get All')
 

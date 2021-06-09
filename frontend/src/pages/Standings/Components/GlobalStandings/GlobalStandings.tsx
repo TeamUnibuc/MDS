@@ -5,6 +5,7 @@ import { TableContainer, Table, TableHead, TableRow, Paper, TableBody, Box,
 import api from 'api';
 import TablePaginationActions from '@material-ui/core/TablePagination/TablePaginationActions';
 import { GlobalStandingsResults } from 'api/Standings/GlobalStandings';
+import { StandingsEntry } from 'api/Models';
 
 const rowsPerPageOptions : number[] = [5, 10, 25];
 const order_bys = ['score', 'submissions', 'defeated'];
@@ -100,7 +101,7 @@ export default function GlobalStandings() : JSX.Element {
     );
 }
 
-function EntryRow(item : any) : JSX.Element {
+function EntryRow(item: StandingsEntry) : JSX.Element {
     const { AuthorUsername, TotalPoints } = item
 
     return (

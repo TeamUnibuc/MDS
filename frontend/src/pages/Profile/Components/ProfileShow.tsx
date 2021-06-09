@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { AuthUser } from "fetch/auth"
+import { AuthUser } from 'fetch/auth'
 
 interface Props {
     profile: AuthUser,

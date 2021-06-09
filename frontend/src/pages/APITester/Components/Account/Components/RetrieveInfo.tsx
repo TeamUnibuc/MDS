@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { useStyles } from '../AccountAPIStyles';
 import { prettyJSON } from 'utils';
 import api from 'api';
