@@ -6,14 +6,14 @@ import api from 'api';
 import TablePaginationActions from '@material-ui/core/TablePagination/TablePaginationActions';
 import { GlobalStandingsResults } from 'api/Standings/GlobalStandings';
 
-const rowsPerPageOptions : number[] = [5, 10, 25];
+const rowsPerPageOptions : number[] = [10, 25, 50];
 const order_bys = ['score', 'submissions', 'defeated'];
 const result_orders = ['increasing', 'decreasing'];
 
 export default function GlobalStandings() : JSX.Element {
     const classes = useStyles();
 
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
     const [page, setPage] = useState(0);
     const [standings, setStandings] = useState<undefined | GlobalStandingsResults>();
     const [orderBy, setOrderBy] = useState('score');
