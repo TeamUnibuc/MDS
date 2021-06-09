@@ -6,6 +6,7 @@ import 'codemirror/keymap/sublime';
 import 'codemirror/theme/elegant.css';
 import CodeMirror from '@uiw/react-codemirror';
 import { NewSubmission } from 'api/Submissions/NewSubmission';
+import { Link } from 'react-router-dom';
 
 
 export default function View() : JSX.Element {
@@ -49,8 +50,23 @@ export default function View() : JSX.Element {
     return (
         <div>
             <div>
-                <h1>Title: {game.game.Name}</h1>
-                <p>Enunt: {game.game.Description}</p>
+                <Link to={"/Submissions?GameID=" + game.game.GameID}>View All Submissions</Link>
+                {user.authenticated &&
+                    <Link to={"/Submissions?GameID=" + game.game.GameID
+                                + "&UserID=" + user.user?.UserID}>View My Submissions</Link>
+                }
+                {user.authenticated && (user.user?.IsAdministrator || user.user?.UserID == game.game.AuthorID) &&
+                    <Link to={"/problemset/update?GameID=" + game.game.GameID}>Edit</Link> 
+                }
+            </div>
+            <div>
+                <h1>{game.game.Name}</h1>
+                <br />
+                <div>
+                    {game.game.Description.split("\n").map((i,key) => {
+                        return <p key={key}>{i}</p>;
+                    })}
+                </div>
             </div>
 
             {/* If is authenticated, show submission options */}
