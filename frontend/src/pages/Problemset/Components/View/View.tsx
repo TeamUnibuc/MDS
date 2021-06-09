@@ -6,7 +6,6 @@ import 'codemirror/keymap/sublime';
 import 'codemirror/theme/elegant.css';
 import CodeMirror from '@uiw/react-codemirror';
 import { NewSubmission } from 'api/Submissions/NewSubmission';
-import { Link } from 'react-router-dom';
 import { Delete } from 'api/Games/Delete';
 
 
@@ -54,7 +53,7 @@ export default function View() : JSX.Element {
 
     const DeleteGame = () => {
         Delete({ GameID: game.game.GameID })
-            .then((v => {
+            .then((() => {
                 window.location.href='/problemset'
             }))
             .catch(err => {

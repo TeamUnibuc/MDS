@@ -83,7 +83,7 @@ const SmartHeader = ({activePage}: Props): JSX.Element =>
             {activePage}
         </Typography>
         
-        {authenticated === null ? (
+        {authenticated === undefined ? (
         
             <CircularProgress color="secondary"/>
         
