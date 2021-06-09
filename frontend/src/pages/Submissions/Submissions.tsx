@@ -14,7 +14,7 @@ const rowsPerPageOptions : number[] = [5, 10, 25];
 const order_bys = ['score', 'date'];
 const result_orders = ['increasing', 'decreasing'];
 
-export default function Submission() : JSX.Element {
+export default function Submissions() : JSX.Element {
     const [Submissions, setSubmissions] = useState<undefined | GetAllResults>();
     const [orderBy, setOrderBy] = useState('score');
     const [resultOrder, setResultOrder] = useState('decreasing');
@@ -52,6 +52,9 @@ export default function Submission() : JSX.Element {
         return <CircularProgress />
     }
 
+    if (Submissions.status === 'fail'){
+        return <div>{Submissions.error_message}</div>
+    }
     
     return (
         <TableContainer component={Paper}>
@@ -60,7 +63,8 @@ export default function Submission() : JSX.Element {
                     <TableRow>
                         <StyledTableCell>Username</StyledTableCell>
                         <StyledTableCell align="right">Problem</StyledTableCell>
-                        <StyledTableCell align="right">Points</StyledTableCell>
+                        <StyledTableCell align="right">Date Submitted</StyledTableCell>
+                        <StyledTableCell align="right">Score</StyledTableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -119,6 +123,7 @@ export default function Submission() : JSX.Element {
 
 function EntryRow(item : any) : JSX.Element {
     const { AuthorUsername, GameName, Score, SubmissionID } = item;
+    const DateSubmitted = item.Date;
     const classes = useStyles();
 
     return (
@@ -131,6 +136,7 @@ function EntryRow(item : any) : JSX.Element {
                 </Link>
             </StyledTableCell>
             <StyledTableCell align="right">{GameName}</StyledTableCell>
+            <StyledTableCell align="right">{(new Date(DateSubmitted)).toLocaleString('ro-RO')}</StyledTableCell>
             <StyledTableCell align="right">{Score}</StyledTableCell>
         </StyledTableRow>
     );
