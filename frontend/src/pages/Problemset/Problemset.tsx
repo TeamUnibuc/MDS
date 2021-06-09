@@ -9,7 +9,6 @@ export default function Problemset() : JSX.Element {
 
     return (
         <div>
-            <p>Problemset</p>
             <Switch>
                 <Route key="Default" path="/problemset/" exact component={Search}/>
                 <Route key="Search" path="/problemset/search" exact component={Search} />

@@ -1,6 +1,6 @@
 import { RequestStatus, BotModel } from '../Models'
 
-interface SourceResults extends RequestStatus {
+export interface SourceResults extends RequestStatus {
     GameEngine: string,
     OfficialGameBots: Array<BotModel>
 }
