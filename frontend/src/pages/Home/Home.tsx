@@ -56,3 +56,8 @@ export default function Home(): JSX.Element
     </Box>
     </>
 }
+
+// TODO: Arhiva
+// TODO: Profil
+
+// TODO: Lista Cele mai noi probleme adaugate
