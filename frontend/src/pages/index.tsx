@@ -9,6 +9,7 @@ import Submissions from './Submissions/Submissions'
 import Submission from './Submission/Submission'
 import Home from './Home/Home'
 import Profile from './Profile/Profile'
+import Documentation from './Documentation/Documentation'
 
 export { 
     DefaultPage, 
@@ -21,5 +22,6 @@ export {
     Submissions, 
     Submission,
     Home,
-    Profile
+    Profile,
+    Documentation
 }

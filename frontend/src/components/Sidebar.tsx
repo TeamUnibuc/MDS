@@ -13,7 +13,7 @@ import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import { useUserStatus } from 'Contexts/UserStatus';
 import { Link } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
-
+import SettingsIcon from '@material-ui/icons/Settings';
 
 
 const useStyles = makeStyles({
@@ -44,38 +44,46 @@ const Sidebar = ({open, toggleDrawer}: Props): JSX.Element =>
   const list = () => (
     // <Divider />   
     <div className={classes.list}> 
-    <List >
+      <List >
 
         <Link href="/">
-        <ListItem button>
-          <ListItemIcon> <HomeIcon /> </ListItemIcon>
+          <ListItem button>
+            <ListItemIcon> <HomeIcon /> </ListItemIcon>
             Home
         </ListItem>
-          </Link>
+        </Link>
 
-          <Link href="/Problemset">
-        <ListItem button>
-          <ListItemIcon> <LibraryBooksIcon /> </ListItemIcon>
+        <Link href="/Problemset">
+          <ListItem button>
+            <ListItemIcon> <LibraryBooksIcon /> </ListItemIcon>
           Problemset
         </ListItem>
-          </Link>
+        </Link>
 
-          <Link href="/Standings">
-        <ListItem button>
-          <ListItemIcon> <FormatListNumberedIcon /> </ListItemIcon>
+        <Link href="/Standings">
+          <ListItem button>
+            <ListItemIcon> <FormatListNumberedIcon /> </ListItemIcon>
           Standings
         </ListItem>
-          </Link>
+        </Link>
 
-        
-          <Link href="/Submissions">
-        <ListItem button>
-          <ListItemIcon> <StorageIcon /> </ListItemIcon>
+
+        <Link href="/Submissions">
+          <ListItem button>
+            <ListItemIcon> <StorageIcon /> </ListItemIcon>
           Submissions
         </ListItem>
-          </Link>
+        </Link>
 
-    </List>
+
+        <Link href="/documentation">
+          <ListItem button>
+            <ListItemIcon> <SettingsIcon /> </ListItemIcon>
+          Documentation
+        </ListItem>
+        </Link>
+
+      </List>
     <Divider />
     {authenticated && user &&
       <List >
