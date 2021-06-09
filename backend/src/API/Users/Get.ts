@@ -14,13 +14,13 @@ export const Get = async (req: Request, res: Response): Promise<void> =>
 
     if (user) {
         res.json({
-            "status": "ok",
-            "FirstName": user.FirstName,
-            "LastName": user.LastName,
-            "DateJoined": user.DateJoined,
-            "Email": user.Email,
-            "Username": user.Username,
-            "IsAdministrator": user.IsAdministrator,
+            status: "ok",
+            FirstName: user.FirstName,
+            LastName: user.LastName,
+            DateJoined: user.DateJoined,
+            Email: user.Email,
+            Username: user.Username,
+            IsAdministrator: user.IsAdministrator,
         });
         return;
     }
