@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useStyles } from './UserAPIStyles';
+// import { useStyles } from './UserAPIStyles';
 
 import { TextField, MenuItem, Box } from '@material-ui/core';
 import { GetUser } from './Components'
 
 export default function SubmissionsAPI() : JSX.Element {
-    const classes = useStyles();
+    // const classes = useStyles();
 
     const [apiType, setApiType] = useState('Get')
 

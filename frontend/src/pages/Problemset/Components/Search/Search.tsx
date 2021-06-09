@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useStyles, StyledTableCell, StyledTableRow } from './SearchStyles';
+import { useStyles, StyledTableCell } from './SearchStyles';
 import { TableContainer, Table, TableHead, TableRow, Paper, TableBody, Box, 
-        TableFooter, TablePagination, CircularProgress, TableCell, MenuItem, TextField, Container, Link } from '@material-ui/core';
+        TableFooter, TablePagination, CircularProgress, TableCell, MenuItem, TextField, Container } from '@material-ui/core';
 import api from 'api';
 import TablePaginationActions from '@material-ui/core/TablePagination/TablePaginationActions';
 import { GetAllResults } from 'api/Games/GetAll';

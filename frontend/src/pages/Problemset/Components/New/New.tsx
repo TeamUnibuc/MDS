@@ -1,13 +1,11 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import api from 'api';
-import { prettyJSON } from 'utils';
 import 'codemirror/keymap/sublime';
 import 'codemirror/theme/elegant.css';
 
-import { Container, Button, Box } from '@material-ui/core'
+import { Button, Box } from '@material-ui/core'
 import CodeMirror from '@uiw/react-codemirror'
 import { useUserStatus } from 'Contexts/UserStatus';
-import classes from '*.module.css';
 
 export default function New(): JSX.Element {
     const [GameEngine, setGameEngine] = useState('Engine code...')
