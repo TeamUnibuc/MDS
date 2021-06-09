@@ -72,7 +72,7 @@ export default function View() : JSX.Element {
             {/* If is authenticated, show submission options */}
             {user.authenticated &&
             <div style={{padding: "50px"}}>
-                <Box width="90%" style={{border: "1px solid black"}}>
+                <Box width="90%" style={{border: "1px solid black", backgroundColor: 'white'}}>
                     <label>
                         Your Submission:
                     </label>

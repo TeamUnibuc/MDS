@@ -72,7 +72,7 @@ export default function New(): JSX.Element {
                 Engine code:
             </label>
             <Box mt="20px" />
-            <Box height="300px" width="100%">
+            <Box height="300px" width="100%" style={{backgroundColor: 'white'}}>
                 <CodeMirror
                     value={GameEngine}
                     onChange={(instance : CodeMirror.Editor) => setGameEngine(instance.getValue())}
@@ -92,7 +92,7 @@ export default function New(): JSX.Element {
                 {`Bot #${id}`}
             </label>
             <Box mt="20px" />
-            <Box style={{width: "100%", height: "300px"}}>
+            <Box style={{width: "100%", height: "300px", backgroundColor: 'white'}}>
                 <CodeMirror
                     value={val}
                     onChange={(instance : CodeMirror.Editor) => {
