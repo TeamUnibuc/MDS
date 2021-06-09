@@ -9,6 +9,7 @@ const CreateNewBotEntry = (Code: string, AuthorID: string): Promise<string> => {
     bot.Code = Code;
     bot.AuthorID = AuthorID;
     bot.DateSubmitted = new Date();
+    bot.CompilationMessage = "Not computed!";
 
     return bot.save()
         .then(val => {
@@ -89,16 +90,15 @@ export const Alter = async (req: Request, res: Response): Promise<void> =>
             editGame.Description = req.body.Description;
             editGame.GameEngine = req.body.GameEngine;
             editGame.AuthorID = req.body.AuthorID;
-            const bots: Array<string> = req.body.OfficialGameBots;
+            const bots: Array<{ BotName: string, BotCode: string }> = req.body.OfficialGameBots;
             editGame.OfficialGameBots = bots.length;
             editGame.Date = new Date();
 
             editGame.save().then(editGame => {
                 console.log("Updated game: ", editGame);
                 bots.map(async (bot, id) => {
-                    const botObj = JSON.parse(bot)
-                    const name: string | undefined = botObj.BotName;
-                    await CreateOfficialBot(botObj.BotCode, name, editGame.AuthorID, editGame.id, id);
+                    const name: string | undefined = bot.BotName;
+                    await CreateOfficialBot(bot.BotCode, name, editGame.AuthorID, editGame.id, id);
                 })
                 res.json({"status": "ok", "GameID": editGame.id});
             })
@@ -117,7 +117,7 @@ export const Alter = async (req: Request, res: Response): Promise<void> =>
     game.Description = req.body.Description;
     game.GameEngine = req.body.GameEngine;
     game.AuthorID = req.body.AuthorID;
-    const bots: Array<string> = req.body.OfficialGameBots;
+    const bots: Array<{ BotName: string, BotCode: string }> = req.body.OfficialGameBots;
     game.OfficialGameBots = bots.length;
     game.Date = new Date();
 
@@ -125,9 +125,8 @@ export const Alter = async (req: Request, res: Response): Promise<void> =>
         .then(game => {
             console.log("Saved game: ", game);  
             bots.map(async (bot, id) => {
-                    const botObj = JSON.parse(bot)
-                    const name: string | undefined = botObj.BotName;
-                    await CreateOfficialBot(botObj.BotCode, name, game.AuthorID, game.id, id);
+                    const name: string | undefined = bot.BotName;
+                    await CreateOfficialBot(bot.BotCode, name, game.AuthorID, game.id, id);
             })
             res.json({"status": "ok", "GameID": game.id});
         })

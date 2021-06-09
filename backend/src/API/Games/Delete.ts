@@ -1,6 +1,8 @@
+/* eslint-disable no-loops/no-loops */
 import { Request, Response } from 'express'
 import { GameRankingsModel } from '../../models/GameRankingsModel';
 import { GamesModel } from '../../models/GamesModel'
+import { SubmissionsModel } from '../../models/SubmissionsModel';
 
 export const Delete = async (req: Request, res: Response): Promise<void> => 
 {
@@ -32,11 +34,14 @@ export const Delete = async (req: Request, res: Response): Promise<void> =>
             console.log("Delete game:", game);
 
             const gameRankings = await GameRankingsModel.find({GameID: game_id});
+            const submissions = await SubmissionsModel.find({ GameID: game_id });
 
             try {
-                // eslint-disable-next-line no-loops/no-loops
                 for (let i = 0; i < gameRankings.length; ++i) {
                     await gameRankings[i]?.delete();
+                }
+                for (let i = 0; i < submissions.length; i++) {
+                    await submissions[i].delete();
                 }
             } catch (error) {
                 res.json({

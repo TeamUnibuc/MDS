@@ -6,14 +6,14 @@ import api from 'api';
 import TablePaginationActions from '@material-ui/core/TablePagination/TablePaginationActions';
 import { GetAllResults } from 'api/Games/GetAll';
 
-const rowsPerPageOptions : number[] = [5, 10, 25];
+const rowsPerPageOptions : number[] = [10, 25, 50];
 const order_bys = ['date', 'solved', 'submissions'];
 const result_orders = ['increasing', 'decreasing'];
 
 export default function Search() : JSX.Element {
     const classes = useStyles();
 
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
     const [page, setPage] = useState(0);
     const [standings, setStandings] = useState<undefined | GetAllResults>();
     const [orderBy, setOrderBy] = useState('solved');
@@ -55,7 +55,7 @@ export default function Search() : JSX.Element {
                                             style={{cursor: 'pointer'}}>
                                     {row.Name}
                                 </TableCell>
-                                <TableCell align='right'>{new Date(row.Date).toLocaleDateString()}</TableCell>
+                                <TableCell align='right'>{(new Date(row.Date)).toLocaleString('ro-RO')}</TableCell>
                                 <TableCell align='right'>
                                     <span onClick={ () => window.location.href='/users?handle='+row.AuthorUsername }
                                             style={{cursor: 'pointer'}}>

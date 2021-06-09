@@ -6,6 +6,7 @@ import 'codemirror/keymap/sublime';
 import 'codemirror/theme/elegant.css';
 import CodeMirror from '@uiw/react-codemirror';
 import { NewSubmission } from 'api/Submissions/NewSubmission';
+import { Delete } from 'api/Games/Delete';
 
 
 export default function View() : JSX.Element {
@@ -39,18 +40,59 @@ export default function View() : JSX.Element {
             .then(({ SubmissionID }) => {
                 if (SubmissionID)
                     console.log("Submission: " + SubmissionID);
+                window.location.href='/Submission?id='+SubmissionID;
             })
             .catch((err) => {
                 console.log("Failed: " + err);
             });
     };
 
+    const RedirectTo = (url: string) => {
+        return () => window.location.href = url
+    }
+
+    const DeleteGame = () => {
+        Delete({ GameID: game.game.GameID })
+            .then((() => {
+                window.location.href='/problemset'
+            }))
+            .catch(err => {
+                console.log("Unable to delete game: " + err)
+            })
+    };
+
 
     return (
         <div>
+            <Box display="inline">
+                <Box m={1}>
+                    <Button onClick={RedirectTo("/Submissions?GameID=" + game.game.GameID)}>View All Submissions</Button>
+                </Box>
+                {user.authenticated &&
+                    <Box m={1}>
+                        <Button onClick={RedirectTo("/Submissions?GameID=" + game.game.GameID
+                                 + "&UserID=" + user.user?.UserID)}>View My Submissions</Button>
+                    </Box>
+                }
+                {user.authenticated && (user.user?.IsAdministrator || user.user?.UserID == game.game.AuthorID) &&
+                    <div>
+                        <Box m={1}>
+                            <Button onClick={RedirectTo("/problemset/update?GameID=" + game.game.GameID)}>Edit</Button>
+                        </Box>
+                        <Box m={1}>
+                            <Button onClick={DeleteGame}>Delete</Button>
+                        </Box>
+                    </div>
+                }
+            </Box>
             <div>
-                <h1>Title: {game.game.Name}</h1>
-                <p>Enunt: {game.game.Description}</p>
+                <h1>{game.game.Name}</h1>
+                <br />
+                <div>
+                    {game.game.Description.split("\n").map((i,key) => {
+                        return <p key={key}>{i}</p>;
+                    })}
+                </div>
             </div>
 
             {/* If is authenticated, show submission options */}
