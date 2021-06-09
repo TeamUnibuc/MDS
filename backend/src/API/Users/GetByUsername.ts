@@ -21,6 +21,7 @@ export const GetByUsername = async (req: Request, res: Response): Promise<void> 
             Email: user.Email,
             Username: user.Username,
             UserID: user.id,
+            IsAdministrator: user.IsAdministrator,
         });
         return;
     }

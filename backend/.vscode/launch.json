@@ -11,7 +11,8 @@
       "name": "Debug Backend",
       "program": "${workspaceFolder}/src/index.ts",
       // "preLaunchTask": "tsc: build - tsconfig.json",
-      "outFiles": ["${workspaceFolder}/dist/**/*.js"]
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "runtimeExecutable": "/home/felix/miniconda3/envs/MDS_env/bin/node"
     },
   ]
 }
