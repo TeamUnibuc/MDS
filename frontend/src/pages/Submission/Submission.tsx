@@ -27,6 +27,10 @@ export default function Submission() : JSX.Element {
         return <CircularProgress />
     }
 
+    if (Submission.status === 'fail'){
+        return <div>{Submission.error_message}</div>
+    }
+
     return (
         <>
             <h1>{`${Submission.AuthorUsername}'s submission`}</h1>
@@ -57,6 +61,7 @@ function ResultEntry({logs, won} : {logs : string, won : boolean}) : JSX.Element
         <>
             {won && <h5>Battle was <span style={{color: 'green'}}>won!</span></h5>}
             {!won && <h5>Battle was <span style={{color: 'red'}}>lost!</span></h5>}
+            <h5>Logs:</h5>
             <CodeMirror
                 value={logs}                    
                 options={{

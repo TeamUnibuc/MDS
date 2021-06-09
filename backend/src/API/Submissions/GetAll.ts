@@ -48,7 +48,6 @@ export const GetAll = async (req: Request, res: Response): Promise<void> =>
     submissions = [];
 
     for (let i = requested_offset; i < totalSubmissions.length && i < requested_offset + requested_submissions; ++i) {
-        console.log(totalSubmissions[i].UserID)
         const user = await UsersModel.findById(totalSubmissions[i].UserID, {Username: 1})
                             .catch(() => null);
         const game = await GamesModel.findById(totalSubmissions[i].GameID, {Name: 1})
