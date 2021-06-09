@@ -37,6 +37,7 @@ export default function Update() : JSX.Element {
                     const bots = s.OfficialGameBots.map(x => x.BotCode)
                     setOfficialBots(bots)
                     setSources(s)
+                    console.log(s)
                 })
         }
     }, [])
@@ -79,7 +80,7 @@ export default function Update() : JSX.Element {
 
         const content = await api.Games.Alter(reqBody);
         console.log(content);
-        window.location.href='/problemset/view?GameID='+game.game.GameID
+        // window.location.href='/problemset/view?GameID='+game.game.GameID
     }
 
     return <div>

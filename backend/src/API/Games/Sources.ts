@@ -34,7 +34,7 @@ export const Sources = async (req: Request, res: Response): Promise<void> =>
         const official_bots_info: Array<any> = [];
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const official_bots = await GameOfficialBotsModel.find({GameID: game_id})
+        const official_bots = await GameOfficialBotsModel.find({GameID: game_id}).sort({ BotRank: 1 })
         for(const bot of official_bots){
             const botInfo = await BotsModel.findById(bot.BotID);
             if (botInfo) {
