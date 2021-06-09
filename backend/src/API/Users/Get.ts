@@ -20,6 +20,7 @@ export const Get = async (req: Request, res: Response): Promise<void> =>
             "DateJoined": user.DateJoined,
             "Email": user.Email,
             "Username": user.Username,
+            "IsAdministrator": user.IsAdministrator,
         });
         return;
     }

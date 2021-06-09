@@ -37,7 +37,7 @@ export default function Home(): JSX.Element
     }, [user])
 
     return <>
-    <Typography variant="h2" component="h3">
+    <Typography variant="h2" component="h3" style={{alignSelf: 'flex-start'}}>
         Home
     </Typography>
     
@@ -48,7 +48,8 @@ export default function Home(): JSX.Element
     <Box 
       display="flex" 
       justifyContent="space-between" 
-      flexDirection="row">
+      flexDirection="row"
+      width="100%">
         <Greeting />
         {authenticated && user && summaryPoints !== undefined && 
             <TotalPoints username={user.Username} points={summaryPoints} />

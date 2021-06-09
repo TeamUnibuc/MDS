@@ -51,7 +51,7 @@ function App(): JSX.Element {
                         <Route key="Submissions" path="/submissions" exact component={Submissions}/>
                         <Route key="Submission" path="/submission" component={Submission}/>
                         <Route key="Documentation" path="/documentation" component={Documentation}/>
-                        
+
                         <Route key="apitester" path="/apitester" exact component={APITester}/>
 
                         <Route key="testeval" path="/testeval" exact component={TestEval}/>

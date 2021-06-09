@@ -9,6 +9,7 @@ export default function Footer() : JSX.Element {
     return (
         <Box className={classes.container}>
             <CopyrightIcon />
+            <Box width="15px" />
             Made by Dragancea Constantin, Pușcașu Felix, Moroianu Theodor, Chichirim Stelian
         </Box>
     );
