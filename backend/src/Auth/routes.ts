@@ -24,6 +24,7 @@ authRoutes.get('/', (req, res) => {
             LastName: user?.LastName,
             DateJoined: user?.DateJoined,
             Providers: user?.Providers,
+            IsAdministrator: user?.IsAdministrator,
         },
     })
 })
