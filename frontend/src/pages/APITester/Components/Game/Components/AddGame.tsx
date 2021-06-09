@@ -29,7 +29,6 @@ function AddGame(): JSX.Element {
             BotCode: it
         }))
 
-        // TODO: add gameid
         const reqBody = {
             Name,
             Description,

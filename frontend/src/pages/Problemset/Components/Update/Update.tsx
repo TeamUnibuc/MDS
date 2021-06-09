@@ -5,8 +5,6 @@ import React, { useEffect, useState } from 'react';
 import 'codemirror/keymap/sublime';
 import 'codemirror/theme/elegant.css';
 import CodeMirror from '@uiw/react-codemirror';
-import { NewSubmission } from 'api/Submissions/NewSubmission';
-import { Link } from 'react-router-dom';
 import { SourceResults, Sources } from 'api/Games/Sources';
 import api from 'api';
 

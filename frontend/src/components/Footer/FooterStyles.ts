@@ -6,7 +6,8 @@ const useStyles = makeStyles(() => ({
         marginTop: '100px',
         display: 'flex',
         alignItems: 'center',
-        alignSelf: 'center'
+        alignSelf: 'center',
+        fontFamily: 'Poppins'
     }
 }));
 

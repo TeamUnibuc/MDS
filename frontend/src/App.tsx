@@ -5,7 +5,7 @@ import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
 import SmartHeader from 'components/SmartHeader'
 import Snackbar from 'components/Snackbar';
 import Footer from './components/Footer/Footer';
-import { TestEval, Dashboard, APITester, Submissions, Submission, Standings, Users, Problemset, Home } from 'pages'
+import { TestEval, Dashboard, APITester, Submissions, Submission, Standings, Users, Problemset, Home, Documentation } from 'pages'
 
 import { Grid, Box, Container, CssBaseline } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/styles'
@@ -50,7 +50,8 @@ function App(): JSX.Element {
                         <Route key="Standings" path="/standings" exact component={Standings}/>
                         <Route key="Submissions" path="/submissions" exact component={Submissions}/>
                         <Route key="Submission" path="/submission" component={Submission}/>
-
+                        <Route key="Documentation" path="/documentation" component={Documentation}/>
+                        
                         <Route key="apitester" path="/apitester" exact component={APITester}/>
 
                         <Route key="testeval" path="/testeval" exact component={TestEval}/>

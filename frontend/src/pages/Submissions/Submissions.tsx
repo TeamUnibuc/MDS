@@ -9,6 +9,7 @@ import { useStyles, StyledTableCell, StyledTableRow } from './SubmissionsStyles'
 import { TableContainer, Table, TableHead, TableRow, Paper, TableBody, Box, Link,
         TableFooter, TablePagination, CircularProgress, TableCell, MenuItem, TextField } from '@material-ui/core';
 import TablePaginationActions from '@material-ui/core/TablePagination/TablePaginationActions';
+import { SubmissionModel } from 'api/Models';
 
 const rowsPerPageOptions : number[] = [10, 25, 50];
 const order_bys = ['score', 'date'];
@@ -121,7 +122,7 @@ export default function Submissions() : JSX.Element {
     );
 }
 
-function EntryRow(item : any) : JSX.Element {
+function EntryRow(item : SubmissionModel) : JSX.Element {
     const { AuthorUsername, GameName, Score, SubmissionID } = item;
     const DateSubmitted = item.Date;
     const classes = useStyles();
