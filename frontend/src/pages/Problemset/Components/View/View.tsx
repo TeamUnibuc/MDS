@@ -63,42 +63,42 @@ export default function View() : JSX.Element {
 
 
     return (
-        <div>
-            <Box display="inline">
+        <Box alignSelf="flex-start" width="100%">
+            <Box style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                 <Box m={1}>
-                    <Button onClick={RedirectTo("/Submissions?GameID=" + game.game.GameID)}>View All Submissions</Button>
+                    <Button onClick={RedirectTo("/Submissions?GameID=" + game.game.GameID)} variant="contained">View All Submissions</Button>
                 </Box>
                 {user.authenticated &&
                     <Box m={1}>
                         <Button onClick={RedirectTo("/Submissions?GameID=" + game.game.GameID
-                                 + "&UserID=" + user.user?.UserID)}>View My Submissions</Button>
+                                    + "&UserID=" + user.user?.UserID)} variant="contained">View My Submissions</Button>
                     </Box>
                 }
                 {user.authenticated && (user.user?.IsAdministrator || user.user?.UserID == game.game.AuthorID) &&
-                    <div>
+                    <>
                         <Box m={1}>
-                            <Button onClick={RedirectTo("/problemset/update?GameID=" + game.game.GameID)}>Edit</Button>
+                            <Button onClick={RedirectTo("/problemset/update?GameID=" + game.game.GameID)} variant="contained">Edit</Button>
                         </Box>
                         <Box m={1}>
-                            <Button onClick={DeleteGame}>Delete</Button>
+                            <Button onClick={DeleteGame} variant="contained" color="secondary">Delete</Button>
                         </Box>
-                    </div>
+                    </>
                 }
             </Box>
-            <div>
+            <Box>
                 <h1>{game.game.Name}</h1>
                 <br />
-                <div>
+                <Box>
                     {game.game.Description.split("\n").map((i,key) => {
                         return <p key={key}>{i}</p>;
                     })}
-                </div>
-            </div>
+                </Box>
+            </Box>
 
             {/* If is authenticated, show submission options */}
             {user.authenticated &&
-            <div style={{padding: "50px"}}>
-                <Box width="90%" style={{border: "1px solid black"}}>
+            <Box style={{padding: "50px"}}>
+                <Box width="90%" style={{border: "1px solid black", backgroundColor: 'white'}}>
                     <label>
                         Your Submission:
                     </label>
@@ -116,8 +116,8 @@ export default function View() : JSX.Element {
                         />
                     </Box>
                     
-                    <Box mt="20px" />
                 </Box>
+                <Box mt="20px" />
                 <Button
                     variant="contained"
                     color="primary"
@@ -125,7 +125,7 @@ export default function View() : JSX.Element {
                 >
                     Submit
                 </Button>
-            </div>}
-        </div>
+            </Box>}
+        </Box>
     );
 }

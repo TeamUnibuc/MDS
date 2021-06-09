@@ -38,79 +38,77 @@ export default function Search() : JSX.Element {
     }
 
     return (
-        <Container>
-            <TableContainer component={Paper}>
-                <Table className={classes.table} aria-label="customized table">
-                    <TableHead>
-                        <TableRow>
-                            <StyledTableCell>Game Name</StyledTableCell>
-                            <StyledTableCell align="right">Date</StyledTableCell>
-                            <StyledTableCell align="right">Author</StyledTableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {standings.games.map((row) => (
-                            <TableRow key={row.GameID}>
-                                <TableCell onClick={ () => window.location.href='/problemset/view?GameID='+row.GameID }
-                                            style={{cursor: 'pointer'}}>
-                                    {row.Name}
-                                </TableCell>
-                                <TableCell align='right'>{(new Date(row.Date)).toLocaleString('ro-RO')}</TableCell>
-                                <TableCell align='right'>
-                                    <span onClick={ () => window.location.href='/users?handle='+row.AuthorUsername }
-                                            style={{cursor: 'pointer'}}>
-                                        {row.AuthorUsername}
-                                    </span>
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                    <TableFooter>
-                        <TableRow>
-                            <TableCell align="right" className={classes.cellRow}>
-                                <TextField 
-                                    select
-                                    value={resultOrder}
-                                    onChange={(event) => setResultOrder(event.target.value)}
-                                    helperText="Result order"
-                                >
-                                    {result_orders.map((option) => (
-                                    <MenuItem key={option} value={option}>
-                                        {option}
-                                    </MenuItem>
-                                    ))}
-                                </TextField>
-                                <Box width="100px" />
-                                <TextField 
-                                    select
-                                    value={orderBy}
-                                    onChange={(event) => setOrderBy(event.target.value)}
-                                    helperText="Criteria to sort by"
-                                >
-                                    {order_bys.map((option) => (
-                                    <MenuItem key={option} value={option}>
-                                        {option}
-                                    </MenuItem>
-                                    ))}
-                                </TextField>
+        <TableContainer component={Paper}>
+            <Table className={classes.table} aria-label="customized table">
+                <TableHead>
+                    <TableRow>
+                        <StyledTableCell>Game Name</StyledTableCell>
+                        <StyledTableCell align="right">Date</StyledTableCell>
+                        <StyledTableCell align="right">Author</StyledTableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {standings.games.map((row) => (
+                        <TableRow key={row.GameID}>
+                            <TableCell onClick={ () => window.location.href='/problemset/view?GameID='+row.GameID }
+                                        style={{cursor: 'pointer'}}>
+                                {row.Name}
                             </TableCell>
-                            <TablePagination
-                                rowsPerPageOptions={rowsPerPageOptions}
-                                count={standings.games_found}
-                                rowsPerPage={rowsPerPage}
-                                page={page}
-                                SelectProps={{
-                                    inputProps: { 'aria-label': 'rows per page' },
-                                    native: true,
-                                }}
-                                onChangePage={(event, newPage) => setPage(newPage)}
-                                onChangeRowsPerPage={(event) => setRowsPerPage(parseInt(event.target.value))}
-                                ActionsComponent={TablePaginationActions}
-                            />                        
+                            <TableCell align='right'>{(new Date(row.Date)).toLocaleString('ro-RO')}</TableCell>
+                            <TableCell align='right'>
+                                <span onClick={ () => window.location.href='/users?handle='+row.AuthorUsername }
+                                        style={{cursor: 'pointer'}}>
+                                    {row.AuthorUsername}
+                                </span>
+                            </TableCell>
                         </TableRow>
-                    </TableFooter>
-                </Table>
-            </TableContainer>
-        </Container>
+                    ))}
+                </TableBody>
+                <TableFooter>
+                    <TableRow>
+                        <TableCell align="right" className={classes.cellRow}>
+                            <TextField 
+                                select
+                                value={resultOrder}
+                                onChange={(event) => setResultOrder(event.target.value)}
+                                helperText="Result order"
+                            >
+                                {result_orders.map((option) => (
+                                <MenuItem key={option} value={option}>
+                                    {option}
+                                </MenuItem>
+                                ))}
+                            </TextField>
+                            <Box width="100px" />
+                            <TextField 
+                                select
+                                value={orderBy}
+                                onChange={(event) => setOrderBy(event.target.value)}
+                                helperText="Criteria to sort by"
+                            >
+                                {order_bys.map((option) => (
+                                <MenuItem key={option} value={option}>
+                                    {option}
+                                </MenuItem>
+                                ))}
+                            </TextField>
+                        </TableCell>
+                        <TablePagination
+                            rowsPerPageOptions={rowsPerPageOptions}
+                            count={standings.games_found}
+                            rowsPerPage={rowsPerPage}
+                            page={page}
+                            SelectProps={{
+                                inputProps: { 'aria-label': 'rows per page' },
+                                native: true,
+                            }}
+                            onChangePage={(event, newPage) => setPage(newPage)}
+                            onChangeRowsPerPage={(event) => setRowsPerPage(parseInt(event.target.value))}
+                            ActionsComponent={TablePaginationActions}
+                        />                        
+                    </TableRow>
+                </TableFooter>
+            </Table>
+        </TableContainer>
     );
 }

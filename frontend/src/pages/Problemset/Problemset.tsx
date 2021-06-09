@@ -8,14 +8,12 @@ import { Switch, Route } from 'react-router-dom'
 export default function Problemset() : JSX.Element {
 
     return (
-        <div>
-            <Switch>
-                <Route key="Default" path="/problemset/" exact component={Search}/>
-                <Route key="Search" path="/problemset/search" exact component={Search} />
-                <Route key="View" path="/problemset/view" exact component={View} />
-                <Route key="New" path="/problemset/new" exact component={New}/>
-                <Route key="Update" path="/problemset/update" exact component={Update}/>
-            </Switch>
-        </div>
+        <Switch>
+            <Route key="Default" path="/problemset/" exact component={Search}/>
+            <Route key="Search" path="/problemset/search" exact component={Search} />
+            <Route key="View" path="/problemset/view" exact component={View} />
+            <Route key="New" path="/problemset/new" exact component={New}/>
+            <Route key="Update" path="/problemset/update" exact component={Update}/>
+        </Switch>
     );
 }

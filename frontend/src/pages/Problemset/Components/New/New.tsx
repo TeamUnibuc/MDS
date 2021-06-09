@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useStyles } from './NewStyles'; 
 import api from 'api';
 import 'codemirror/keymap/sublime';
 import 'codemirror/theme/elegant.css';
@@ -13,6 +14,7 @@ export default function New(): JSX.Element {
     const [Description, setDescription] = useState('Game Statement...')
     const [OfficialBots, setOfficialBots] = useState<Array<string>>(["Bot #0 code..."])
     const {state: user} = useUserStatus();
+    const classes = useStyles();
 
     const processSubmit = async (event: React.SyntheticEvent) => {
         event.preventDefault();
@@ -47,8 +49,9 @@ export default function New(): JSX.Element {
             })
     }
 
-    return <div>
+    return (<Box className={classes.pageContainer}>
         <h1>New Game</h1>
+        <h3>Game Title:</h3>
         <textarea
             style={{width: "90%"}}
             rows={1} 
@@ -57,6 +60,7 @@ export default function New(): JSX.Element {
             onChange={(event) => setName(event.target.value)}
         />
         
+        <h3>Game Statement:</h3>
         <textarea
             style={{width: "90%"}}
             rows={20} 
@@ -68,11 +72,11 @@ export default function New(): JSX.Element {
         <br/>
 
         <Box width="90%">
-            <label>
+            <h3>
                 Engine code:
-            </label>
+            </h3>
             <Box mt="20px" />
-            <Box height="300px" width="100%">
+            <Box height="300px" className={classes.codeMirrorContainer}>
                 <CodeMirror
                     value={GameEngine}
                     onChange={(instance : CodeMirror.Editor) => setGameEngine(instance.getValue())}
@@ -88,17 +92,23 @@ export default function New(): JSX.Element {
             <Box mt="20px" />
         </Box>
         {OfficialBots.map((val, id) => <Box key={id} style={{width: "90%"}}>
-            <label>
+            <h3>
                 {`Bot #${id}`}
-            </label>
+            </h3>
             <Box mt="20px" />
-            <Box style={{width: "100%", height: "300px"}}>
+            <Box height="300px" className={classes.codeMirrorContainer}>
                 <CodeMirror
                     value={val}
                     onChange={(instance : CodeMirror.Editor) => {
                         const new_bots = OfficialBots;
                         new_bots[id] = instance.getValue();
                         setOfficialBots(new_bots);
+                    }}
+                    options={{
+                        theme: 'elegant',
+                        keyMap: 'sublime',
+                        mode: 'c++',
+                        lineNumbers: true,
                     }}
                 />
             </Box>
@@ -110,7 +120,7 @@ export default function New(): JSX.Element {
 
         <Box mt="40px" />
 
-        <Box>
+        <Box className={classes.buttonsContainer}>
             <Button
                 onClick={() => {
                     setOfficialBots([...OfficialBots, "Bot #" + (OfficialBots.length + 1) + " code..."]);
@@ -135,7 +145,8 @@ export default function New(): JSX.Element {
             >Submit</Button>
         </Box>
         
-    </div>;
+    </Box>
+    );
 }
 
 

@@ -1,7 +1,8 @@
+import React, { useEffect, useState } from 'react';
+import { useStyles } from './UpdateStyles';
 import { GetOne as GetOneGame, GetOneResults as GetOneGameResults } from 'api/Games/GetOne';
 import { useUserStatus } from 'Contexts/UserStatus';
 import { Box, Button, CircularProgress } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
 import 'codemirror/keymap/sublime';
 import 'codemirror/theme/elegant.css';
 import CodeMirror from '@uiw/react-codemirror';
@@ -13,6 +14,7 @@ export default function Update() : JSX.Element {
     const GameID = new URLSearchParams(location.search).get(`GameID`);
     const [game, setGame] = useState<undefined | GetOneGameResults>();
     const [sources, setSources] = useState<undefined | SourceResults>();
+    const classes = useStyles();
 
     const [GameEngine, setGameEngine] = useState('')
     const [Name, setName] = useState('')
@@ -80,8 +82,9 @@ export default function Update() : JSX.Element {
         window.location.href='/problemset/view?GameID='+game.game.GameID
     }
 
-    return <div>
+    return <Box className={classes.pageContainer}>
         <h1>Edit Game</h1>
+        <h3>Game Title:</h3>
         <textarea
             style={{width: "90%"}}
             rows={1} 
@@ -90,6 +93,7 @@ export default function Update() : JSX.Element {
             onChange={(event) => setName(event.target.value)}
         />
         
+        <h3>Game Description</h3>
         <textarea
             style={{width: "90%"}}
             rows={20} 
@@ -101,11 +105,11 @@ export default function Update() : JSX.Element {
         <br/>
 
         <Box width="90%">
-            <label>
+            <h3>
                 Engine code:
-            </label>
+            </h3>
             <Box mt="20px" />
-            <Box height="300px" width="100%">
+            <Box className={classes.codeMirrorContainer} height="300px">
                 <CodeMirror
                     value={GameEngine}
                     onChange={(instance : CodeMirror.Editor) => setGameEngine(instance.getValue())}
@@ -121,17 +125,23 @@ export default function Update() : JSX.Element {
             <Box mt="20px" />
         </Box>
         {OfficialBots.map((val, id) => <Box key={id} style={{width: "90%"}}>
-            <label>
+            <h3>
                 {`Bot #${id}`}
-            </label>
+            </h3>
             <Box mt="20px" />
-            <Box style={{width: "100%", height: "300px"}}>
+            <Box className={classes.codeMirrorContainer} height="300px">
                 <CodeMirror
                     value={val}
                     onChange={(instance : CodeMirror.Editor) => {
                         const new_bots = OfficialBots;
                         new_bots[id] = instance.getValue();
                         setOfficialBots(new_bots);
+                    }}
+                    options={{
+                        theme: 'elegant',
+                        keyMap: 'sublime',
+                        mode: 'c++',
+                        lineNumbers: true,
                     }}
                 />
             </Box>
@@ -143,7 +153,7 @@ export default function Update() : JSX.Element {
 
         <Box mt="40px" />
 
-        <Box>
+        <Box className={classes.buttonsContainer}>
             <Button
                 onClick={() => {
                     setOfficialBots([...OfficialBots, "Bot #" + (OfficialBots.length + 1) + " code..."]);
@@ -165,9 +175,9 @@ export default function Update() : JSX.Element {
                 onClick={processSubmit}
                 variant="contained"
                 color="primary"
-            >Submit</Button>
+            >Save</Button>
         </Box>
         
-    </div>;
+    </Box>;
 }
     

@@ -97,6 +97,7 @@ export const New = async (req: Request, res: Response): Promise<void> =>
             submission.SubmissionDate = new Date();
 
             const officialBots = await GameOfficialBotsModel.find({GameID: gameID});
+            console.log(officialBots);
 
             const fightIds: Array<string> = [];
 
@@ -117,7 +118,8 @@ export const New = async (req: Request, res: Response): Promise<void> =>
                 const winnerID = (await FightsModel.findById(fightID, {WinnerID: 1}))?.WinnerID;
                 if (winnerID == botID) nrWins++;
             }
-
+            
+            console.log(officialBots);
             submission.Points = nrWins * 100 / officialBots.length;
 
             const gameRank = await GameRankingsModel.find({GameID: gameID, UserID: req.user.id});

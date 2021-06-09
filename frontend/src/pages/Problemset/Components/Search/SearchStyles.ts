@@ -4,6 +4,7 @@ import { TableRow, TableCell } from '@material-ui/core'
 const useStyles = makeStyles({
     table: {
         minWidth: 700,
+        width: '100%'
     },
     cellRow: {
         display: 'flex',

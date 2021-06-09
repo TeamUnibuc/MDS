@@ -8,7 +8,7 @@ import WhatshotIcon from '@material-ui/icons/Whatshot';
 
 const useStyles = makeStyles({
     root: {
-      minWidth: 275,
+      minWidth: 380,
       maxWidth: 450,
       backgroundColor: '#b0d3f5',
     },
