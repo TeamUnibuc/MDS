@@ -39,8 +39,12 @@ export default function New(): JSX.Element {
 
         console.log(reqBody);
 
-        const content = await api.Games.Alter(reqBody);
-        console.log(content);
+        api.Games.Alter(reqBody)
+            .then(content => {
+                console.log(content)
+                if (content.GameID)
+                    window.location.href='/problemset/view?GameID='+content.GameID
+            })
     }
 
     return <div>
