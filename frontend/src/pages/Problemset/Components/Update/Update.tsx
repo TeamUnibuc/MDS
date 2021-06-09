@@ -37,10 +37,6 @@ export default function Update() : JSX.Element {
                     const bots = s.OfficialGameBots.map(x => x.BotCode)
                     setOfficialBots(bots)
                     setSources(s)
-<<<<<<< HEAD
-                    console.log(s)
-=======
->>>>>>> d872e67629f78b5a21ffbf2a292e52e712f4e413
                 })
         }
     }, [])
