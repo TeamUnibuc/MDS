@@ -3,7 +3,6 @@ import { env } from './config'
 
 import zerorpc from 'zerorpc'
 
-
 export class EngineConnection {
     private static instance: undefined | EngineConnection;
 
