@@ -4,6 +4,7 @@ import { Box, Divider, Typography } from '@material-ui/core';
 import { useUserStatus } from 'Contexts/UserStatus';
 import api from 'api';
 import TotalPoints from './components/TotalPoints';
+import LatestGames from './components/LatestGames';
 
 const Greeting = (): JSX.Element => 
 {
@@ -55,6 +56,12 @@ export default function Home(): JSX.Element
             <TotalPoints username={user.Username} points={summaryPoints} />
         }
     </Box>
+
+    <Box my={3}>
+        <Divider />
+    </Box>
+
+    <LatestGames />
     </>
 }
 

@@ -27,11 +27,12 @@ it("renders user data", async () => {
         "OK": "fake response from server"
     };
   
-    jest.spyOn(global, "fetch").mockImplementation(() => 
-        Promise.resolve({
-            json: () => Promise.resolve(fakeResponse)
-        })
-    );
+    // chestia asta strica toate fetch-urile si de-aia pica Enhanced-Home PR
+    // jest.spyOn(global, "fetch").mockImplementation(() => 
+    //     Promise.resolve({
+    //         json: () => Promise.resolve(fakeResponse)
+    //     })
+    // );
 
     // Use the asynchronous version of act to apply resolved promises
     await act(async () => {
@@ -41,8 +42,8 @@ it("renders user data", async () => {
     // expect(container.querySelector("summary").textContent).toBe(fakeUser.name);
     // expect(container.querySelector("strong").textContent).toBe(fakeUser.age);
     // expect(container.textContent).toContain(fakeUser.address);
-    // expect(container.querySelector("strong").textContent).toContain(fakeResponse["OK"]);
+    expect(container.querySelector("header").textContent).toContain('Fight Bots');
 
     // remove the mock to ensure tests are completely isolated
-    global.fetch.mockRestore();
+    // global.fetch.mockRestore();
 });

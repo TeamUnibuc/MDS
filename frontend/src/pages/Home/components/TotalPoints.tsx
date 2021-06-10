@@ -53,8 +53,8 @@ export default function TotalPoints({username, points}: Props): JSX.Element
           display="flex" 
           flexDirection="row" 
           justifyContent="space-between">
-            <Box display="flex" flexDirection="row" >
-                <PersonOutlineIcon className={classes.iconProfile}/>
+            <Box display="flex" flexDirection="row" alignItems="center">
+                <PersonOutlineIcon />
 
                 <Typography variant="h5" component="h2">
                     {username}
@@ -64,11 +64,11 @@ export default function TotalPoints({username, points}: Props): JSX.Element
       </Typography> */}
             </Box>
 
-            <Box display="flex" flexDirection="row" >
+            <Box display="flex" flexDirection="row" alignItems="center">
                 <Typography variant="h5" component="p">
                     {points}
                 </Typography>
-                <WhatshotIcon className={classes.iconScore}/>
+                <WhatshotIcon />
             </Box>
 
         </Box>
