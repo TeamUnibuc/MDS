@@ -31,9 +31,9 @@ const useStyles = makeStyles({
 
 export default function LatestGames(): JSX.Element 
 {
-    const classes = useStyles();
-
     const [games, setGames] = useState<GameModel[]>([])
+    
+    const classes = useStyles();
 
     useEffect(() => {
         api.Games.GetAll({
@@ -43,6 +43,8 @@ export default function LatestGames(): JSX.Element
             result_order: 'decreasing'
         }).then(res => {
             setGames(res.games)
+        }).catch(err => {
+            console.log("viata naspa: ", err)
         })
     }, [])
 
