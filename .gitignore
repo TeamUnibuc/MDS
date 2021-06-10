@@ -6,6 +6,7 @@ node_modules/
 .env
 .env.prod
 .env.dev
+.env.test
 
 # Package lock file should be ignored, we use Yarn
 package-lock.json

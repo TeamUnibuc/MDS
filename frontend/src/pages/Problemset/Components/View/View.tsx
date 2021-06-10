@@ -7,6 +7,7 @@ import 'codemirror/theme/elegant.css';
 import CodeMirror from '@uiw/react-codemirror';
 import { NewSubmission } from 'api/Submissions/NewSubmission';
 import { Delete } from 'api/Games/Delete';
+import ReactMarkdown from 'react-markdown';
 
 
 export default function View() : JSX.Element {
@@ -89,9 +90,7 @@ export default function View() : JSX.Element {
                 <h1>{game.game.Name}</h1>
                 <br />
                 <Box>
-                    {game.game.Description.split("\n").map((i,key) => {
-                        return <p key={key}>{i}</p>;
-                    })}
+                    <ReactMarkdown>{game.game.Description}</ReactMarkdown>
                 </Box>
             </Box>
 
