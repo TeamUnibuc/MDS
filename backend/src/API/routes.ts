@@ -5,6 +5,7 @@ import { gameRoutes } from './Games/routes'
 import { NewGame } from './NewGame'
 import { standingsRoutes } from './Standings/routes'
 import { submissionRoutes } from './Submissions/routes'
+import { transientRoutes } from './Transient/routes'
 import { userRoutes } from './Users/routes'
 
 export const routes = express.Router()
@@ -18,6 +19,7 @@ routes.use('/Submissions', submissionRoutes)
 routes.use('/Standings', standingsRoutes)
 routes.use('/Account', accountRoutes)
 routes.use('/Users', userRoutes)
+routes.use('/Transient', transientRoutes)
 
 // routes for testing
 

@@ -10,6 +10,7 @@ export interface GetOneResults extends RequestStatus, SubmissionModel {
     compiled: boolean,
     compilation_message?: string,
     results: Array<Result>,
+    OfficialBots: number,
 
     finished_evaluation: boolean
 }
