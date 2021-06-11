@@ -14,3 +14,6 @@ init_ia_sandbox:
 
 init_environment:
 	conda env update --name $(CONDA_ENV) --file $(CONDA_ENV).yml
+
+count:
+	cloc --exclude-list-file=.clocignore --exclude-dir=node_modules . 
