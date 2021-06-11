@@ -11,7 +11,7 @@ export const TitleDivider: FC<Props> = ({title}: Props) =>
     const classes = useStyles()
 
     return <>
-    <Box className={classes.titleBox}>
+    <Box pt={1} className={classes.titleBox}>
         <Typography variant="h4">
             {title}
         </Typography>
