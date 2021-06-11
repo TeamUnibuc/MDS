@@ -50,7 +50,7 @@ export const Transient: FC = () =>
             setTotalFights(res.OfficialBots)
         })
 
-        const delay = 0.5
+        const delay = 0.1
         const updater = setInterval(() => updateFights(closeUpdater), delay * 1000);
 
         const closeUpdater = () => clearInterval(updater) 
