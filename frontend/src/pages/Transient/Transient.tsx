@@ -6,16 +6,13 @@ import api from 'api'
 import { useLocation } from 'react-router-dom'
 import { FightCard } from './components/FightCard'
 
-interface Props {
-    gameName: string,
-}
-
-export const Transient: FC<Props> = ({gameName}: Props) =>
+export const Transient: FC = () =>
 {
     const [fights, setFights] = useState<TrFight[]>([])
     const [totalFights, setTotalFights] = useState(0)
     const [finished, setFinished] = useState(false)
     const SubmissionID = new URLSearchParams(useLocation().search).get('SubmissionID') ?? "";
+    const GameName = new URLSearchParams(useLocation().search).get('gameName') ?? "";
 
     const RedirectTo = (url: string) => {
         return () => window.location.href = url
@@ -67,7 +64,7 @@ export const Transient: FC<Props> = ({gameName}: Props) =>
 
     return <>
         <Typography variant="h5">
-            Submission status of your code for game: {gameName}
+            Submission status of your code for game: {GameName}
         </Typography>
         <Box
             display="flex"
