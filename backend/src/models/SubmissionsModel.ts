@@ -19,6 +19,8 @@ class SubmissionsItem {
     FightIDs = <string[]>[];
     // Points of the submission. Maximum is 100.
     Points = 0;
+    // Status of the submission
+    Status = "pending";
 }
 
 interface SubmissionsDoc extends SubmissionsItem, Document { }
@@ -30,6 +32,11 @@ const SubmissionsSchema: Schema = new Schema({
     SubmissionDate: { type: Date, required: true },
     FightIDs: { type: Array, required: true },
     Points: { type: Number, required: true },
+    Status: {
+        type: String,
+        enum: ['pending', 'done'],
+        required: true,
+    },
 });
 
 // Export the model and return your interface

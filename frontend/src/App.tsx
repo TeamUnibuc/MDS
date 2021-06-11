@@ -12,6 +12,7 @@ import { ThemeProvider } from '@material-ui/styles'
 import { createMuiTheme } from '@material-ui/core/styles';
 import { UserStatusProvider } from 'Contexts/UserStatus';
 import { SnackProvider } from 'Contexts/Snackbar';
+import { Transient } from 'pages/Transient/Transient';
 
 // Daca vrem sa adaugam culori la theme, aici trebuie sa facem asta
 const theme = createMuiTheme({
@@ -50,6 +51,9 @@ function App(): JSX.Element {
                         <Route key="Standings" path="/standings" exact component={Standings}/>
                         <Route key="Submissions" path="/submissions" exact component={Submissions}/>
                         <Route key="Submission" path="/submission" component={Submission}/>
+
+                        <Route key="Transient" path="/transient" component={Transient} />
+                        
                         <Route key="Documentation" path="/documentation" component={Documentation}/>
 
                         <Route key="apitester" path="/apitester" exact component={APITester}/>

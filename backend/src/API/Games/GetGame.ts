@@ -18,6 +18,7 @@ export const GetGame = async (req: Request, res: Response): Promise<void> =>
                 "GameID": game.id,
                 "AuthorID": game.AuthorID,
                 "Date": game.Date,
+                "OfficialBots": game.OfficialGameBots,
             },
         });
     }

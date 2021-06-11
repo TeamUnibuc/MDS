@@ -59,7 +59,7 @@ export const GetAll = async (req: Request, res: Response): Promise<void> =>
             "AuthorID": totalSubmissions[i].UserID,
             "SubmissionID": totalSubmissions[i].id,
             "AuthorUsername": (user?.Username ?? "Inexistent"),
-            "GameName": (game?.Name ?? "Inexistent")
+            "GameName": (game?.Name ?? "Inexistent"),
         });
     }
 

@@ -42,7 +42,7 @@ export default function View() : JSX.Element {
             .then(({ SubmissionID }) => {
                 if (SubmissionID)
                     console.log("Submission: " + SubmissionID);
-                window.location.href='/Submission?id='+SubmissionID;
+                window.location.href='/Transient?SubmissionID='+SubmissionID;
             })
             .catch((err) => {
                 console.log("Failed: " + err);
