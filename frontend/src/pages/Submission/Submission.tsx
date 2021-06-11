@@ -7,6 +7,7 @@ import { GetOneResults } from 'api/Submissions/GetOne';
 import 'codemirror/keymap/sublime';
 import 'codemirror/theme/elegant.css';
 import CodeMirror from '@uiw/react-codemirror';
+import { TitleDivider } from 'components/TitleDivider';
 
 export default function Submission() : JSX.Element {
     const [Submission, setSubmission] = useState<undefined | GetOneResults>();
@@ -35,7 +36,7 @@ export default function Submission() : JSX.Element {
 
     return (
         <Box className={classes.pageContainer}>
-            <h1>{`${Submission.AuthorUsername}'s submission`}</h1>
+            <TitleDivider title={`${Submission.AuthorUsername}'s submission`} />
             <h3>{`${Submission.Score} points`}</h3>
 
             <h2>Code:</h2>
