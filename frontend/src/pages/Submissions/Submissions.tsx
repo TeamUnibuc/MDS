@@ -10,6 +10,7 @@ import { TableContainer, Table, TableHead, TableRow, Paper, TableBody, Box, Link
         TableFooter, TablePagination, CircularProgress, TableCell, MenuItem, TextField } from '@material-ui/core';
 import TablePaginationActions from '@material-ui/core/TablePagination/TablePaginationActions';
 import { SubmissionModel } from 'api/Models';
+import { TitleDivider } from 'components/TitleDivider';
 
 const rowsPerPageOptions : number[] = [10, 25, 50];
 const order_bys = ['score', 'date'];
@@ -57,7 +58,8 @@ export default function Submissions() : JSX.Element {
         return <div>{Submissions.error_message}</div>
     }
     
-    return (
+    return (<>
+        <TitleDivider title='Submissions'/>
         <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="customized table">
                 <TableHead>
@@ -119,7 +121,7 @@ export default function Submissions() : JSX.Element {
                 </TableFooter>
             </Table>
         </TableContainer>
-    );
+    </>);
 }
 
 function EntryRow(item : SubmissionModel) : JSX.Element {

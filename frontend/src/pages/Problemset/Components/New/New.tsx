@@ -7,6 +7,7 @@ import 'codemirror/theme/elegant.css';
 import { Button, Box } from '@material-ui/core'
 import CodeMirror from '@uiw/react-codemirror'
 import { useUserStatus } from 'Contexts/UserStatus';
+import { TitleDivider } from 'components/TitleDivider';
 
 export default function New(): JSX.Element {
     const [GameEngine, setGameEngine] = useState('Engine code...')
@@ -50,7 +51,7 @@ export default function New(): JSX.Element {
     }
 
     return (<Box className={classes.pageContainer}>
-        <h1>New Game</h1>
+        <TitleDivider title='New Game' />
         <h3>Game Title:</h3>
         <textarea
             style={{width: "90%"}}

@@ -8,6 +8,7 @@ import CodeMirror from '@uiw/react-codemirror';
 import { NewSubmission } from 'api/Submissions/NewSubmission';
 import { Delete } from 'api/Games/Delete';
 import ReactMarkdown from 'react-markdown';
+import { TitleDivider } from 'components/TitleDivider';
 
 
 export default function View() : JSX.Element {
@@ -65,6 +66,7 @@ export default function View() : JSX.Element {
 
     return (
         <Box alignSelf="flex-start" width="100%">
+            <TitleDivider title={game.game.Name}/>
             <Box style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                 <Box m={1}>
                     <Button onClick={RedirectTo("/Submissions?GameID=" + game.game.GameID)} variant="contained">View All Submissions</Button>
@@ -87,8 +89,6 @@ export default function View() : JSX.Element {
                 }
             </Box>
             <Box>
-                <h1>{game.game.Name}</h1>
-                <br />
                 <Box>
                     <ReactMarkdown>{game.game.Description}</ReactMarkdown>
                 </Box>

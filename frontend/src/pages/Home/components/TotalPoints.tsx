@@ -7,31 +7,31 @@ import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 
 const useStyles = makeStyles({
-    root: {
-      minWidth: 380,
-      maxWidth: 450,
-      backgroundColor: '#b0d3f5',
-    },
-    bullet: {
-      display: 'inline-block',
-      margin: '0 2px',
-      transform: 'scale(0.8)',
-    },
-    title: {
-      fontSize: 14,
-    },
-    pos: {
-      marginBottom: 12,
-    },
-    iconProfile: {
-      paddingTop: 5,
-      paddingBottom: 5,
-    },
-    iconScore: {
-      paddingTop: 4,
-      paddingBottom: 4,
-    }
-  });
+  root: {
+    minWidth: 380,
+    maxWidth: 450,
+    backgroundColor: '#7dbeff',
+  },
+  bullet: {
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(0.8)',
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
+  },
+  iconProfile: {
+    paddingTop: 5,
+    paddingBottom: 5,
+  },
+  iconScore: {
+    paddingTop: 4,
+    paddingBottom: 4,
+  }
+});
 
 interface Props {
     username: string,

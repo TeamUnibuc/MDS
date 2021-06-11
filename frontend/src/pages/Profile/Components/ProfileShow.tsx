@@ -9,7 +9,6 @@ interface Props {
 function ProfileShow({profile}: Props): JSX.Element
 {
     return (<>
-    <h3>Personal information</h3>
     <p><strong>Email: </strong> {profile.Email} </p>
     <p><strong>First name: </strong> {profile.FirstName} </p>
     <p><strong>Last name: </strong> {profile.LastName} </p>

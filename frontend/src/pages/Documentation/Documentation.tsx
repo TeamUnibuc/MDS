@@ -6,6 +6,7 @@ import { Box } from '@material-ui/core';
 import { useStyles } from './DocumentationStyles';
 
 import { engine_sample, function_proto } from './utils';
+import { TitleDivider } from 'components/TitleDivider';
 
 
 export default function Documentation() : JSX.Element {
@@ -13,7 +14,7 @@ export default function Documentation() : JSX.Element {
     
     return (
         <div>
-            <h1>Fight-Bots Documentation</h1>
+            <TitleDivider title='Fight-Bots Documentation'/>
 
             <h2>How Fight-Bots evaluation works</h2>
 
