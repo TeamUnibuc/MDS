@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useStyles, StyledTableCell } from './SearchStyles';
 import { TableContainer, Table, TableHead, TableRow, Paper, TableBody, Box, 
-        TableFooter, TablePagination, CircularProgress, TableCell, MenuItem, TextField, Container } from '@material-ui/core';
+        TableFooter, TablePagination, CircularProgress, TableCell, MenuItem, TextField } from '@material-ui/core';
 import api from 'api';
 import TablePaginationActions from '@material-ui/core/TablePagination/TablePaginationActions';
 import { GetAllResults } from 'api/Games/GetAll';
+import { TitleDivider } from 'components/TitleDivider';
 
 const rowsPerPageOptions : number[] = [10, 25, 50];
 const order_bys = ['date', 'solved', 'submissions'];
@@ -37,7 +38,8 @@ export default function Search() : JSX.Element {
         return <CircularProgress />
     }
 
-    return (
+    return (<>
+        <TitleDivider title='Search'/>
         <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="customized table">
                 <TableHead>
@@ -110,5 +112,5 @@ export default function Search() : JSX.Element {
                 </TableFooter>
             </Table>
         </TableContainer>
-    );
+    </>);
 }

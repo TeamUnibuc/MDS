@@ -5,6 +5,7 @@ import { useUserStatus } from 'Contexts/UserStatus';
 import api from 'api';
 import TotalPoints from './components/TotalPoints';
 import LatestGames from './components/LatestGames';
+import { TitleDivider } from 'components/TitleDivider';
 
 const Greeting = (): JSX.Element => 
 {
@@ -38,13 +39,7 @@ export default function Home(): JSX.Element
     }, [user])
 
     return <>
-    <Typography variant="h2" component="h3" style={{alignSelf: 'flex-start'}}>
-        Home
-    </Typography>
-    
-    <Box my={2}>
-        <Divider />
-    </Box>
+    <TitleDivider title='Home' />
 
     <Box 
       display="flex" 

@@ -8,6 +8,7 @@ import 'codemirror/theme/elegant.css';
 import CodeMirror from '@uiw/react-codemirror';
 import { SourceResults, Sources } from 'api/Games/Sources';
 import api from 'api';
+import { TitleDivider } from 'components/TitleDivider';
 
 
 export default function Update() : JSX.Element {
@@ -83,7 +84,7 @@ export default function Update() : JSX.Element {
     }
 
     return <Box className={classes.pageContainer}>
-        <h1>Edit Game</h1>
+        <TitleDivider title='Edit Game'/>
         <h3>Game Title:</h3>
         <textarea
             style={{width: "90%"}}
