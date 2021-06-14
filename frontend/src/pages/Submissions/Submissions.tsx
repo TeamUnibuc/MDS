@@ -140,7 +140,7 @@ function EntryRow(item : SubmissionModel) : JSX.Element {
             </StyledTableCell>
             <StyledTableCell align="right">{GameName}</StyledTableCell>
             <StyledTableCell align="right">{(new Date(DateSubmitted)).toLocaleString('ro-RO')}</StyledTableCell>
-            <StyledTableCell align="right">{Score}</StyledTableCell>
+            <StyledTableCell align="right">{Math.round((Score + Number.EPSILON) * 100) / 100}</StyledTableCell>
         </StyledTableRow>
     );
 }
