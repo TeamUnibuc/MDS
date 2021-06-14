@@ -109,7 +109,7 @@ function EntryRow(item: StandingsEntry) : JSX.Element {
             <StyledTableCell component="th" scope="row">
                 {AuthorUsername}
             </StyledTableCell>
-            <StyledTableCell align="right">{TotalPoints}</StyledTableCell>
+            <StyledTableCell align="right">{Math.round((TotalPoints + Number.EPSILON) * 100) / 100}</StyledTableCell>
         </StyledTableRow>
     );
 }
