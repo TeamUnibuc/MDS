@@ -46,7 +46,7 @@ const CreateNewFight = async (BotIDs: Array<string>, GameID: string): Promise<st
     await EngineConnection.Fight(game.GameEngine, botsCode).then(fightInfo => {
         if (fightInfo.status == "ok") {
             fight.BattleLogs = fightInfo.logs;
-            fight.WinnerID = BotIDs[fightInfo.winner];
+            fight.WinnerID = (fightInfo.winner === -1 ? "-1" : BotIDs[fightInfo.winner]);
         }
         else if (fightInfo.status == "compilation_error") {
             fight.WinnerID = "-1";
