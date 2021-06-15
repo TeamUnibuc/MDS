@@ -53,6 +53,9 @@ export default function APITester() : JSX.Element{
                     value={apiResponse}                    
                     options={{
                         theme: 'elegant',
+                        tabSize: 4,
+                        smartIndent: true,
+                        indentUnit: 4,
                         keyMap: 'sublime',
                         mode: 'javascript',
                         lineNumbers: true,

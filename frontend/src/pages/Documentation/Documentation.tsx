@@ -36,7 +36,9 @@ export default function Documentation() : JSX.Element {
                         mode: 'c++',
                         lineNumbers: true,
                         readOnly: true,
-
+                        tabSize: 4,
+                        smartIndent: true,
+                        indentUnit: 4
                     }}
                 />
             </Box>
@@ -52,7 +54,9 @@ export default function Documentation() : JSX.Element {
                         mode: 'c++',
                         lineNumbers: true,
                         readOnly: true,
-
+                        tabSize: 4,
+                        smartIndent: true,
+                        indentUnit: 4
                     }}
                 />
             </Box>
@@ -79,7 +83,9 @@ export default function Documentation() : JSX.Element {
                         mode: 'c++',
                         lineNumbers: true,
                         readOnly: true,
-
+                        tabSize: 4,
+                        smartIndent: true,
+                        indentUnit: 4
                     }}
                 />
             </Box>

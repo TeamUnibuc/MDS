@@ -96,6 +96,9 @@ function AddGame(): JSX.Element {
                         keyMap: 'sublime',
                         mode: 'c++',
                         lineNumbers: true,
+                        tabSize: 4,
+                        smartIndent: true,
+                        indentUnit: 4
                     }}
                 />
             </Box>
@@ -114,6 +117,15 @@ function AddGame(): JSX.Element {
                         const new_bots = OfficialBots;
                         new_bots[id] = instance.getValue();
                         setOfficialBots(new_bots);
+                    }}
+                    options={{
+                        theme: 'elegant',
+                        keyMap: 'sublime',
+                        mode: 'c++',
+                        lineNumbers: true,
+                        tabSize: 4,
+                        smartIndent: true,
+                        indentUnit: 4
                     }}
                 />
             </Box>
