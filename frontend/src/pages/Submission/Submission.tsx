@@ -48,7 +48,10 @@ export default function Submission() : JSX.Element {
                         keyMap: 'sublime',
                         mode: 'c++',
                         lineNumbers: true,
-                        readOnly: true
+                        readOnly: true,
+                        tabSize: 4,
+                        smartIndent: true,
+                        indentUnit: 4
                     }}
                 />
             </Box>
@@ -75,7 +78,7 @@ function ResultEntry({logs, won} : {logs : string, won : boolean}) : JSX.Element
                         keyMap: 'sublime',
                         mode: 'textile',
                         lineNumbers: true,
-                        readOnly: true
+                        readOnly: true,
                     }}
                 />
             </Box>            

@@ -60,6 +60,9 @@ function CustomRequest() : JSX.Element {
                         keyMap: 'sublime',
                         mode: 'javascript',
                         lineNumbers: true,
+                        tabSize: 4,
+                        smartIndent: true,
+                        indentUnit: 4
                     }}
                 />
             </Box>

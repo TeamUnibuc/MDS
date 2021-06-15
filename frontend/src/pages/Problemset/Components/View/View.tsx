@@ -14,7 +14,7 @@ import { TitleDivider } from 'components/TitleDivider';
 export default function View() : JSX.Element {
     const GameID = new URLSearchParams(location.search).get(`GameID`);
     const [game, setGame] = useState<undefined | GetOneGameResults>();
-    const [submissionCode, setSubmissionCode] = useState("#include <bits/stdc++.h>\n\nint main() {\n    return 0;\n}\n");
+    const [submissionCode, setSubmissionCode] = useState("#include <bits/stdc++.h>\n\nint main() {\n\treturn 0;\n}\n");
 
     const {state: user} = useUserStatus();
 
@@ -109,8 +109,11 @@ export default function View() : JSX.Element {
                             options={{
                                 theme: 'elegant',
                                 keyMap: 'sublime',
-                                mode: 'C++',
+                                mode: 'c++',
                                 lineNumbers: true,
+                                tabSize: 4,
+                                smartIndent: true,
+                                indentUnit: 4
                             }}
                         />
                     </Box>

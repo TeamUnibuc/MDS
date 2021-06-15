@@ -58,6 +58,9 @@ export default function NewSubmission(): JSX.Element {
                         keyMap: 'sublime',
                         mode: 'c++',
                         lineNumbers: true,
+                        tabSize: 4,
+                        smartIndent: true,
+                        indentUnit: 4
                     }}
                 />
             </Box>
