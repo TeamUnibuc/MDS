@@ -1,5 +1,7 @@
 # Proiect Metode de Dezvoltare Software
 
+If you are lucky, the project might be hosted here: [Fight Bots](https://universityproject.ml)
+
 ## Tehnologii posibile
 
 1. `NodeJS` pentru server
